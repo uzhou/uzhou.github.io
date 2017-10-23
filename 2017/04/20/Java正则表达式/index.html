@@ -1,0 +1,811 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x5B9A;&amp;#x4E49;&amp;#x53CA;&amp;#x57FA;&amp;#x7840;&amp;#x6982;&amp;#x5FF5;&amp;#x5B9A;&amp;#x4E49;&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x7528;&amp;#x4E8E;&amp;#x5339;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java正则表达式">
+<meta property="og:url" content="http://yoursite.com/2017/04/20/Java正则表达式/index.html">
+<meta property="og:site_name" content="uzhou">
+<meta property="og:description" content="&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x5B9A;&amp;#x4E49;&amp;#x53CA;&amp;#x57FA;&amp;#x7840;&amp;#x6982;&amp;#x5FF5;&amp;#x5B9A;&amp;#x4E49;&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x7528;&amp;#x4E8E;&amp;#x5339;">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img1.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img2.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img3.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img4.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img5.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img6.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img7.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img8.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img9.png">
+<meta property="og:updated_time" content="2017-04-25T09:19:57.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java正则表达式">
+<meta name="twitter:description" content="&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x5B9A;&amp;#x4E49;&amp;#x53CA;&amp;#x57FA;&amp;#x7840;&amp;#x6982;&amp;#x5FF5;&amp;#x5B9A;&amp;#x4E49;&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x7528;&amp;#x4E8E;&amp;#x5339;">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/20/Java正则表达式/img1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/20/Java正则表达式/"/>
+
+
+
+
+
+  <title> Java正则表达式 | uzhou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">uzhou</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/Java正则表达式/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java正则表达式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-20T10:47:59+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/04/20/Java正则表达式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/20/Java正则表达式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/20/Java正则表达式/" class="leancloud_visitors" data-flag-title="Java正则表达式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;"><a href="#&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;" class="headerlink" title="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;"></a>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;</h1><h2 id="&#x5B9A;&#x4E49;&#x53CA;&#x57FA;&#x7840;&#x6982;&#x5FF5;"><a href="#&#x5B9A;&#x4E49;&#x53CA;&#x57FA;&#x7840;&#x6982;&#x5FF5;" class="headerlink" title="&#x5B9A;&#x4E49;&#x53CA;&#x57FA;&#x7840;&#x6982;&#x5FF5;"></a>&#x5B9A;&#x4E49;&#x53CA;&#x57FA;&#x7840;&#x6982;&#x5FF5;</h2><h3 id="&#x5B9A;&#x4E49;"><a href="#&#x5B9A;&#x4E49;" class="headerlink" title="&#x5B9A;&#x4E49;"></a>&#x5B9A;&#x4E49;</h3><p>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x5339;&#x914D;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6A21;&#x677F;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x770B;&#x6210;&#x4E00;&#x4E2A;&#x5F3A;&#x5927;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5904;&#x7406;&#x5DE5;&#x5177;&#x3002;</p>
+<h3 id="&#x57FA;&#x7840;&#x6982;&#x5FF5;"><a href="#&#x57FA;&#x7840;&#x6982;&#x5FF5;" class="headerlink" title="&#x57FA;&#x7840;&#x6982;&#x5FF5;"></a>&#x57FA;&#x7840;&#x6982;&#x5FF5;</h3><h4 id="String&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;"><a href="#String&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;" class="headerlink" title="String&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;"></a>String&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;</h4><p>&#x7531;&#x4E8E;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x7528;&#x4E8E;&#x5339;&#x914D;&#x548C;&#x67E5;&#x627E;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x56E0;&#x6B64;String&#x7C7B;&#x4E2D;&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x591A;&#x4E2A;&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x652F;&#x6301;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x3002;&#x6BD4;&#x5982;&#xFF1A;</p>
+<pre><code>boolean matches(String regex):&#x5224;&#x65AD;&#x8BE5;String&#x5BF9;&#x8C61;&#x4E0E;regex&#x662F;&#x5426;&#x5339;&#x914D;&#x3002;
+
+String replaceAll(String regex,String replacement):&#x5C06;&#x8BE5;String&#x5BF9;&#x8C61;&#x4E2D;&#x6240;&#x6709;&#x4E0E;regex&#x5339;&#x914D;&#x7684;&#x5B50;&#x4E32;&#x90FD;&#x7528;replacement&#x66FF;&#x6362;&#x6389;&#x3002;
+</code></pre><h4 id="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5F62;&#x5F0F;"><a href="#&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5F62;&#x5F0F;" class="headerlink" title="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5F62;&#x5F0F;"></a>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5F62;&#x5F0F;</h4><p>&#x53EF;&#x4EE5;&#x5C06;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x5F62;&#x5F0F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5C31;&#x5982;&#x540C;&#x4E0A;&#x8FF0;&#x7684;String&#x4E2D;&#x7684;method&#x4E00;&#x6837;&#xFF0C;&#x5C06;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x4EE5;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5F62;&#x5F0F;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x5230;&#x4E86;&#x65B9;&#x6CD5;&#x4E2D;&#x3002;&#x6240;&#x4EE5;&#x6784;&#x5EFA;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6700;&#x91CD;&#x8981;&#x7684;&#x90E8;&#x5206;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5408;&#x4E4E;&#x6211;&#x4EEC;&#x9700;&#x6C42;&#x7684;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5BF9;&#x6B64;Java&#x4E2D;&#x4E5F;&#x7ED9;&#x51FA;&#x4E86;&#x4E00;&#x4E9B;regex&#x7684;&#x89C4;&#x8303;&#x3002;</p>
+<h4 id="&#x5143;&#x5B57;&#x7B26;"><a href="#&#x5143;&#x5B57;&#x7B26;" class="headerlink" title="&#x5143;&#x5B57;&#x7B26;"></a>&#x5143;&#x5B57;&#x7B26;</h4><p>&#x4E0A;&#x9762;&#x8BF4;&#x5230;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x5339;&#x914D;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x5C31;&#x4F1A;&#x6709;&#x901A;&#x914D;&#x7B26;&#x3002;&#x4E3A;&#x4E86;&#x7406;&#x89E3;&#x65B9;&#x4FBF;&#xFF0C;&#x6211;&#x5C06;&#x901A;&#x914D;&#x7B26;&#x5206;&#x6210;&#x4E24;&#x5927;&#x7C7B;&#xFF0C;&#x4E00;&#x7C7B;&#x662F;&#x5143;&#x5B57;&#x7B26;&#x548C;&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;&#xFF1B;&#x53E6;&#x4E00;&#x7C7B;&#x662F;&#x6570;&#x91CF;&#x7B26;&#x3002;<br>&#x5143;&#x5B57;&#x7B26;&#x662F;&#x53EA;&#x80FD;&#x7528;&#x4E8E;&#x8868;&#x793A;&#x67D0;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img1.png" alt="image"></p>
+<h4 id="&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;"><a href="#&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;" class="headerlink" title="&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;"></a>&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;</h4><p>&#x4E0A;&#x8FF0;&#x7684;&#x5143;&#x5B57;&#x7B26;&#x53EF;&#x80FD;&#x65E0;&#x6CD5;&#x8868;&#x793A;&#x67D0;&#x4E00;&#x4E2A;&#x8303;&#x56F4;&#x5185;&#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x56E0;&#x6B64;Java&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;&#x65B9;&#x62EC;&#x53F7;&#x8868;&#x8FBE;&#x5F0F;&#x3002;&#x5177;&#x4F53;&#x5982;&#x56FE;&#xFF1A;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img2.png" alt="image"></p>
+<h4 id="&#x6570;&#x91CF;&#x7B26;"><a href="#&#x6570;&#x91CF;&#x7B26;" class="headerlink" title="&#x6570;&#x91CF;&#x7B26;"></a>&#x6570;&#x91CF;&#x7B26;</h4><p>&#x4E0A;&#x8FF0;&#x4E24;&#x79CD;&#x901A;&#x914D;&#x8868;&#x8FBE;&#x5F0F;&#x90FD;&#x65E0;&#x6CD5;&#x6EE1;&#x8DB3;&#x5B57;&#x7B26;&#x5E8F;&#x5217;&#x7684;&#x8868;&#x793A;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x9700;&#x8981;&#x6570;&#x91CF;&#x7B26;&#x3002;&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x6570;&#x91CF;&#x7B26;&#x6709;&#x4E09;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x8868;&#x8FBE;&#x6A21;&#x5F0F;&#xFF1A;</p>
+<ol>
+<li>Greedy&#x6A21;&#x5F0F;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img3.png" alt="image"><br>&#x4E5F;&#x53EF;&#x4EE5;&#x79F0;&#x4E3A;&#x6700;&#x5927;&#x5339;&#x914D;&#x6A21;&#x5F0F;&#xFF0C;&#x53EA;&#x8981;&#x662F;&#x6EE1;&#x8DB3;&#x7684;&#x5B57;&#x7B26;&#x5C31;&#x4F1A;&#x4E00;&#x76F4;&#x5339;&#x914D;&#x4E0B;&#x53BB;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String str = &quot;hello,java!&quot;;</div><div class="line">System.out.println(str.replaceFirst(&quot;\\w*&quot;,&quot;k&quot;));</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x8F93;&#x51FA;&#x7684;&#x662F;&#xFF1A;k,java!</p>
+<ol>
+<li>Reluctant&#x6A21;&#x5F0F;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img4.png" alt="image"><br>&#x6700;&#x5C0F;&#x5339;&#x914D;&#x6A21;&#x5F0F;&#xFF0C;&#x53EA;&#x4F1A;&#x5339;&#x914D;&#x6700;&#x5C11;&#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String str = &quot;hello,java!&quot;;</div><div class="line">System.out.println(str.replaceFirst(&quot;\\w*&#xFF1F;&quot;,&quot;k&quot;));</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x8F93;&#x51FA;&#x7684;&#x662F;&#xFF1A;khello,java!</p>
+<ol>
+<li>Possessive&#x6A21;&#x5F0F;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img5.png" alt="image"><br>&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x8FD9;&#x79CD;&#x6A21;&#x5F0F;&#x3002;</li>
+</ol>
+<h2 id="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4F7F;&#x7528;"><a href="#&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4F7F;&#x7528;" class="headerlink" title="&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4F7F;&#x7528;"></a>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4F7F;&#x7528;</h2><h3 id="&#x51E0;&#x4E2A;&#x6BD4;&#x8F83;nice&#x7684;&#x6B63;&#x5219;&#x5339;&#x914D;&#x5DE5;&#x5177;"><a href="#&#x51E0;&#x4E2A;&#x6BD4;&#x8F83;nice&#x7684;&#x6B63;&#x5219;&#x5339;&#x914D;&#x5DE5;&#x5177;" class="headerlink" title="&#x51E0;&#x4E2A;&#x6BD4;&#x8F83;nice&#x7684;&#x6B63;&#x5219;&#x5339;&#x914D;&#x5DE5;&#x5177;"></a>&#x51E0;&#x4E2A;&#x6BD4;&#x8F83;nice&#x7684;&#x6B63;&#x5219;&#x5339;&#x914D;&#x5DE5;&#x5177;</h3><ol>
+<li><a href="http://rubular.com[/](http://rubular.com/" target="_blank" rel="external">http://rubular.com[/](http://rubular.com/</a>)</li>
+<li><a href="http://www.regexpal.com[/](http://www.regexpal.com/" target="_blank" rel="external">http://www.regexpal.com[/](http://www.regexpal.com/</a>)<h3 id="&#x6355;&#x83B7;&#x7EC4;&#x57FA;&#x7840;&#x6982;&#x5FF5;"><a href="#&#x6355;&#x83B7;&#x7EC4;&#x57FA;&#x7840;&#x6982;&#x5FF5;" class="headerlink" title="&#x6355;&#x83B7;&#x7EC4;&#x57FA;&#x7840;&#x6982;&#x5FF5;"></a>&#x6355;&#x83B7;&#x7EC4;&#x57FA;&#x7840;&#x6982;&#x5FF5;</h3><h4 id="&#x5B9A;&#x4E49;-1"><a href="#&#x5B9A;&#x4E49;-1" class="headerlink" title="&#x5B9A;&#x4E49;"></a>&#x5B9A;&#x4E49;</h4>&#x6355;&#x83B7;&#x7EC4;&#x5C31;&#x662F;&#x628A;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4FDD;&#x5B58;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x4EE5;&#x6570;&#x5B57;&#x7F16;&#x53F7;&#x6216;&#x663E;&#x5F0F;&#x547D;&#x540D;&#x7684;&#x7EC4;&#x91CC;&#xFF0C;&#x65B9;&#x4FBF;&#x540E;&#x9762;&#x5F15;&#x7528;&#x3002;&#x4E00;&#x822C;&#x6709;&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x5408;&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x4E4B;&#x5206;&#x3002;&#x5177;&#x4F53;&#x8BED;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#x666E;&#x901A;&#x5206;&#x7EC4;&#xFF1A;(Expression)</div><div class="line">&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#xFF1A;(?&lt;name&gt;Expression)</div></pre></td></tr></table></figure>
+<h4 id="&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;"><a href="#&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;" class="headerlink" title="&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;"></a>&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;</h4><p>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x663E;&#x5F0F;&#x4E3A;&#x6355;&#x83B7;&#x7EC4;&#x547D;&#x540D;&#xFF0C;&#x5373;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#xFF0C;&#x90A3;&#x4E48;&#x9700;&#x8981;&#x6309;&#x6570;&#x5B57;&#x987A;&#x5E8F;&#x6765;&#x8BBF;&#x95EE;&#x6240;&#x6709;&#x6355;&#x83B7;&#x7EC4;&#x3002;&#x5728;&#x53EA;&#x6709;&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x7F16;&#x53F7;&#x662F;&#x6309;&#x7167;&#x201C;(&#x201D;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#xFF0C;&#x4ECE;1&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x7F16;&#x53F7;&#x7684;&#x3002;&#x4F8B;&#x5982;&#xFF1A;<br>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;(\d{4})-(\d{2}-(\d\d))</p>
+<p><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img6.png" alt="image"><br>&#x7528;&#x4EE5;&#x4E0A;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;2008-12-31&#xFF0C;&#x5339;&#x914D;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img7.png" alt="image"></p>
+<h4 id="&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;"><a href="#&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;" class="headerlink" title="&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;"></a>&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7F16;&#x53F7;&#x89C4;&#x5219;</h4><p>&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x901A;&#x8FC7;&#x663E;&#x5F0F;&#x547D;&#x540D;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x540D;&#x65B9;&#x4FBF;&#x7684;&#x8BBF;&#x95EE;&#x5230;&#x6307;&#x5B9A;&#x7684;&#x7EC4;&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x53BB;&#x4E00;&#x4E2A;&#x4E2A;&#x7684;&#x6570;&#x7F16;&#x53F7;&#xFF0C;&#x540C;&#x65F6;&#x907F;&#x514D;&#x4E86;&#x5728;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6269;&#x5C55;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x589E;&#x52A0;&#x6216;&#x51CF;&#x5C11;&#x5BF9;&#x5F15;&#x7528;&#x7ED3;&#x679C;&#x5BFC;&#x81F4;&#x7684;&#x4E0D;&#x53EF;&#x63A7;&#x3002;<br>&#x4E0D;&#x8FC7;&#x5BB9;&#x6613;&#x5FFD;&#x7565;&#x7684;&#x662F;&#xFF0C;&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x4E5F;&#x53C2;&#x4E0E;&#x4E86;&#x7F16;&#x53F7;&#x7684;&#xFF0C;&#x5728;&#x53EA;&#x6709;&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x7F16;&#x53F7;&#x4E5F;&#x662F;&#x6309;&#x7167;&#x201C;(&#x201D;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#xFF0C;&#x4ECE;1&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x7F16;&#x53F7;&#x7684; &#x3002;<br>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;(?<year>\d{4})-(?<date>\d{2}-(?<day>\d\d))<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img8.png" alt="image"><br>&#x7528;&#x4EE5;&#x4E0A;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;2008-12-31<br>&#x5339;&#x914D;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;<br><img src="/2017/04/20/Java&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;/img9.png" alt="image"></day></date></year></p>
+<h4 id="&#x6DF7;&#x5408;&#x547D;&#x540D;&#x89C4;&#x5219;"><a href="#&#x6DF7;&#x5408;&#x547D;&#x540D;&#x89C4;&#x5219;" class="headerlink" title="&#x6DF7;&#x5408;&#x547D;&#x540D;&#x89C4;&#x5219;"></a>&#x6DF7;&#x5408;&#x547D;&#x540D;&#x89C4;&#x5219;</h4><p>&#x5148;&#x666E;&#x901A;&#x540E;&#x547D;&#x540D;&#x7684;&#x539F;&#x5219;&#x3002;</p>
+<h3 id="&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x6355;&#x83B7;&#x7EC4;"><a href="#&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x6355;&#x83B7;&#x7EC4;" class="headerlink" title="&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x6355;&#x83B7;&#x7EC4;"></a>&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x6355;&#x83B7;&#x7EC4;</h3><p>&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x7A0B;&#x5E8F;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x5F15;&#x7528;&#xFF0C;&#x4E00;&#x822C;&#x6709;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5185;&#x90E8;&#x5F15;&#x7528;&#x548C;&#x5916;&#x90E8;&#x5F15;&#x7528;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x5185;&#x90E8;&#x5F15;&#x7528;</div><div class="line">([ab])\1</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x6B63;&#x5219;&#x4E2D;&#x7684;&#x201D;\1&#x201D;&#x5C31;&#x662F;&#x5BF9;[ab]&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x201D;aa&#x201D;&#x6216;&#x8005;&#x201D;bb&#x201D;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x80FD;&#x5339;&#x914D;&#x201D;ab&#x201D;&#x6216;&#x8005;&#x201D;ba&#x201D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//&#x666E;&#x901A;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x5916;&#x90E8;&#x5F15;&#x7528;</div><div class="line"> Pattern p = Pattern.compile(&quot;(?&lt;!c)a(\\d+)bd&quot;);</div><div class="line"> Matcher m = p.matcher(&quot;da12bka3434bdca4343bdca234bm&quot;);</div><div class="line"> while(m.find()){</div><div class="line">   System.out.println(m.group(1)); //&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x6355;&#x83B7;&#x7EC4;1&#x7684;&#x6570;&#x5B57;&#x5373;&#x53EF;&#x3002;&#x7ED3;&#x679C; 3434</div><div class="line">   System.out.println(m.group(0)); // 0&#x7EC4;&#x662F;&#x6574;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x770B;&#x8FD9;&#x91CC;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x63D0;&#x70BC;&#x51FA;(?&lt;!c)&#x7684;&#x5B57;&#x7B26; &#x3002;&#x7ED3;&#x679C; a3434bd</div><div class="line"> }</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x6B63;&#x5219;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x8FD0;&#x7528;&#x4E86;Matcher&#x5BF9;&#x8C61;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x5F15;&#x7528;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x5185;&#x90E8;&#x5F15;&#x7528;</div><div class="line">(?&lt;year&gt;\d{4})-\k&lt;year&gt;</div><div class="line">//&#x547D;&#x540D;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x5916;&#x90E8;&#x5F15;&#x7528;</div><div class="line">//Matcher&#x5BF9;&#x8C61;&#x7684;start&#x3001;end&#x3001;group&#x7684;String name&#x53C2;&#x6570;&#x6307;&#x5B9A;&#x8981;&#x67E5;&#x8BE2;&#x7684;&#x6355;&#x83B7;&#x7EC4;&#x7684;&#x540D;&#x79F0;&#xFF1B;</div></pre></td></tr></table></figure>
+<h3 id="Java&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x6B63;&#x5219;&#x76F8;&#x5173;&#x7C7B;"><a href="#Java&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x6B63;&#x5219;&#x76F8;&#x5173;&#x7C7B;" class="headerlink" title="Java&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x6B63;&#x5219;&#x76F8;&#x5173;&#x7C7B;"></a>Java&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x6B63;&#x5219;&#x76F8;&#x5173;&#x7C7B;</h3><h4 id="Pattern"><a href="#Pattern" class="headerlink" title="Pattern"></a>Pattern</h4><p>&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x90A3;&#x4E48;JVM&#x662F;&#x5982;&#x4F55;&#x5C06;&#x8FD9;&#x4E2A;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x4E32;&#x548C;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x533A;&#x5206;&#x5F00;&#x6765;&#x7528;&#x4E8E;&#x5B57;&#x7B26;&#x4E32;&#x5339;&#x914D;&#x7684;&#x5462;&#xFF1F;&#x8FD9;&#x91CC;&#x5C31;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4E00;&#x4E2A;&#x8F6C;&#x6362;&#xFF0C;&#x628A;&#x8FD9;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x5316;&#x6210;JVM&#x80FD;&#x591F;&#x7406;&#x89E3;&#x7684;&#x5185;&#x5B58;&#x5F62;&#x5F0F;&#x3002;JDK&#x4E2D;&#x6709;&#x4E24;&#x4E2A;&#x6B63;&#x5219;&#x76F8;&#x5173;&#x7684;&#x7C7B;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;Pattern&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x662F;Matcher&#x3002;<br>Pattern&#x662F;&#x5C06;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5F62;&#x5F0F;&#x8F6C;&#x5316;&#x4E3A;Java&#x7684;&#x5185;&#x5B58;&#x5F62;&#x5F0F;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x7B80;&#x5355;&#x7684;&#x5339;&#x914D;&#x65B9;&#x6CD5;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Pattern p=Pattern.compile(&quot;\\d+&quot;); </div><div class="line">String[] str=p.split(&quot;12381sadhashda2321312&quot;);</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#x7684;str[0]&#x662F;12381&#xFF0C;str[1]&#x662F;2321312&#x3002;&#x60F3;&#x8981;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x590D;&#x6742;&#x7684;&#x5339;&#x914D;&#x64CD;&#x4F5C;&#x6216;&#x8005;&#x63CF;&#x8FF0;&#x5339;&#x914D;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x9700;&#x8981;Matcger&#x7C7B;&#x3002;</p>
+<h4 id="Matcher"><a href="#Matcher" class="headerlink" title="Matcher"></a>Matcher</h4><p>Matcher&#x7C7B;&#x63D0;&#x4F9B;&#x4E09;&#x4E2A;&#x5339;&#x914D;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;,&#x4E09;&#x4E2A;&#x65B9;&#x6CD5;&#x5747;&#x8FD4;&#x56DE;boolean&#x7C7B;&#x578B;,&#x5F53;&#x5339;&#x914D;&#x5230;&#x65F6;&#x8FD4;&#x56DE;true,&#x6CA1;&#x5339;&#x914D;&#x5230;&#x5219;&#x8FD4;&#x56DE;false&#x3002;&#x5176;&#x4E2D;matches()&#x5BF9;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x8FDB;&#x884C;&#x5339;&#x914D;,&#x53EA;&#x6709;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x90FD;&#x5339;&#x914D;&#x4E86;&#x624D;&#x8FD4;&#x56DE;true&#xFF1B;lookingAt()&#x5BF9;&#x524D;&#x9762;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8FDB;&#x884C;&#x5339;&#x914D;&#xFF1B;find()&#x53EA;&#x8981;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x6709;&#x76EE;&#x6807;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5B50;&#x4E32;&#x65F6;&#x5C31;&#x8FD4;&#x56DE;true&#x3002;<br>&#x53E6;&#x5916;&#xFF0C;Matcher&#x7C7B;&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x51E0;&#x4E2A;&#x63CF;&#x8FF0;&#x5339;&#x914D;&#x7684;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#xFF0C;&#x6BD4;&#x5982;&#x6355;&#x83B7;&#x5206;&#x7EC4;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x6355;&#x83B7;&#x5206;&#x7EC4;&#x4FE1;&#x606F;&#x7B49;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/09/深入理解JVM——虚拟机类加载机制/" rel="next" title="深入理解JVM——虚拟机类加载机制">
+                <i class="fa fa-chevron-left"></i> 深入理解JVM——虚拟机类加载机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/26/Java集合/" rel="prev" title="Java集合">
+                Java集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/20/Java正则表达式/"
+           data-title="Java正则表达式" data-url="http://yoursite.com/2017/04/20/Java正则表达式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="uzhou" />
+          <p class="site-author-name" itemprop="name">uzhou</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">124</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正则表达式"><span class="nav-number">1.</span> <span class="nav-text">正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义及基础概念"><span class="nav-number">1.1.</span> <span class="nav-text">定义及基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础概念"><span class="nav-number">1.1.2.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String和正则表达式"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">String和正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则表达式的形式"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">正则表达式的形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元字符"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">元字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方括号表达式"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">方括号表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数量符"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">数量符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式的使用"><span class="nav-number">1.2.</span> <span class="nav-text">正则表达式的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#几个比较nice的正则匹配工具"><span class="nav-number">1.2.1.</span> <span class="nav-text">几个比较nice的正则匹配工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获组基础概念"><span class="nav-number">1.2.2.</span> <span class="nav-text">捕获组基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#普通捕获组编号规则"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">普通捕获组编号规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命名捕获组编号规则"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">命名捕获组编号规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#混合命名规则"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">混合命名规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要捕获组"><span class="nav-number">1.2.3.</span> <span class="nav-text">为什么需要捕获组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java中的两个正则相关类"><span class="nav-number">1.2.4.</span> <span class="nav-text">Java中的两个正则相关类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pattern"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Pattern</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Matcher"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">Matcher</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">uzhou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uzhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cx68mo8YeMcWfXT4VAmB9AXK-gzGzoHsz", "scXvv2AUsd0NQ4YTKKoSNmTl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

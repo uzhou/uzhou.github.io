@@ -1,0 +1,768 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JDK源码," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;Java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;&amp;#x4E3B;&amp;#x8981;&amp;#x5305;&amp;#x542B;&amp;#x4E24;&amp;#x4E2A;&amp;#x63A5;&amp;#x53E3;&amp;#xFF1A;Collection&amp;#x548C;Map&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK源码之Set集合">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/JDK源码之Set集合/index.html">
+<meta property="og:site_name" content="uzhou">
+<meta property="og:description" content="java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;Java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;&amp;#x4E3B;&amp;#x8981;&amp;#x5305;&amp;#x542B;&amp;#x4E24;&amp;#x4E2A;&amp;#x63A5;&amp;#x53E3;&amp;#xFF1A;Collection&amp;#x548C;Map&amp;#x">
+<meta property="og:image" content="http://yoursite.com/2017/09/19/JDK源码之Set集合/img1.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/19/JDK源码之Set集合/img2.png">
+<meta property="og:updated_time" content="2017-09-19T15:25:13.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JDK源码之Set集合">
+<meta name="twitter:description" content="java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;Java&amp;#x4E2D;&amp;#x7684;&amp;#x96C6;&amp;#x5408;&amp;#x6846;&amp;#x67B6;&amp;#x4E3B;&amp;#x8981;&amp;#x5305;&amp;#x542B;&amp;#x4E24;&amp;#x4E2A;&amp;#x63A5;&amp;#x53E3;&amp;#xFF1A;Collection&amp;#x548C;Map&amp;#x">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/19/JDK源码之Set集合/img1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/JDK源码之Set集合/"/>
+
+
+
+
+
+  <title> JDK源码之Set集合 | uzhou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">uzhou</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/JDK源码之Set集合/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JDK源码之Set集合
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T22:29:58+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/09/19/JDK源码之Set集合/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/19/JDK源码之Set集合/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/19/JDK源码之Set集合/" class="leancloud_visitors" data-flag-title="JDK源码之Set集合">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="java&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6846;&#x67B6;"><a href="#java&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6846;&#x67B6;" class="headerlink" title="java&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6846;&#x67B6;"></a>java&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6846;&#x67B6;</h1><p>Java&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6846;&#x67B6;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x63A5;&#x53E3;&#xFF1A;Collection&#x548C;Map&#x63A5;&#x53E3;&#xFF0C;&#x4ECA;&#x5929;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5B66;&#x4E60;&#x4E0B;Collection&#x4E2D;&#x7684;Set&#x96C6;&#x5408;&#x3002;<br>&#x9996;&#x5148;&#x770B;&#x4E0B;&#xFF0C;Set&#x5728;Java&#x96C6;&#x5408;&#x6846;&#x67B6;&#x4E2D;&#x7684;&#x7EE7;&#x627F;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;&#xFF1A;<br><img src="/2017/09/19/JDK&#x6E90;&#x7801;&#x4E4B;Set&#x96C6;&#x5408;/img1.png" alt="image"><br>&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF0C;Java&#x96C6;&#x5408;&#x6846;&#x67B6;&#x4E2D;&#xFF0C;Collection&#x63A5;&#x53E3;&#x4E0B;&#x4E3B;&#x8981;&#x6709;List&#x548C;Set&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x63A5;&#x53E3;&#x3002;&#x5176;&#x4E2D;Set&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5177;&#x6709;&#x6DFB;&#x52A0;&#x987A;&#x5E8F;&#x548C;&#x8BBF;&#x95EE;&#x987A;&#x5E8F;&#x65E0;&#x5173;&#x3001;&#x5143;&#x7D20;&#x552F;&#x4E00;&#x4E14;&#x53EF;&#x4EE5;&#x4E3A;null&#x7B49;&#x7279;&#x70B9;&#xFF1B;List&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5177;&#x6709;&#x53EF;&#x4EE5;&#x6309;&#x7167;index&#x8BBF;&#x95EE;&#x96C6;&#x5408;&#x5143;&#x7D20;&#x3001;&#x6DFB;&#x52A0;&#x6709;&#x5E8F;&#x6027;&#x3001;&#x5143;&#x7D20;&#x53EF;&#x4EE5;&#x91CD;&#x590D;&#x7B49;&#x7279;&#x70B9;&#x3002;</p>
+<h2 id="Set&#x96C6;&#x5408;"><a href="#Set&#x96C6;&#x5408;" class="headerlink" title="Set&#x96C6;&#x5408;"></a>Set&#x96C6;&#x5408;</h2><p>Set&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x63A5;&#x53E3;&#xFF1A;&#x5176;&#x6E90;&#x7801;&#x4E2D;&#x4E3B;&#x8981;&#x63D0;&#x4F9B;&#x4E86;&#x5982;&#x4E0B;&#x65B9;&#x6CD5;&#xFF1A;<br><img src="/2017/09/19/JDK&#x6E90;&#x7801;&#x4E4B;Set&#x96C6;&#x5408;/img2.png" alt="image"><br>&#x5176;&#x4E2D;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;iterator()&#x65B9;&#x6CD5;&#xFF0C;Collection&#x7EE7;&#x627F;&#x4E86;iterable&#x63A5;&#x53E3;&#xFF0C;&#x56E0;&#x6B64;Set&#x96C6;&#x5408;&#x4E5F;&#x5177;&#x5907;&#x4E86;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;iterator&#x904D;&#x5386;&#x7684;&#x80FD;&#x529B;&#x3002;</p>
+<h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><p>HashSet&#x662F;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x4E0D;&#x91CD;&#x590D;&#x5143;&#x7D20;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5176;&#x5E95;&#x5C42;&#x5B9E;&#x73B0;&#x662F;HashMap&#x3002;HashSet&#x6709;&#x4E24;&#x4E2A;&#x4E3B;&#x8981;&#x7684;field&#xFF1A;HashMap m &#x548C;final Object PRESENT&#x3002;&#x5176;&#x4E2D;m&#x662F;&#x5B9E;&#x73B0;&#x8BE5;HashSet&#x5BF9;&#x5E94;&#x7684;HashMap&#xFF0C;PRESENT&#x5219;&#x662F;HashMap&#x4E2D;&#x7684;value&#x503C;&#xFF0C;&#x5373;m&#x4E2D;&#x7684;key&#x96C6;&#x5C31;&#x662F;HashSet&#x7684;element&#xFF0C;&#x800C;m&#x4E2D;&#x7684;value&#x5219;&#x6C38;&#x8FDC;&#x4E3A;PRESENT&#x3002;<br>m&#x4E2D;&#x6709;&#x4E09;&#x4E2A;&#x5C5E;&#x6027;&#x5341;&#x5206;&#x91CD;&#x8981;&#xFF1A;size&#xFF08;&#x8868;&#x793A;&#x96C6;&#x5408;&#x4E2D;&#x5B9E;&#x9645;&#x5143;&#x7D20;&#x7684;&#x4E2A;&#x6570;&#xFF09;&#xFF0C;capacity&#xFF08;&#x8868;&#x793A;&#x5B9E;&#x73B0;HashMap&#x7684;&#x54C8;&#x5E0C;&#x8868;&#x5927;&#x5C0F;&#xFF09;&#xFF0C;load_factor&#xFF08;&#x8868;&#x793A;&#x8BE5;&#x54C8;&#x5E0C;&#x8868;&#x7684;&#x8D1F;&#x8F7D;&#x56E0;&#x5B50;&#xFF09;&#x3002;&#x4E00;&#x822C;&#x7684;&#x6784;&#x9020;HashSet&#x65F6;&#xFF0C;&#x4F1A;&#x9ED8;&#x8BA4;HashSet&#x7684;capacity&#x4E3A;16&#xFF0C;load_factor&#x4E3A;0.75&#x3002;<br>&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x662F;HashSet&#x662F;&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x60F3;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x4E0B;&#x5BF9;HashSet&#x8BBF;&#x95EE;&#x4E0D;&#x51FA;&#x9519;&#xFF0C;&#x5FC5;&#x987B;&#x6709;Collections#synchronizedSet&#x65B9;&#x6CD5;&#x5305;&#x88C5;&#x4E0B;HashSet&#x624D;&#x80FD;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#x96C6;&#x5408;&#x3002;<br>Java&#x96C6;&#x5408;&#x91C7;&#x7528;fail-fast&#x68C0;&#x9519;&#x673A;&#x5236;&#xFF0C;&#x4E00;&#x65E6;A&#x7EBF;&#x7A0B;&#x8BBF;&#x95EE;HashSet&#x65F6;&#xFF0C;&#x6709;B&#x7EBF;&#x7A0B;&#x6539;&#x53D8;&#x4E86;HashSet&#x7684;&#x7ED3;&#x6784;&#xFF08;&#x4F7F;&#x7528;add&#x3001;remove&#x7B49;&#x65B9;&#x6CD5;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;A&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;&#x8FD9;&#x4E2A;&#x673A;&#x5236;&#x4E0D;&#x80FD;&#x5B8C;&#x5168;&#x4FDD;&#x8BC1;&#x80FD;&#x591F;&#x68C0;&#x6D4B;&#x5230;&#x5E76;&#x53D1;&#x95EE;&#x9898;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x4F60;&#x4E0D;&#x80FD;&#x4F9D;&#x9760;&#x8FD9;&#x4E2A;&#x673A;&#x5236;&#x53BB;&#x5B8C;&#x5168;&#x907F;&#x514D;&#x5E76;&#x53D1;&#x95EE;&#x9898;&#x3002;<br>HashSet&#x5728;&#x5E8F;&#x5217;&#x5316;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5BF9;m&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x5B9A;&#x4E49;m&#x7684;&#x65F6;&#x5019;&#x7528;&#x4E86;transient&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x8BE5;&#x5173;&#x952E;&#x5B57;&#x8868;&#x793A;&#x8BE5;&#x53D8;&#x91CF;&#x4E0D;&#x9700;&#x8981;&#x5E8F;&#x5217;&#x5316;&#x3002;&#x6240;&#x8C13;&#x5E8F;&#x5217;&#x5316;&#x5C31;&#x662F;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#x4F20;&#x8F93;&#x5230;&#x7F13;&#x5B58;&#x6216;&#x8005;&#x5B58;&#x50A8;&#x533A;&#xFF0C;&#x4EE5;&#x4FBF;&#x65E5;&#x540E;&#x80FD;&#x591F;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#x8FD8;&#x539F;&#x5BF9;&#x8C61;&#x3002;</p>
+<h3 id="SortedSet"><a href="#SortedSet" class="headerlink" title="SortedSet"></a>SortedSet</h3><p>&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x4F20;&#x7EDF;&#x610F;&#x4E49;&#x4E0A;&#x7684;Set&#x90FD;&#x662F;&#x6DFB;&#x52A0;&#x65E0;&#x5E8F;&#x7684;&#xFF0C;&#x800C;&#x5B9E;&#x73B0;&#x4E86;SortedSet&#x63A5;&#x53E3;&#x7684;&#x5219;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x6DFB;&#x52A0;&#x6709;&#x5E8F;&#x3002;&#x56E0;&#x4E3A;&#x5728;SortedSet&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5FC5;&#x987B;&#x90FD;&#x5B9E;&#x73B0;&#x540C;&#x4E00;&#x4E2A;Comparator&#x63A5;&#x53E3;&#xFF0C;&#x8BE5;&#x63A5;&#x53E3;&#x7528;&#x4E8E;&#x5BF9;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x5F53;&#x672A;&#x6307;&#x5B9A;Comparator&#x65F6;&#xFF0C;&#x4F1A;&#x91C7;&#x7528;&#x9ED8;&#x8BA4;&#x7684;&#x81EA;&#x7136;&#x6392;&#x5E8F;&#x3002;</p>
+<h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>TreeSet&#x57FA;&#x4E8E;NavigableMap&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x5C31;&#x50CF;HashSet&#x57FA;&#x4E8E;HashMap&#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x6837;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;TreeSet&#x662F;&#x5143;&#x7D20;&#x6709;&#x5E8F;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5E76;&#x4E14;&#x6267;&#x884C;add&#x65B9;&#x6CD5;&#x65F6;&#x5982;&#x679C;&#x88AB;&#x6DFB;&#x52A0;&#x7684;&#x5143;&#x7D20;&#x548C;&#x5F53;&#x524D;&#x96C6;&#x5408;&#x7684;Comparator&#x7684;&#x63A5;&#x53E3;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x629B;&#x51FA;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x7684;&#x5F02;&#x5E38;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK源码/" rel="tag"># JDK源码</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/25/SpringMvc入门/" rel="next" title="SpringMvc入门">
+                <i class="fa fa-chevron-left"></i> SpringMvc入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/24/JDK源码之ArrayList/" rel="prev" title="JDK源码之ArrayList">
+                JDK源码之ArrayList <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/09/19/JDK源码之Set集合/"
+           data-title="JDK源码之Set集合" data-url="http://yoursite.com/2017/09/19/JDK源码之Set集合/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="uzhou" />
+          <p class="site-author-name" itemprop="name">uzhou</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">124</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java中的集合框架"><span class="nav-number">1.</span> <span class="nav-text">java中的集合框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Set集合"><span class="nav-number">1.1.</span> <span class="nav-text">Set集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet"><span class="nav-number">1.1.1.</span> <span class="nav-text">HashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SortedSet"><span class="nav-number">1.1.2.</span> <span class="nav-text">SortedSet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TreeSet"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">TreeSet</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">uzhou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uzhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cx68mo8YeMcWfXT4VAmB9AXK-gzGzoHsz", "scXvv2AUsd0NQ4YTKKoSNmTl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

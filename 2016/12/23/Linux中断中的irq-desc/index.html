@@ -1,0 +1,741 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x4FBF;&amp;#x4E8E;os&amp;#x7BA1;&amp;#x7406;&amp;#x4E2D;&amp;#x65AD;&amp;#xFF0C;linux&amp;#x4E5F;&amp;#x4E3A;&amp;#x4E2D;&amp;#x65AD;&amp;#x5B9A;&amp;#x4E49;&amp;#x4E86;&amp;#x4E00;&amp;#x7CFB;&amp;#x5217;&amp;#x6570;&amp;#x636E;&amp;#x7ED3;&amp;#x6784;&amp;#xFF0C;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中断中的irq_desc">
+<meta property="og:url" content="http://yoursite.com/2016/12/23/Linux中断中的irq-desc/index.html">
+<meta property="og:site_name" content="uzhou">
+<meta property="og:description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x4FBF;&amp;#x4E8E;os&amp;#x7BA1;&amp;#x7406;&amp;#x4E2D;&amp;#x65AD;&amp;#xFF0C;linux&amp;#x4E5F;&amp;#x4E3A;&amp;#x4E2D;&amp;#x65AD;&amp;#x5B9A;&amp;#x4E49;&amp;#x4E86;&amp;#x4E00;&amp;#x7CFB;&amp;#x5217;&amp;#x6570;&amp;#x636E;&amp;#x7ED3;&amp;#x6784;&amp;#xFF0C;&amp;">
+<meta property="og:updated_time" content="2016-12-23T13:04:19.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux中断中的irq_desc">
+<meta name="twitter:description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x4FBF;&amp;#x4E8E;os&amp;#x7BA1;&amp;#x7406;&amp;#x4E2D;&amp;#x65AD;&amp;#xFF0C;linux&amp;#x4E5F;&amp;#x4E3A;&amp;#x4E2D;&amp;#x65AD;&amp;#x5B9A;&amp;#x4E49;&amp;#x4E86;&amp;#x4E00;&amp;#x7CFB;&amp;#x5217;&amp;#x6570;&amp;#x636E;&amp;#x7ED3;&amp;#x6784;&amp;#xFF0C;&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/23/Linux中断中的irq-desc/"/>
+
+
+
+
+
+  <title> Linux中断中的irq_desc | uzhou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">uzhou</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/Linux中断中的irq-desc/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux中断中的irq_desc
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T20:49:30+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/23/Linux中断中的irq-desc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/Linux中断中的irq-desc/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/23/Linux中断中的irq-desc/" class="leancloud_visitors" data-flag-title="Linux中断中的irq_desc">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;os&#x7BA1;&#x7406;&#x4E2D;&#x65AD;&#xFF0C;linux&#x4E5F;&#x4E3A;&#x4E2D;&#x65AD;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x83AB;&#x8FC7;&#x4E8E;irq_desc,&#x987E;&#x540D;&#x601D;&#x4E49;&#x5C31;&#x662F;&#x4E2D;&#x65AD;&#x7684;&#x63CF;&#x8FF0;&#x7ED3;&#x6784;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x662F;&#x4E2D;&#x65AD;&#x7684;&#x6838;&#x5FC3;&#xFF0C;&#x5176;&#x4E2D;&#x53C8;&#x5305;&#x542B;&#x4E86;irq_chip&#x548C;irqaction&#x3002;<br>irq_chip  &#x91CC;&#x9762;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x4E00;&#x4E9B;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x4E2D;&#x5927;&#x591A;&#x7528;&#x4E8E;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x786C;&#x4EF6;&#xFF0C;&#x8BBE;&#x7F6E;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x8BBE;&#x7F6E;GPIO&#x4E3A;&#x4E2D;&#x65AD;&#x8F93;&#x5165;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x4E00;&#x4E0B;&#x76F8;&#x5173;&#x6E90;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">struct irq_chip {</div><div class="line">        const char     *name;</div><div class="line">        unsigned int   (*startup)(unsigned int irq); &#x542F;&#x52A8;&#x4E2D;&#x65AD;</div><div class="line">        void           (*shutdown)(unsigned int irq); &#x5173;&#x95ED;&#x4E2D;&#x65AD;</div><div class="line">        void           (*enable)(unsigned int irq);   &#x4F7F;&#x80FD;&#x4E2D;&#x65AD;</div><div class="line">        void           (*disable)(unsigned int irq);  &#x7981;&#x6B62;&#x4E2D;&#x65AD;</div><div class="line"> </div><div class="line">        void           (*ack)(unsigned int irq);   &#x4E2D;&#x65AD;&#x5E94;&#x7B54;&#x51FD;&#x6570;&#xFF0C;&#x5C31;&#x662F;&#x6E05;&#x9664;&#x4E2D;&#x65AD;&#x6807;&#x8BC6;&#x51FD;&#x6570;</div><div class="line">        void           (*mask)(unsigned int irq);   &#x4E2D;&#x65AD;&#x5C4F;&#x853D;&#x51FD;&#x6570;</div><div class="line">        void           (*mask_ack)(unsigned int irq); &#x5C4F;&#x853D;&#x4E2D;&#x65AD;&#x5E94;&#x7B54;&#x51FD;&#x6570;&#xFF0C;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x7535;&#x5E73;&#x89E6;&#x53D1;&#x65B9;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x5C4F;&#x853D;&#x518D;&#x5E94;&#x7B54;</div><div class="line">        void           (*unmask)(unsigned int irq);  &#x5F00;&#x542F;&#x4E2D;&#x65AD;</div><div class="line">        void           (*eoi)(unsigned int irq);</div><div class="line"> </div><div class="line">        void           (*end)(unsigned int irq);</div><div class="line">        int            (*set_affinity)(unsigned int irq,</div><div class="line">                                      const struct cpumask *dest);</div><div class="line">        int            (*retrigger)(unsigned int irq);</div><div class="line">        int            (*set_type)(unsigned int irq, unsigned int flow_type); &#x8BBE;&#x7F6E;&#x4E2D;&#x65AD;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x8BBE;&#x7F6E;GPIO&#x53E3;&#x4E3A;&#x4E2D;&#x65AD;&#x8F93;&#x5165;</div><div class="line">        int            (*set_wake)(unsigned int irq, unsigned int on);</div><div class="line"> </div><div class="line">        void           (*bus_lock)(unsigned int irq);  &#x4E0A;&#x9501;&#x51FD;&#x6570;</div><div class="line">        void           (*bus_sync_unlock)(unsigned int irq); &#x89E3;&#x9501;</div><div class="line"> </div><div class="line">        /* Currently used only by UML, might disappear one day.*/</div><div class="line">#ifdef CONFIG_IRQ_RELEASE_METHOD</div><div class="line">        void           (*release)(unsigned int irq, void *dev_id);</div><div class="line">#endif</div><div class="line">        /*</div><div class="line">         * For compatibility, -&gt;typename is copied into -&gt;name.</div><div class="line">         * Will disappear.</div><div class="line">         */</div><div class="line">        const char     *typename;</div><div class="line">};</div><div class="line"></div><div class="line">struct irqaction {</div><div class="line">        irq_handler_t handler;  &#x7528;&#x6237;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x51FD;&#x6570;</div><div class="line">        unsigned long flags;    &#x4E2D;&#x65AD;&#x6807;&#x8BC6;</div><div class="line">        const char *name;       &#x7528;&#x6237;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x540D;&#x5B57;&#xFF0C;cat/proc/interrupts&#x65F6;&#x53EF;&#x4EE5;&#x770B;&#x5230;</div><div class="line">        void *dev_id;           &#x53EF;&#x4EE5;&#x662F;&#x7528;&#x6237;&#x4F20;&#x9012;&#x7684;&#x53C2;&#x6570;&#x6216;&#x8005;&#x7528;&#x6765;&#x533A;&#x5206;&#x5171;&#x4EAB;&#x4E2D;&#x65AD;</div><div class="line">        struct irqaction *next; irqaction&#x7ED3;&#x6784;&#x94FE;&#xFF0C;&#x4E00;&#x4E2A;&#x5171;&#x4EAB;&#x4E2D;&#x65AD;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x51FD;&#x6570;</div><div class="line">        int irq;                &#x4E2D;&#x65AD;&#x53F7;</div><div class="line">        struct proc_dir_entry *dir;</div><div class="line">        irq_handler_t thread_fn;</div><div class="line">        struct task_struct *thread;</div><div class="line">        unsigned long thread_flags;</div><div class="line">};</div></pre></td></tr></table></figure>
+<p>&#x5176;&#x5B9E;&#x5C31;&#x662F;linux&#x5DF2;&#x7ECF;&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x6846;&#x67B6;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x586B;&#x5145;&#x91CC;&#x9762;&#x7684;&#x51FD;&#x6570;&#x3002;<br>&#x4E00;&#x822C;&#x7684;&#xFF0C;&#x4E2D;&#x65AD;&#x7684;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>1&#x3001;&#x4E2D;&#x65AD;&#x521D;&#x59CB;&#x5316;&#xFF1A;&#x5185;&#x6838;&#x542F;&#x52A8;&#x65F6;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x5927;&#x90E8;&#x5206;&#x64CD;&#x4F5C;&#xFF0C;&#x5373;&#x521D;&#x59CB;&#x5316;&#x4E86;irq_chip&#x7ED3;&#x6784;</p>
+<p>2&#x3001;&#x4E2D;&#x65AD;&#x6CE8;&#x518C;&#xFF1A;&#x8C03;&#x7528;irq_request&#x6CE8;&#x518C;&#x4E2D;&#x65AD;</p>
+<p>3&#x3001;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#xFF1A;&#x5148;&#x8C03;&#x7528;irq_chip&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x4E2D;&#x65AD;&#x5C4F;&#x853D;&#xFF0C;&#x518D;&#x8C03;&#x7528;irqaction&#x4E2D;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x51FD;&#x6570;&#x53BB;&#x5904;&#x7406;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/23/linux中断向量是如何分配的/" rel="next" title="linux中断向量是如何分配的">
+                <i class="fa fa-chevron-left"></i> linux中断向量是如何分配的
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/23/Linux中的内存管理/" rel="prev" title="Linux中的内存管理">
+                Linux中的内存管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/23/Linux中断中的irq-desc/"
+           data-title="Linux中断中的irq_desc" data-url="http://yoursite.com/2016/12/23/Linux中断中的irq-desc/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="uzhou" />
+          <p class="site-author-name" itemprop="name">uzhou</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">124</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">uzhou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uzhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cx68mo8YeMcWfXT4VAmB9AXK-gzGzoHsz", "scXvv2AUsd0NQ4YTKKoSNmTl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
