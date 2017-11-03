@@ -1,0 +1,794 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring&amp;#x5BB9;&amp;#x5668;&amp;#x6280;&amp;#x672F;&amp;#x5185;&amp;#x5E55;AbstractApplicationContext&amp;#x662F;ApplicationContext&amp;#x62BD;&amp;#x8C61;&amp;#x5B9E;&amp;#x73B0;&amp;#x7C7B;&amp;#xFF0C;&amp;#x8BE5;&amp;#x7C7B;&amp;#x7684;refresh&amp;#x65B9;&amp;#x6CD5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring容器高级特性">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/Spring容器高级特性/index.html">
+<meta property="og:site_name" content="uzhou">
+<meta property="og:description" content="Spring&amp;#x5BB9;&amp;#x5668;&amp;#x6280;&amp;#x672F;&amp;#x5185;&amp;#x5E55;AbstractApplicationContext&amp;#x662F;ApplicationContext&amp;#x62BD;&amp;#x8C61;&amp;#x5B9E;&amp;#x73B0;&amp;#x7C7B;&amp;#xFF0C;&amp;#x8BE5;&amp;#x7C7B;&amp;#x7684;refresh&amp;#x65B9;&amp;#x6CD5">
+<meta property="og:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img2.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img3.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img4.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img5.png">
+<meta property="og:updated_time" content="2017-10-24T08:44:38.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring容器高级特性">
+<meta name="twitter:description" content="Spring&amp;#x5BB9;&amp;#x5668;&amp;#x6280;&amp;#x672F;&amp;#x5185;&amp;#x5E55;AbstractApplicationContext&amp;#x662F;ApplicationContext&amp;#x62BD;&amp;#x8C61;&amp;#x5B9E;&amp;#x73B0;&amp;#x7C7B;&amp;#xFF0C;&amp;#x8BE5;&amp;#x7C7B;&amp;#x7684;refresh&amp;#x65B9;&amp;#x6CD5">
+<meta name="twitter:image" content="http://yoursite.com/2017/10/24/Spring容器高级特性/img1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/Spring容器高级特性/"/>
+
+
+
+
+
+  <title> Spring容器高级特性 | uzhou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">uzhou</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/Spring容器高级特性/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring容器高级特性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-24T09:41:37+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/10/24/Spring容器高级特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/24/Spring容器高级特性/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/24/Spring容器高级特性/" class="leancloud_visitors" data-flag-title="Spring容器高级特性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring&#x5BB9;&#x5668;&#x6280;&#x672F;&#x5185;&#x5E55;"><a href="#Spring&#x5BB9;&#x5668;&#x6280;&#x672F;&#x5185;&#x5E55;" class="headerlink" title="Spring&#x5BB9;&#x5668;&#x6280;&#x672F;&#x5185;&#x5E55;"></a>Spring&#x5BB9;&#x5668;&#x6280;&#x672F;&#x5185;&#x5E55;</h1><p>AbstractApplicationContext&#x662F;ApplicationContext&#x62BD;&#x8C61;&#x5B9E;&#x73B0;&#x7C7B;&#xFF0C;&#x8BE5;&#x7C7B;&#x7684;refresh&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x4E86;Spring&#x5BB9;&#x5668;&#x4ECE;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x52A0;&#x8F7D;&#x5230;Bean&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x5B8C;&#x6210;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x6240;&#x6267;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+<h2 id="&#x5185;&#x90E8;&#x5DE5;&#x4F5C;&#x673A;&#x5236;"><a href="#&#x5185;&#x90E8;&#x5DE5;&#x4F5C;&#x673A;&#x5236;" class="headerlink" title="&#x5185;&#x90E8;&#x5DE5;&#x4F5C;&#x673A;&#x5236;"></a>&#x5185;&#x90E8;&#x5DE5;&#x4F5C;&#x673A;&#x5236;</h2><p>&#x4E0B;&#x56FE;&#x63CF;&#x8FF0;&#x4E86;Spring&#x5BB9;&#x5668;&#x4ECE;&#x52A0;&#x8F7D;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x521B;&#x5EFA;&#x51FA;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;Bean&#x7684;&#x4F5C;&#x4E1A;&#x6D41;&#x7A0B;&#x4EE5;&#x53CA;&#x53C2;&#x4E0E;&#x7684;&#x89D2;&#x8272;&#x3002;<br><img src="/2017/10/24/Spring&#x5BB9;&#x5668;&#x9AD8;&#x7EA7;&#x7279;&#x6027;/img1.jpg" alt="image"><br>&#x9996;&#x5148;&#xFF0C;ResourceLoader&#x4ECE;&#x5B58;&#x50A8;&#x4ECB;&#x8D28;&#x4E2D;&#x88C5;&#x8F7D;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x4FE1;&#x606F;&#x7528;Resource&#x8868;&#x793A;&#xFF1B;<br>&#x7136;&#x540E;&#xFF0C;BeanDefinitionReader&#x89E3;&#x6790;&#x4E0A;&#x8FF0;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C;&#x5C06;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;<bean>&#x6807;&#x7B7E;&#x7684;&#x8282;&#x70B9;&#x5143;&#x7D20;&#x89E3;&#x6790;&#x6210;BeanDefinition&#xFF08;&#x6B64;&#x65F6;&#x7684;BeanDefinition&#x662F;&#x534A;&#x6210;&#x54C1;&#xFF09;&#x5E76;&#x5C06;&#x5176;&#x653E;&#x5230;BeanDefinitionRegistry&#xFF08;&#x7C7B;&#x4F3C;&#x4E8E;&#x4E13;&#x95E8;&#x5B58;&#x653E;BeanDefinition&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x540E;&#x7EED;&#x53D6;Bean Definition&#x90FD;&#x9700;&#x8981;&#x4ECE;&#x8FD9;&#x4E2A;&#x5730;&#x65B9;&#x83B7;&#x53D6;&#xFF09;&#xFF1B;<br>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;Spring&#x5BB9;&#x5668;&#x4F1A;&#x626B;&#x63CF;BeanDefinitionRegistry&#x4E2D;&#x5B9E;&#x73B0;&#x4E86;BeanFactoryPostProcessor&#x63A5;&#x53E3;&#x7684;Bean&#x5E76;&#x8C03;&#x7528;&#x5176;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x4EE5;&#x4E0B;&#x5DE5;&#x4F5C;&#xFF1A;</bean></p>
+<ol>
+<li>&#x5BF9;&#x4F7F;&#x7528;&#x5360;&#x4F4D;&#x7B26;&#x7684;bean&#x6807;&#x7B7E;&#x8FDB;&#x884C;&#x89E3;&#x6790;&#xFF0C;&#x83B7;&#x53D6;&#x6700;&#x7EC8;&#x503C;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5BF9;&#x4E00;&#x4E9B;&#x534A;&#x6210;&#x54C1;&#x7684;BeanDefinition&#x52A0;&#x5DE5;&#x5F62;&#x6210;&#x6210;&#x54C1;</li>
+<li>&#x626B;&#x63CF;BeanDefinition&#xFF0C;&#x5229;&#x7528;&#x53CD;&#x5C04;&#x627E;&#x51FA;&#x5B9E;&#x73B0;&#x4E86;PropertyEditor&#x63A5;&#x53E3;&#x7684;Bean&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x6CE8;&#x518C;&#x5230;PropertyEditorRegistry&#x3002;<br>&#x5B8C;&#x6210;&#x4E0A;&#x8FF0;&#x5DE5;&#x4F5C;&#x540E;&#xFF0C;Spring&#x5BB9;&#x5668;&#x4ECE;BeanDefinitionRegitry&#x4E2D;&#x83B7;&#x53D6;&#x52A0;&#x5DE5;&#x540E;&#x7684;BeanDefinition,&#x4F7F;&#x7528;InstantiationStrategy&#x7740;&#x624B;&#x8FDB;&#x884C;Bean&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x64CD;&#x4F5C;&#x3002;<br>&#x7136;&#x540E;&#xFF0C;Spring&#x5BB9;&#x5668;&#x4F1A;&#x4F7F;&#x7528;BeanWrapper&#x5BF9;Bean&#x8FDB;&#x884C;&#x5305;&#x88C5;&#xFF0C;&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x5C5E;&#x6027;&#x7684;&#x8BBE;&#x7F6E;&#x5DE5;&#x4F5C;&#xFF1B;<br>&#x6700;&#x540E;Spring&#x5BB9;&#x5668;&#x4F1A;&#x626B;&#x63CF;BeanDefinitionRegitry&#x4E2D;&#x7684;Bean&#x540E;&#x5904;&#x7406;&#x5668;&#xFF0C;&#x5B8C;&#x6210;&#x5BF9;Bean&#x7684;&#x6700;&#x540E;&#x52A0;&#x5DE5;&#xFF0C;&#x88C5;&#x914D;&#x51FA;&#x4E00;&#x4E2A;&#x51C6;&#x5907;&#x5C31;&#x7EEA;&#x7684;Bean&#x3002;<h3 id="BeanDefinition"><a href="#BeanDefinition" class="headerlink" title="BeanDefinition"></a>BeanDefinition</h3>&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x5C31;&#x63D0;&#x5230;BeanDefinition&#x662F;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;<bean>&#x6807;&#x7B7E;&#x7684;&#x8282;&#x70B9;&#x5143;&#x7D20;&#x5728;Spring&#x5BB9;&#x5668;&#x4E2D;&#x7684;&#x5185;&#x90E8;&#x8868;&#x793A;&#x3002;&#x4E00;&#x5F00;&#x59CB;BeanDefinitionReader&#x5C06;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x89E3;&#x6790;&#x6210;&#x534A;&#x6210;&#x54C1;&#x7684;BeanDefinition&#xFF08;&#x5360;&#x4F4D;&#x7B26;&#x672A;&#x89E3;&#x6790;&#x6210;&#x6700;&#x7EC8;&#x503C;&#xFF09;&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x653E;&#x5165;BeanDefinitionRegistry&#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;BeanDefinitionRegistry&#x5C31;&#x50CF;&#x662F;&#x5B58;&#x50A8;BeanDefinition&#x7684;&#x5185;&#x5B58;&#x6570;&#x636E;&#x5E93;&#x3002;&#x5DE5;&#x5382;&#x540E;&#x5904;&#x7406;&#x5668;&#x4F1A;&#x5BF9;&#x534A;&#x6210;&#x54C1;&#x7684;BeanDefinition&#x8FDB;&#x884C;&#x52A0;&#x5DE5;&#x5F62;&#x6210;&#x6700;&#x7EC8;&#x7684;BeanDefinition&#xFF08;&#x5360;&#x4F4D;&#x7B26;&#x5DF2;&#x89E3;&#x6790;&#x6210;&#x6700;&#x7EC8;&#x503C;&#xFF09;&#x3002;<h3 id="InstantiationStrategy"><a href="#InstantiationStrategy" class="headerlink" title="InstantiationStrategy"></a>InstantiationStrategy</h3>&#x5F53;&#x5F62;&#x6210;&#x6700;&#x7EC8;&#x7684;BeanDefinition&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4F7F;&#x7528;InstantiationStrategy&#x6839;&#x636E;BeanDefinition&#x521B;&#x5EFA;&#x4E00;&#x4E2A;Bean&#x5B9E;&#x4F8B;&#x3002;InstantiationStrategy&#x662F;&#x4E00;&#x4E2A;&#x7B56;&#x7565;&#x63A5;&#x53E3;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x610F;&#x5473;&#x7740;&#x63D0;&#x4F9B;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x521B;&#x5EFA;&#x5B9E;&#x4F8B;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6BD4;&#x5982;&#x4F7F;&#x7528;CGLib&#x52A8;&#x6001;&#x7684;&#x521B;&#x5EFA;Bean&#x7684;&#x5B50;&#x7C7B;&#x5BF9;&#x8C61;&#xFF0C;&#x6216;&#x8005;&#x4F7F;&#x7528;SimpleInstantiationStrategy&#x5229;&#x7528;Bean&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x521B;&#x5EFA;Bean&#x5B9E;&#x4F8B;&#x3002;<br>&#x4F7F;&#x7528;InstantiationStrategy&#x521B;&#x5EFA;&#x7684;Bean&#x5B9E;&#x4F8B;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5BF9;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#xFF0C;&#x8981;&#x60F3;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#x503C;&#x9700;&#x8981;&#x4F7F;&#x7528;BeanWrapper&#x3002;<h3 id="BeanWrapper"><a href="#BeanWrapper" class="headerlink" title="BeanWrapper"></a>BeanWrapper</h3>&#x5F53;Bean&#x5B9E;&#x4F8B;&#x88AB;&#x521B;&#x5EFA;&#x51FA;&#x6765;&#x540E;&#xFF0C;&#x5BB9;&#x5668;&#x7684;&#x4E3B;&#x63A7;&#x7A0B;&#x5E8F;&#x4F1A;&#x5C06;&#x8FD9;&#x4E2A;Bean&#x5B9E;&#x4F8B;&#x901A;&#x8FC7;BeanWrapper&#x5305;&#x88C5;&#x8D77;&#x6765;&#xFF0C;&#x5373;&#x8C03;&#x7528;setWrappedInstance()&#x65B9;&#x6CD5;&#x3002;<br>BeanWrapper&#x5B9E;&#x73B0;&#x7C7B;BeanWrapperImpl&#x7684;UML&#x56FE;&#x5982;&#x4E0B;&#xFF1A;<br><img src="/2017/10/24/Spring&#x5BB9;&#x5668;&#x9AD8;&#x7EA7;&#x7279;&#x6027;/img2.png" alt="image"><br>&#x4ECE;&#x4E0A;&#x56FE;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;BeanWrapperImpl&#x540C;&#x65F6;&#x5177;&#x6709;&#x4E0B;&#x9762;&#x4E09;&#x91CD;&#x8EAB;&#x4EFD;&#xFF1A;</bean></li>
+<li>Bean&#x5305;&#x88F9;&#x5668;</li>
+<li>&#x5C5E;&#x6027;&#x8BBF;&#x95EE;&#x5668;</li>
+<li>&#x5C5E;&#x6027;&#x7F16;&#x8F91;&#x5668;&#x6CE8;&#x518C;&#x8868;<br>&#x8981;&#x987A;&#x5229;&#x7684;&#x8BBE;&#x7F6E;Bean&#x5B9E;&#x4F8B;&#x7684;&#x5C5E;&#x6027;&#x503C;&#xFF0C;&#x5FC5;&#x987B;&#x8981;&#x6709;bean&#x5B9E;&#x4F8B;&#x548C;&#x5C5E;&#x6027;&#x7F16;&#x8F91;&#x5668;&#x4EE5;&#x53CA;BeanDefinition&#x3002;&#x5176;&#x4E2D;Bean&#x5B9E;&#x4F8B;&#x662F;&#x7528;&#x6765;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x83B7;&#x53D6;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5C5E;&#x6027;&#x7F16;&#x8F91;&#x5668;&#x63CF;&#x8FF0;&#x4E86;&#x4ECE;BeanDefinition&#x7684;&#x5B57;&#x9762;&#x503C;&#x8F6C;&#x6362;&#x4E3A;Java&#x5185;&#x90E8;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x800C;BeanDefinition&#x63D0;&#x4F9B;&#x4E86;&#x8FD9;&#x4E9B;&#x5B57;&#x9762;&#x503C;&#xFF08;PropertyValue&#xFF09;&#x3002;<h2 id="&#x5BB9;&#x5668;&#x4E8B;&#x4EF6;"><a href="#&#x5BB9;&#x5668;&#x4E8B;&#x4EF6;" class="headerlink" title="&#x5BB9;&#x5668;&#x4E8B;&#x4EF6;"></a>&#x5BB9;&#x5668;&#x4E8B;&#x4EF6;</h2>Spring&#x7684;ApplicationContext&#x76F8;&#x5BF9;&#x4E8E;BeanFactory&#x6765;&#x8BF4;&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x4E8B;&#x4EF6;&#x53D1;&#x5E03;&#x673A;&#x5236;&#x3002;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x770B;&#x770B;&#x4E8B;&#x4EF6;&#x673A;&#x5236;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x4E09;&#x4E2A;&#x6982;&#x5FF5;&#xFF1A;</li>
+</ol>
+<ul>
+<li>&#x4E8B;&#x4EF6;&#x6E90;&#xFF1A;&#x4E8B;&#x4EF6;&#x7684;&#x4EA7;&#x751F;&#x8005;</li>
+<li>&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#x6CE8;&#x518C;&#x8868;&#xFF1A;&#x4FDD;&#x5B58;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#x7684;&#x7EC4;&#x4EF6;</li>
+<li>&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;&#xFF1A;&#x8D1F;&#x8D23;&#x628A;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x7ED9;&#x65F6;&#x95F4;&#x76D1;&#x542C;&#x5668;<h3 id="Spring&#x4E8B;&#x4EF6;&#x7C7B;&#x7ED3;&#x6784;"><a href="#Spring&#x4E8B;&#x4EF6;&#x7C7B;&#x7ED3;&#x6784;" class="headerlink" title="Spring&#x4E8B;&#x4EF6;&#x7C7B;&#x7ED3;&#x6784;"></a>Spring&#x4E8B;&#x4EF6;&#x7C7B;&#x7ED3;&#x6784;</h3><h4 id="&#x4E8B;&#x4EF6;&#x7C7B;"><a href="#&#x4E8B;&#x4EF6;&#x7C7B;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7C7B;"></a>&#x4E8B;&#x4EF6;&#x7C7B;</h4>UML&#x56FE;&#xFF1A;<br><img src="/2017/10/24/Spring&#x5BB9;&#x5668;&#x9AD8;&#x7EA7;&#x7279;&#x6027;/img3.png" alt="image"><br>ApplicationContextEvent&#x5171;&#x6709;&#x56DB;&#x4E2A;&#x5B50;&#x7C7B;&#xFF0C;&#x5206;&#x522B;&#x8868;&#x793A;&#x5BB9;&#x5668;&#x5173;&#x95ED;&#x3001;&#x5F00;&#x542F;&#x3001;&#x5237;&#x65B0;&#x548C;&#x505C;&#x6B62;&#x4E8B;&#x4EF6;&#x3002;<h4 id="&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;"><a href="#&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;"></a>&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;</h4>Spring&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#x90FD;&#x6269;&#x5C55;&#x81EA;ApplicationListener&#x63A5;&#x53E3;&#xFF0C;&#x5176;UML&#x7C7B;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;<br><img src="/2017/10/24/Spring&#x5BB9;&#x5668;&#x9AD8;&#x7EA7;&#x7279;&#x6027;/img4.png" alt="image"><br>ApplicationListener&#x4EC5;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;onApplicationEvent()&#x7528;&#x4E8E;&#x7F16;&#x5199;&#x4E8B;&#x4EF6;&#x54CD;&#x5E94;&#x7684;&#x5904;&#x7406;&#x903B;&#x8F91;&#x3002;<h4 id="&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;"><a href="#&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;"></a>&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;</h4>&#x5F53;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x5BB9;&#x5668;&#x4F1A;&#x8C03;&#x7528;&#x5E7F;&#x64AD;&#x5668;&#x5C06;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x7ED9;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#xFF0C;&#x7136;&#x540E;&#x7531;&#x76D1;&#x542C;&#x5668;&#x8FDB;&#x884C;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x3002;<br><img src="/2017/10/24/Spring&#x5BB9;&#x5668;&#x9AD8;&#x7EA7;&#x7279;&#x6027;/img5.png" alt="image"><h4 id="spring&#x4E8B;&#x4EF6;&#x4F53;&#x7CFB;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;"><a href="#spring&#x4E8B;&#x4EF6;&#x4F53;&#x7CFB;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;" class="headerlink" title="spring&#x4E8B;&#x4EF6;&#x4F53;&#x7CFB;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;"></a>spring&#x4E8B;&#x4EF6;&#x4F53;&#x7CFB;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;</h4>Spring&#x5728;ApplicationContext&#x7684;&#x62BD;&#x8C61;&#x5B9E;&#x73B0;&#x7C7B;AbstractApplicationContext&#x4E2D;&#x5B8C;&#x6210;&#x4E86;&#x4E8B;&#x4EF6;&#x4F53;&#x7CFB;&#x7684;&#x642D;&#x5EFA;&#x3002;&#x5728;&#x5176;refresh()&#x5185;&#x90E8;&#x6709;&#x4EE5;&#x4E0B;&#x4E0E;&#x4E8B;&#x4EF6;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#xFF1A;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//1&#x3001;&#x521D;&#x59CB;&#x5316;&#x5E94;&#x7528;&#x4E0A;&#x4E0B;&#x6587;&#x7684;&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;</div><div class="line">initApplicationEventMulticaster();</div><div class="line">//2&#x3001;&#x6CE8;&#x518C;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;</div><div class="line">registryListeners();</div><div class="line">//3&#x3001;&#x5B8C;&#x6210;&#x5237;&#x65B0;&#x5E76;&#x53D1;&#x5E03;&#x5BB9;&#x5668;&#x5237;&#x65B0;&#x4E8B;&#x4EF6;</div><div class="line">finishRefresh();</div></pre></td></tr></table></figure>
+<p>&#x9996;&#x5148;&#x5728;1&#x5904;&#x521D;&#x59CB;&#x5316;&#x4E8B;&#x4EF6;&#x5E7F;&#x64AD;&#x5668;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x6307;&#x5B9A;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x5E7F;&#x64AD;&#x5668;&#xFF1B;&#x5728;2&#x5904;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x673A;&#x5236;&#x83B7;&#x53D6;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#x5E76;&#x6CE8;&#x518C;&#x5230;&#x5BB9;&#x5668;&#x4E2D;&#x7684;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5668;&#x6CE8;&#x518C;&#x8868;&#x4E2D;&#xFF1B;&#x6700;&#x540E;&#x5B8C;&#x6210;&#x5237;&#x65B0;&#x4E8B;&#x4EF6;&#x540E;&#xFF0C;&#x4F1A;&#x7531;&#x5E7F;&#x64AD;&#x5668;&#x5C06;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x7ED9;&#x6CE8;&#x518C;&#x8868;&#x4E2D;&#x7684;&#x76D1;&#x542C;&#x5668;&#x3002;</p>
+<h4 id="Spring&#x4E8B;&#x4EF6;&#x5B9E;&#x4F8B;"><a href="#Spring&#x4E8B;&#x4EF6;&#x5B9E;&#x4F8B;" class="headerlink" title="Spring&#x4E8B;&#x4EF6;&#x5B9E;&#x4F8B;"></a>Spring&#x4E8B;&#x4EF6;&#x5B9E;&#x4F8B;</h4><p>MailSendEvent:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/24.</div><div class="line"> */</div><div class="line">public class MailSendEvent extends ApplicationContextEvent {</div><div class="line">    private String to;</div><div class="line"></div><div class="line">    public String getTo() {</div><div class="line">        return to;</div><div class="line">    }</div><div class="line"></div><div class="line">    public MailSendEvent(ApplicationContext source,String to) {</div><div class="line">        super(source);</div><div class="line">        this.to = to;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>MailSendListener:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/24.</div><div class="line"> */</div><div class="line">public class MailSendListener implements ApplicationListener&lt;MailSendEvent&gt; {</div><div class="line">    public void onApplicationEvent(MailSendEvent mailSendEvent) {</div><div class="line">        MailSendEvent mse = (MailSendEvent)mailSendEvent;</div><div class="line">        System.out.println(&quot;MailSendListener:&#x5411;&quot;+mse.getTo()+&quot;&#x53D1;&#x9001;&#x5B8C;&#x4E00;&#x5C01;&#x90AE;&#x4EF6;&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>MailSender(&#x4E8B;&#x4EF6;&#x7684;&#x4EA7;&#x751F;&#x8005;):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/24.</div><div class="line"> */</div><div class="line">public class MailSender implements ApplicationContextAware {</div><div class="line">    private ApplicationContext ctx;</div><div class="line">    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {</div><div class="line">        this.ctx = applicationContext;</div><div class="line">    }</div><div class="line">    public void sendMail(String to){</div><div class="line">        System.out.println(&quot;MailSender:&#x6A21;&#x62DF;&#x53D1;&#x9001;&#x90AE;&#x4EF6;...&quot;);</div><div class="line">        MailSendEvent mse = new MailSendEvent(this.ctx,to);</div><div class="line">        ctx.publishEvent(mse);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/24.</div><div class="line"> */</div><div class="line">public class EventTest {</div><div class="line">    public static void main(String[] args){</div><div class="line">        ApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;spring-event.xml&quot;);</div><div class="line">        MailSender sender = (MailSender) ctx.getBean(&quot;mailSender&quot;);</div><div class="line">        sender.sendMail(&quot;uzhou&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x914D;&#x7F6E;&#x6587;&#x4EF6;:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line">    &lt;bean class=&quot;com.uzhou.event.MailSendListener&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;mailSender&quot; class=&quot;com.uzhou.event.MailSender&quot;&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MailSender:&#x6A21;&#x62DF;&#x53D1;&#x9001;&#x90AE;&#x4EF6;...</div><div class="line">MailSendListener:&#x5411;uzhou&#x53D1;&#x9001;&#x5B8C;&#x4E00;&#x5C01;&#x90AE;&#x4EF6;</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/23/Spring-IoC基础入门/" rel="next" title="Spring IoC基础入门">
+                <i class="fa fa-chevron-left"></i> Spring IoC基础入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/03/MySQL体系结构和存储引擎/" rel="prev" title="MySQL体系结构和存储引擎">
+                MySQL体系结构和存储引擎 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/24/Spring容器高级特性/"
+           data-title="Spring容器高级特性" data-url="http://yoursite.com/2017/10/24/Spring容器高级特性/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="uzhou" />
+          <p class="site-author-name" itemprop="name">uzhou</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">126</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring容器技术内幕"><span class="nav-number">1.</span> <span class="nav-text">Spring容器技术内幕</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内部工作机制"><span class="nav-number">1.1.</span> <span class="nav-text">内部工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanDefinition"><span class="nav-number">1.1.1.</span> <span class="nav-text">BeanDefinition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InstantiationStrategy"><span class="nav-number">1.1.2.</span> <span class="nav-text">InstantiationStrategy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanWrapper"><span class="nav-number">1.1.3.</span> <span class="nav-text">BeanWrapper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器事件"><span class="nav-number">1.2.</span> <span class="nav-text">容器事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring事件类结构"><span class="nav-number">1.2.1.</span> <span class="nav-text">Spring事件类结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件类"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">事件类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件监听器"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">事件监听器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件广播器"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">事件广播器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring事件体系的具体实现"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">spring事件体系的具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring事件实例"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">Spring事件实例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">uzhou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uzhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cx68mo8YeMcWfXT4VAmB9AXK-gzGzoHsz", "scXvv2AUsd0NQ4YTKKoSNmTl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
