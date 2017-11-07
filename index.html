@@ -236,6 +236,146 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/07/Innodb中redo-log和undo-log/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/07/Innodb中redo-log和undo-log/" itemprop="url">
+                  Innodb中redo log和undo log
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-07T22:09:05+08:00">
+                2017-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/11/07/Innodb中redo-log和undo-log/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/07/Innodb中redo-log和undo-log/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/11/07/Innodb中redo-log和undo-log/" class="leancloud_visitors" data-flag-title="Innodb中redo log和undo log">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h1><p>&#x6211;&#x4EEC;&#x901A;&#x5E38;&#x8BF4;&#x5230;&#x4E8B;&#x52A1;&#x65F6;&#xFF0C;&#x90FD;&#x4F1A;&#x8C08;&#x8D77;&#x4E8B;&#x52A1;&#x7684;ACID&#x56DB;&#x5927;&#x7279;&#x6027;&#x3002;undo log&#x4E3B;&#x8981;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x4E8B;&#x52A1;&#x7684;&#x539F;&#x5B50;&#x6027;&#xFF0C;&#x4E3E;&#x4E2A;&#x6817;&#x5B50;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#x7528;Undo Log&#x5B9E;&#x73B0;&#x539F;&#x5B50;&#x6027;&#x548C;&#x6301;&#x4E45;&#x5316;&#x7684;&#x4E8B;&#x52A1;&#x7684;&#x7B80;&#x5316;&#x8FC7;&#x7A0B;</div><div class="line">  &#x5047;&#x8BBE;&#x6709;A&#x3001;B&#x4E24;&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x503C;&#x5206;&#x522B;&#x4E3A;1,2&#x3002;</div><div class="line">  A.&#x4E8B;&#x52A1;&#x5F00;&#x59CB;.</div><div class="line">  B.&#x8BB0;&#x5F55;A=1&#x5230;undo log.</div><div class="line">  C.&#x4FEE;&#x6539;A=3.</div><div class="line">  D.&#x8BB0;&#x5F55;B=2&#x5230;undo log.</div><div class="line">  E.&#x4FEE;&#x6539;B=4.</div><div class="line">  F.&#x5C06;undo log&#x5199;&#x5230;&#x78C1;&#x76D8;&#x3002;</div><div class="line">  G.&#x5C06;&#x6570;&#x636E;&#x5199;&#x5230;&#x78C1;&#x76D8;&#x3002;</div><div class="line">  H.&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;</div></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;A-F&#x4E4B;&#x95F4;&#x51FA;&#x73B0;&#x5B95;&#x673A;&#xFF0C;&#x90A3;&#x4E48;G&#x8FD8;&#x6CA1;&#x6709;&#x6267;&#x884C;&#xFF0C;&#x5373;&#x78C1;&#x76D8;&#x4E2D;&#x6570;&#x636E;&#x8FD8;&#x6CA1;&#x6709;&#x88AB;&#x66F4;&#x65B0;&#xFF0C;&#x6B64;&#x65F6;&#x662F;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x4E8B;&#x52A1;&#x7684;&#x539F;&#x5B50;&#x6027;&#x7684;&#xFF1B;&#x5982;&#x679C;&#x5728;G-H&#x51FA;&#x73B0;&#x5B95;&#x673A;&#x5219;&#x8BF4;&#x660E;undo log&#x5DF2;&#x7ECF;&#x5C06;&#x4E8B;&#x52A1;&#x5F00;&#x59CB;&#x65F6;&#x7684;&#x6570;&#x636E;&#x72B6;&#x6001;&#x8BB0;&#x5F55;&#x5230;&#x78C1;&#x76D8;&#x4E2D;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x6570;&#x636E;&#x7684;&#x6301;&#x4E45;&#x5316;&#x51FA;&#x9519;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;undo log&#x5C06;&#x4E8B;&#x52A1;&#x56DE;&#x6EDA;&#x5230;&#x6700;&#x521D;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x7F3A;&#x9677;&#xFF1A;&#x6BCF;&#x4E2A;&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;&#x524D;&#x5C06;&#x6570;&#x636E;&#x548C;Undo Log&#x5199;&#x5165;&#x78C1;&#x76D8;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x5BFC;&#x81F4;&#x5927;&#x91CF;&#x7684;&#x78C1;&#x76D8;IO&#xFF0C;&#x56E0;&#x6B64;&#x6027;&#x80FD;&#x5F88;&#x4F4E;&#x3002;</p>
+<h1 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h1><p>&#x548C;Undo Log&#x76F8;&#x53CD;&#xFF0C;Redo Log&#x8BB0;&#x5F55;&#x7684;&#x662F;&#x65B0;&#x6570;&#x636E;&#x7684;&#x5907;&#x4EFD;&#xFF0C;&#x4E3B;&#x8981;&#x5B9E;&#x73B0;&#x4E8B;&#x52A1;&#x7684;&#x6301;&#x4E45;&#x6027;&#x3002;&#x5728;&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;&#x524D;&#xFF0C;&#x53EA;&#x8981;&#x5C06;Redo Log&#x6301;&#x4E45;&#x5316;&#x5373;&#x53EF;&#xFF0C;<br>  &#x4E0D;&#x9700;&#x8981;&#x5C06;&#x6570;&#x636E;&#x6301;&#x4E45;&#x5316;&#x3002;&#x5F53;&#x7CFB;&#x7EDF;&#x5D29;&#x6E83;&#x65F6;&#xFF0C;&#x867D;&#x7136;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x6301;&#x4E45;&#x5316;&#xFF0C;&#x4F46;&#x662F;Redo Log&#x5DF2;&#x7ECF;&#x6301;&#x4E45;&#x5316;&#x3002;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x6839;&#x636E;<br>  Redo Log&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5C06;&#x6240;&#x6709;&#x6570;&#x636E;&#x6062;&#x590D;&#x5230;&#x6700;&#x65B0;&#x7684;&#x72B6;&#x6001;&#x3002;<br> &#x5177;&#x4F53;&#x4F8B;&#x5B50;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Undo + Redo&#x4E8B;&#x52A1;&#x7684;&#x7B80;&#x5316;&#x8FC7;&#x7A0B;</div><div class="line">  &#x5047;&#x8BBE;&#x6709;A&#x3001;B&#x4E24;&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x503C;&#x5206;&#x522B;&#x4E3A;1,2.</div><div class="line">  A.&#x4E8B;&#x52A1;&#x5F00;&#x59CB;.</div><div class="line">  B.&#x8BB0;&#x5F55;A=1&#x5230;undo log.</div><div class="line">  C.&#x4FEE;&#x6539;A=3.</div><div class="line">  D.&#x8BB0;&#x5F55;A=3&#x5230;redo log.</div><div class="line">  E.&#x8BB0;&#x5F55;B=2&#x5230;undo log.</div><div class="line">  F.&#x4FEE;&#x6539;B=4.</div><div class="line">  G.&#x8BB0;&#x5F55;B=4&#x5230;redo log.</div><div class="line">  H.&#x5C06;redo log&#x5199;&#x5165;&#x78C1;&#x76D8;&#x3002;</div><div class="line">  I.&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;</div></pre></td></tr></table></figure>
+<p> Undo + Redo&#x7684;&#x8BBE;&#x8BA1;&#x4E3B;&#x8981;&#x8003;&#x8651;&#x7684;&#x662F;&#x63D0;&#x5347;IO&#x6027;&#x80FD;&#x3002;&#x867D;&#x8BF4;&#x901A;&#x8FC7;&#x7F13;&#x5B58;&#x6570;&#x636E;&#xFF0C;&#x51CF;&#x5C11;&#x4E86;&#x5199;&#x6570;&#x636E;&#x7684;IO.<br>  &#x4F46;&#x662F;&#x5374;&#x5F15;&#x5165;&#x4E86;&#x65B0;&#x7684;IO&#xFF0C;&#x5373;&#x5199;Redo Log&#x7684;IO&#x3002;&#x5982;&#x679C;Redo Log&#x7684;IO&#x6027;&#x80FD;&#x4E0D;&#x597D;&#xFF0C;&#x5C31;&#x4E0D;&#x80FD;&#x8D77;&#x5230;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x7684;&#x76EE;&#x7684;&#x3002;<br>  &#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;Redo Log&#x80FD;&#x591F;&#x6709;&#x6BD4;&#x8F83;&#x597D;&#x7684;IO&#x6027;&#x80FD;&#xFF0C;InnoDB &#x7684; Redo Log&#x7684;&#x8BBE;&#x8BA1;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x7279;&#x70B9;&#xFF1A;</p>
+<p>  A. &#x5C3D;&#x91CF;&#x4FDD;&#x6301;Redo Log&#x5B58;&#x50A8;&#x5728;&#x4E00;&#x6BB5;&#x8FDE;&#x7EED;&#x7684;&#x7A7A;&#x95F4;&#x4E0A;&#x3002;&#x56E0;&#x6B64;&#x5728;&#x7CFB;&#x7EDF;&#x7B2C;&#x4E00;&#x6B21;&#x542F;&#x52A8;&#x65F6;&#x5C31;&#x4F1A;&#x5C06;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x7684;&#x7A7A;&#x95F4;&#x5B8C;&#x5168;&#x5206;&#x914D;&#x3002;<br>     &#x4EE5;&#x987A;&#x5E8F;&#x8FFD;&#x52A0;&#x7684;&#x65B9;&#x5F0F;&#x8BB0;&#x5F55;Redo Log,&#x901A;&#x8FC7;&#x987A;&#x5E8F;IO&#x6765;&#x6539;&#x5584;&#x6027;&#x80FD;&#x3002;<br>  B. &#x6279;&#x91CF;&#x5199;&#x5165;&#x65E5;&#x5FD7;&#x3002;&#x65E5;&#x5FD7;&#x5E76;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x5199;&#x5165;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x662F;&#x5148;&#x5199;&#x5165;redo log buffer.&#x5F53;&#x9700;&#x8981;&#x5C06;&#x65E5;&#x5FD7;&#x5237;&#x65B0;&#x5230;&#x78C1;&#x76D8;&#x65F6;<br>     (&#x5982;&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;),&#x5C06;&#x8BB8;&#x591A;&#x65E5;&#x5FD7;&#x4E00;&#x8D77;&#x5199;&#x5165;&#x78C1;&#x76D8;.<br>  C. &#x5E76;&#x53D1;&#x7684;&#x4E8B;&#x52A1;&#x5171;&#x4EAB;Redo Log&#x7684;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#xFF0C;&#x5B83;&#x4EEC;&#x7684;Redo Log&#x6309;&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#xFF0C;&#x4F9D;&#x6B21;&#x4EA4;&#x66FF;&#x7684;&#x8BB0;&#x5F55;&#x5728;&#x4E00;&#x8D77;&#xFF0C;<br>     &#x4EE5;&#x51CF;&#x5C11;&#x65E5;&#x5FD7;&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/07/InnoDB关键特性/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1757,177 +1897,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/JDK源码之HashMap/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/25/JDK源码之HashMap/" itemprop="url">
-                  JDK源码之HashMap
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-25T19:55:42+08:00">
-                2017-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/09/25/JDK源码之HashMap/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/JDK源码之HashMap/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/09/25/JDK源码之HashMap/" class="leancloud_visitors" data-flag-title="JDK源码之HashMap">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="HashMap&#x6E90;&#x7801;&#x4ECB;&#x7ECD;"><a href="#HashMap&#x6E90;&#x7801;&#x4ECB;&#x7ECD;" class="headerlink" title="HashMap&#x6E90;&#x7801;&#x4ECB;&#x7ECD;"></a>HashMap&#x6E90;&#x7801;&#x4ECB;&#x7ECD;</h1><p>HashMap&#x5E95;&#x5C42;&#x4F7F;&#x7528;&#x54C8;&#x5E0C;&#x8868;&#x5B9E;&#x73B0;&#xFF0C;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x6570;&#x7EC4;+&#x94FE;&#x8868;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x94FE;&#x8868;&#x6563;&#x5217;&#x3002;&#x5177;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x70B9;&#xFF1A;</p>
-<ol>
-<li>&#x975E;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#xFF0C;&#x8981;&#x60F3;&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;HashMap&#x96C6;&#x5408;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Collections#synchronizedMap&#x5305;&#x88C5;&#x4E0B;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;HashTable&#x548C;&#x5E76;&#x53D1;&#x5305;&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x3002;</li>
-<li>HashMap&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x987A;&#x5E8F;&#x53EF;&#x80FD;&#x4F1A;&#x6539;&#x53D8;&#xFF0C;&#x8FD9;&#x4E3B;&#x8981;&#x662F;&#x6269;&#x5BB9;&#x7684;&#x65F6;&#x5019;&#x5BF9;bucket&#x7D22;&#x5F15;&#x7684;&#x91CD;&#x65B0;&#x751F;&#x6210;&#x9020;&#x6210;&#x7684;&#x3002;</li>
-<li>HashMap&#x4E2D;&#x7684;key&#x4E0D;&#x80FD;&#x91CD;&#x590D;&#xFF0C;&#x5426;&#x5219;&#x6DFB;&#x52A0;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8986;&#x76D6;&#x65E7;&#x5143;&#x7D20;&#xFF0C;&#x5141;&#x8BB8;null&#x7684;&#x5B58;&#x5728;&#x3002;<h2 id="HashMap&#x7684;&#x7EE7;&#x627F;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;"><a href="#HashMap&#x7684;&#x7EE7;&#x627F;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;" class="headerlink" title="HashMap&#x7684;&#x7EE7;&#x627F;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;"></a>HashMap&#x7684;&#x7EE7;&#x627F;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;</h2></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class HashMap&lt;K,V&gt;</div><div class="line">    extends AbstractMap&lt;K,V&gt;</div><div class="line">    implements Map&lt;K,V&gt;, Cloneable, Serializable</div></pre></td></tr></table></figure>
-<p>HashMap&#x7EE7;&#x627F;&#x4E86;&#x62BD;&#x8C61;&#x7C7B;AbstractMap&#xFF0C;&#x800C;AbstractMap&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;Map&#x7684;&#x4E00;&#x4E9B;&#x516C;&#x5171;&#x64CD;&#x4F5C;&#x3002;Cloneable&#x548C;Seriablizable&#x5C5E;&#x4E8E;&#x6807;&#x8BB0;&#x578B;&#x63A5;&#x53E3;&#xFF0C;&#x524D;&#x8005;&#x8868;&#x793A;&#x5B9E;&#x73B0;&#x7C7B;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;clone&#x65B9;&#x6CD5;&#x800C;&#x4E0D;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF0C;&#x4F46;&#x9700;&#x8981;&#x91CD;&#x5199;Object#clone&#x65B9;&#x6CD5;&#xFF1B;&#x540E;&#x8005;&#x8868;&#x793A;&#x53EF;&#x5E8F;&#x5217;&#x5316;&#x3002;</p>
-<h2 id="HashMap&#x4E3B;&#x8981;field"><a href="#HashMap&#x4E3B;&#x8981;field" class="headerlink" title="## HashMap&#x4E3B;&#x8981;field"></a>## HashMap&#x4E3B;&#x8981;field</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * The default initial capacity - MUST be a power of two.</div><div class="line"> */</div><div class="line">static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16</div><div class="line"></div><div class="line">/**</div><div class="line"> * The maximum capacity, used if a higher value is implicitly specified</div><div class="line"> * by either of the constructors with arguments.</div><div class="line"> * MUST be a power of two &lt;= 1&lt;&lt;30.</div><div class="line"> */</div><div class="line">static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The load factor used when none specified in constructor.</div><div class="line"> */</div><div class="line">static final float DEFAULT_LOAD_FACTOR = 0.75f;</div><div class="line"></div><div class="line">/**</div><div class="line"> * An empty table instance to share when the table is not inflated.</div><div class="line"> */</div><div class="line">static final Entry&lt;?,?&gt;[] EMPTY_TABLE = {};</div><div class="line"></div><div class="line">/**</div><div class="line"> * The table, resized as necessary. Length MUST Always be a power of two.</div><div class="line"> */</div><div class="line">transient Entry&lt;K,V&gt;[] table = (Entry&lt;K,V&gt;[]) EMPTY_TABLE;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The number of key-value mappings contained in this map.</div><div class="line"> */</div><div class="line">transient int size;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The next size value at which to resize (capacity * load factor).</div><div class="line"> * @serial</div><div class="line"> */</div><div class="line">// If table == EMPTY_TABLE then this is the initial capacity at which the</div><div class="line">// table will be created when inflated.</div><div class="line">int threshold;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The load factor for the hash table.</div><div class="line"> *</div><div class="line"> * @serial</div><div class="line"> */</div><div class="line">final float loadFactor;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The number of times this HashMap has been structurally modified</div><div class="line"> * Structural modifications are those that change the number of mappings in</div><div class="line"> * the HashMap or otherwise modify its internal structure (e.g.,</div><div class="line"> * rehash).  This field is used to make iterators on Collection-views of</div><div class="line"> * the HashMap fail-fast.  (See ConcurrentModificationException).</div><div class="line"> */</div><div class="line">transient int modCount;</div><div class="line"></div><div class="line">/**</div><div class="line"> * The default threshold of map capacity above which alternative hashing is</div><div class="line"> * used for String keys. Alternative hashing reduces the incidence of</div><div class="line"> * collisions due to weak hash code calculation for String keys.</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * This value may be overridden by defining the system property</div><div class="line"> * {@code jdk.map.althashing.threshold}. A property value of {@code 1}</div><div class="line"> * forces alternative hashing to be used at all times whereas</div><div class="line"> * {@code -1} value ensures that alternative hashing is never used.</div><div class="line"> */</div><div class="line">static final int ALTERNATIVE_HASHING_THRESHOLD_DEFAULT = Integer.MAX_VALUE;</div></pre></td></tr></table></figure>
-<p>&#x9996;&#x5148;&#x4ECB;&#x7ECD;&#x4E0B;&#x51E0;&#x4E2A;&#x6982;&#x5FF5;&#xFF1A;</p>
-<ul>
-<li>capacity&#xFF1A;the number of buckets in the hash table.HashMap&#x4E2D;&#x5E95;&#x5C42;hash&#x8868;&#x7684;bucket&#x6570;&#x91CF;</li>
-<li>size&#xFF1A;HashMap&#x4E2D;&#x5143;&#x7D20;&#x4E2A;&#x6570;</li>
-<li>loadFactor&#xFF1A;&#x8D1F;&#x8F7D;&#x56E0;&#x5B50;&#xFF0C;&#x7528;&#x4E8E;&#x63CF;&#x8FF0;&#x54C8;&#x5E0C;&#x8868;&#x5728;HashMap&#x81EA;&#x52A8;&#x6269;&#x5BB9;&#x4E4B;&#x524D;&#x80FD;&#x591F;&#x8FBE;&#x5230;&#x591A;&#x6EE1;&#x7684;&#x7A0B;&#x5EA6;</li>
-<li>threshold&#xFF1A;&#x5F53;HashMap&#x7684;size&#x8FBE;&#x5230;threshold&#x65F6;&#xFF0C;&#x4F1A;&#x6267;&#x884C;resize&#x64CD;&#x4F5C;</li>
-<li>modCount&#xFF1A;&#x8868;&#x793A;&#x96C6;&#x5408;&#x7ED3;&#x6784;&#x4FEE;&#x6539;&#x7684;&#x6B21;&#x6570;<br>&#x7136;&#x540E;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x4E2A;&#x5730;&#x65B9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;capacity&#x5FC5;&#x987B;&#x662F;2&#x7684;n&#x6B21;&#x65B9;&#xFF1A;&#x8FD9;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x5230;&#x4F4D;&#x8FD0;&#x7B97;&#x548C;&#x53D6;&#x4F59;&#x8FD0;&#x7B97;&#x4E4B;&#x95F4;&#x7684;&#x6548;&#x7387;&#x95EE;&#x9898;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x4ECB;&#x7ECD;&#x5230;&#x3002;<br>&#x901A;&#x8FC7;&#x8FD9;&#x4E9B;&#x5C5E;&#x6027;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#xFF0C;HashMap&#x5E95;&#x5C42;&#x5B9E;&#x73B0;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5C31;&#x662F;&#x6570;&#x7EC4;&#x548C;&#x94FE;&#x8868;&#x3002;<h2 id="HashMap&#x6784;&#x9020;&#x51FD;&#x6570;"><a href="#HashMap&#x6784;&#x9020;&#x51FD;&#x6570;" class="headerlink" title="HashMap&#x6784;&#x9020;&#x51FD;&#x6570;"></a>HashMap&#x6784;&#x9020;&#x51FD;&#x6570;</h2></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">public HashMap(int initialCapacity, float loadFactor) {</div><div class="line">    if (initialCapacity &lt; 0)</div><div class="line">        throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</div><div class="line">                                           initialCapacity);</div><div class="line">    if (initialCapacity &gt; MAXIMUM_CAPACITY)</div><div class="line">        initialCapacity = MAXIMUM_CAPACITY;</div><div class="line">    if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</div><div class="line">        throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</div><div class="line">                                           loadFactor);</div><div class="line"></div><div class="line">    this.loadFactor = loadFactor;</div><div class="line">    threshold = initialCapacity;</div><div class="line">    init();</div><div class="line">}</div><div class="line"></div><div class="line">/**</div><div class="line"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the specified initial</div><div class="line"> * capacity and the default load factor (0.75).</div><div class="line"> *</div><div class="line"> * @param  initialCapacity the initial capacity.</div><div class="line"> * @throws IllegalArgumentException if the initial capacity is negative.</div><div class="line"> */</div><div class="line">public HashMap(int initialCapacity) {</div><div class="line">    this(initialCapacity, DEFAULT_LOAD_FACTOR);</div><div class="line">}</div><div class="line"></div><div class="line">/**</div><div class="line"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the default initial capacity</div><div class="line"> * (16) and the default load factor (0.75).</div><div class="line"> */</div><div class="line">public HashMap() {</div><div class="line">    this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);</div><div class="line">}</div><div class="line"></div><div class="line">/**</div><div class="line"> * Constructs a new &lt;tt&gt;HashMap&lt;/tt&gt; with the same mappings as the</div><div class="line"> * specified &lt;tt&gt;Map&lt;/tt&gt;.  The &lt;tt&gt;HashMap&lt;/tt&gt; is created with</div><div class="line"> * default load factor (0.75) and an initial capacity sufficient to</div><div class="line"> * hold the mappings in the specified &lt;tt&gt;Map&lt;/tt&gt;.</div><div class="line"> *</div><div class="line"> * @param   m the map whose mappings are to be placed in this map</div><div class="line"> * @throws  NullPointerException if the specified map is null</div><div class="line"> */</div><div class="line">public HashMap(Map&lt;? extends K, ? extends V&gt; m) {</div><div class="line">    this(Math.max((int) (m.size() / DEFAULT_LOAD_FACTOR) + 1,</div><div class="line">                  DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);</div><div class="line">    inflateTable(threshold);</div><div class="line"></div><div class="line">    putAllForCreate(m);</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x6700;&#x91CD;&#x8981;&#x7684;&#x8FD8;&#x662F;&#x7B2C;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x6700;&#x7EC8;&#x4F1A;&#x8C03;&#x7528;&#x7B2C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x3002;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;&#x4E3A;&#x5B50;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;init()&#x94A9;&#x5B50;&#x65B9;&#x6CD5;&#x3002;</p>
-<h2 id="HashMap&#x6269;&#x5BB9;&#x76F8;&#x5173;"><a href="#HashMap&#x6269;&#x5BB9;&#x76F8;&#x5173;" class="headerlink" title="HashMap&#x6269;&#x5BB9;&#x76F8;&#x5173;"></a>HashMap&#x6269;&#x5BB9;&#x76F8;&#x5173;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">void resize(int newCapacity) {</div><div class="line">    Entry[] oldTable = table;</div><div class="line">    int oldCapacity = oldTable.length;</div><div class="line">    if (oldCapacity == MAXIMUM_CAPACITY) {</div><div class="line">        threshold = Integer.MAX_VALUE;</div><div class="line">        return;</div><div class="line">    }</div><div class="line"></div><div class="line">    Entry[] newTable = new Entry[newCapacity];</div><div class="line">    transfer(newTable, initHashSeedAsNeeded(newCapacity));</div><div class="line">    table = newTable;</div><div class="line">    threshold = (int)Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);</div><div class="line">}</div><div class="line"></div><div class="line">/**</div><div class="line"> * Transfers all entries from current table to newTable.</div><div class="line"> */</div><div class="line">void transfer(Entry[] newTable, boolean rehash) {</div><div class="line">    int newCapacity = newTable.length;</div><div class="line">    for (Entry&lt;K,V&gt; e : table) {</div><div class="line">        while(null != e) {</div><div class="line">            Entry&lt;K,V&gt; next = e.next;</div><div class="line">            if (rehash) {</div><div class="line">                e.hash = null == e.key ? 0 : hash(e.key);</div><div class="line">            }</div><div class="line">            int i = indexFor(e.hash, newCapacity);</div><div class="line">            e.next = newTable[i];</div><div class="line">            newTable[i] = e;</div><div class="line">            e = next;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#x5728;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x53D1;&#x751F;resize&#x51FD;&#x6570;&#xFF0C;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6539;&#x53D8;size&#x5927;&#x5C0F;&#xFF0C;&#x5F53;size&gt;=threshold&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x8C03;&#x7528;resize&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x6269;&#x5BB9;&#x3002;<br>resize&#x4E3B;&#x8981;&#x6839;&#x636E;newCapacity&#x91CD;&#x65B0;&#x5206;&#x914D;&#x4E00;&#x4E2A;Entry&#x6570;&#x7EC4;&#xFF0C;&#x518D;&#x8BB2;table&#x5F15;&#x7528;&#x6307;&#x5411;&#x8BE5;&#x6570;&#x7EC4;&#xFF1B;&#x53E6;&#x5916;resize&#x8FD8;&#x8C03;&#x7528;&#x4E86;transfer&#x51FD;&#x6570;&#x5C06;&#x539F;Map&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8F6C;&#x79FB;&#x5230;&#x65B0;&#x5206;&#x914D;&#x7684;&#x6570;&#x7EC4;&#x4E2D;&#xFF0C;&#x5E76;&#x5BF9;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x8C03;&#x7528;indexFor&#x65B9;&#x6CD5;&#xFF0C;&#x91CD;&#x65B0;&#x786E;&#x5B9A;&#x5143;&#x7D20;&#x5C5E;&#x4E8E;&#x54EA;&#x4E00;&#x4E2A;bucket&#x3002;&#x8FD9;&#x5C31;&#x80FD;&#x89E3;&#x91CA;&#x4E3A;&#x4EC0;&#x4E48;HashMap&#x7684;&#x5143;&#x7D20;&#x987A;&#x5E8F;&#x4E0D;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#x3002;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Retrieve object hash code and applies a supplemental hash function to the</div><div class="line"> * result hash, which defends against poor quality hash functions.  This is</div><div class="line"> * critical because HashMap uses power-of-two length hash tables, that</div><div class="line"> * otherwise encounter collisions for hashCodes that do not differ</div><div class="line"> * in lower bits. Note: Null keys always map to hash 0, thus index 0.</div><div class="line"> */</div><div class="line">final int hash(Object k) {</div><div class="line">    int h = hashSeed;</div><div class="line">    if (0 != h &amp;&amp; k instanceof String) {</div><div class="line">        return sun.misc.Hashing.stringHash32((String) k);</div><div class="line">    }</div><div class="line"></div><div class="line">    h ^= k.hashCode();</div><div class="line"></div><div class="line">    // This function ensures that hashCodes that differ only by</div><div class="line">    // constant multiples at each bit position have a bounded</div><div class="line">    // number of collisions (approximately 8 at default load factor).</div><div class="line">    h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);</div><div class="line">    return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);</div><div class="line">}</div><div class="line"></div><div class="line">/**</div><div class="line"> * Returns index for hash code h.</div><div class="line"> */</div><div class="line">static int indexFor(int h, int length) {</div><div class="line">    // assert Integer.bitCount(length) == 1 : &quot;length must be a non-zero power of 2&quot;;</div><div class="line">    return h &amp; (length-1);</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x4E0A;&#x9762;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x5B8C;&#x6210;&#x4E86;&#x5C06;Map&#x4E2D;key&#x8F6C;&#x4E3A;table&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x9996;&#x5148;&#x56DE;&#x53BB;&#x51FA;key&#x7684;hashCode&#xFF0C;&#x5E76;&#x5C06;&#x8FD9;&#x4E2A;hashCode&#x4F20;&#x7ED9;&#x4E00;&#x4E2A;&#x6270;&#x4E71;&#x51FD;&#x6570;&#xFF0C;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x5904;&#x7406;&#x540E;&#x7684;hash&#x503C;&#xFF0C;&#x518D;&#x5C06;&#x8BE5;hash&#x503C;&#x8FDB;&#x884C;&#x4F4D;&#x8FD0;&#x7B97;&#x5F97;&#x5230;&#x8BE5;hash&#x503C;&#x5BF9;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x7684;&#x53D6;&#x4F59;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x5C31;&#x662F;&#x8BE5;&#x5143;&#x7D20;&#x6240;&#x5728;bucket&#x7684;&#x7D22;&#x5F15;&#x3002;<br>&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x89E3;&#x91CA;&#x4E0B;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8FDB;&#x884C;&#x6270;&#x4E71;&#xFF1A;&#x9996;&#x5148;HashMap&#x7684;&#x6548;&#x7387;&#x53D7;&#x5230;&#x5143;&#x7D20;&#x662F;&#x5426;&#x5747;&#x5300;&#x5206;&#x5E03;&#x5728;table&#x4E2D;&#xFF0C;&#x56E0;&#x6B64;&#x8981;&#x60F3;&#x8FBE;&#x5230;&#x8FD9;&#x79CD;&#x6548;&#x679C;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x7528;&#x5143;&#x7D20;&#x7684;hashCode&#x503C;&#x5BF9;&#x6570;&#x7EC4;&#x957F;&#x5EA6;&#x53D6;&#x4F59;&#xFF0C;&#x4F46;&#x8FD9;&#x6837;&#x4E00;&#x6765;&#xFF0C;&#x5BF9;&#x4E8E;&#x90A3;&#x4E9B;hashCode&#x4F4E;&#x4F4D;&#x6709;&#x89C4;&#x5F8B;&#x7684;&#x5143;&#x7D20;&#x6765;&#x8BF4;&#x4F1A;&#x9020;&#x6210;&#x4E0D;&#x597D;&#x7684;&#x5206;&#x5E03;&#x3002;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;hashCOde&#x7684;&#x9AD8;&#x4F4D;&#x7279;&#x5F81;&#x548C;&#x4F4E;&#x4F4D;&#x7279;&#x5F81;&#x90FD;&#x5229;&#x7528;&#x8D77;&#x6765;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x5C31;&#x80FD;&#x51CF;&#x5C11;&#x78B0;&#x649E;&#x3002;&#x6240;&#x4EE5;&#x51FA;&#x73B0;&#x4E86;&#x6270;&#x4E71;&#x51FD;&#x6570;&#xFF1A;&#x5148;&#x5BF9;&#x539F;hashCode&#x79FB;&#x4F4D;&#xFF0C;&#x518D;&#x5C06;&#x9AD8;&#x4F4D;&#x548C;&#x4F4E;&#x4F4D;&#x8FDB;&#x884C;&#x5F02;&#x6216;&#x8FD0;&#x7B97;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53D8;&#x76F8;&#x5229;&#x7528;&#x4E86;&#x9AD8;&#x4F4D;&#x4F4E;&#x4F4D;&#x7279;&#x5F81;&#x3002;<br>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#x4E3A;&#x4EC0;&#x4E48;capacity&#x4E00;&#x5B9A;&#x662F;2&#x7684;n&#x6B21;&#x65B9;&#xFF1A;indexFor&#x51FD;&#x6570;&#x4E2D;&#x7684;h &amp; (length-1) &#x548C; h%length &#x7B49;&#x4EF7;&#xFF0C;&#x4F46;&#x662F;&#x524D;&#x8005;&#x5C5E;&#x4E8E;&#x4F4D;&#x8FD0;&#x7B97;&#x5176;&#x6548;&#x7387;&#x8FDC;&#x5927;&#x4E8E;&#x540E;&#x8005;&#x7684;&#x53D6;&#x4F59;&#x8FD0;&#x7B97;&#x3002;&#x4E0A;&#x8FF0;&#x7B49;&#x4EF7;&#x7684;&#x6761;&#x4EF6;&#x5C31;&#x662F;length&#x5FC5;&#x987B;&#x662F;2&#x7684;n&#x6B21;&#x65B9;&#x3002;</p>
-<h2 id="HashMap&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;"><a href="#HashMap&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;" class="headerlink" title="HashMap&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;"></a>HashMap&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public V put(K key, V value) {</div><div class="line">    if (table == EMPTY_TABLE) {</div><div class="line">        inflateTable(threshold);</div><div class="line">    }</div><div class="line">    if (key == null)</div><div class="line">        return putForNullKey(value);</div><div class="line">    int hash = hash(key);</div><div class="line">    int i = indexFor(hash, table.length);</div><div class="line">    for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {</div><div class="line">        Object k;</div><div class="line">        if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {</div><div class="line">            V oldValue = e.value;</div><div class="line">            e.value = value;</div><div class="line">            e.recordAccess(this);</div><div class="line">            return oldValue;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    modCount++;</div><div class="line">    addEntry(hash, key, value, i);</div><div class="line">    return null;</div><div class="line">}</div><div class="line"></div><div class="line">void addEntry(int hash, K key, V value, int bucketIndex) {</div><div class="line">    if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {</div><div class="line">        resize(2 * table.length);</div><div class="line">        hash = (null != key) ? hash(key) : 0;</div><div class="line">        bucketIndex = indexFor(hash, table.length);</div><div class="line">    }</div><div class="line"></div><div class="line">createEntry(hash, key, value, bucketIndex);</div><div class="line">}</div><div class="line"></div><div class="line">    Entry&lt;K,V&gt; e = table[bucketIndex];</div><div class="line">    table[bucketIndex] = new Entry&lt;&gt;(hash, key, value, e);//&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;Entry&#x5E76;&#x5C06;next&#x6307;&#x5411;e</div><div class="line">    size++;</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>put&#x65B9;&#x6CD5;&#x662F;&#x501F;&#x52A9;&#x4E8E;addEntry()&#x65B9;&#x6CD5;&#x5B8C;&#x6210;&#x7684;&#xFF0C;&#x5728;addEntry&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex]))&#x7684;&#x5224;&#x65AD;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x65F6;&#x8981;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8981;&#x6269;&#x5BB9;&#x3002;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public V get(Object key) {</div><div class="line">    if (key == null)</div><div class="line">        return getForNullKey();</div><div class="line">    Entry&lt;K,V&gt; entry = getEntry(key);</div><div class="line"></div><div class="line">    return null == entry ? null : entry.getValue();</div><div class="line">}</div><div class="line"></div><div class="line">final Entry&lt;K,V&gt; getEntry(Object key) {</div><div class="line">    if (size == 0) {</div><div class="line">        return null;</div><div class="line">    }</div><div class="line"></div><div class="line">    int hash = (key == null) ? 0 : hash(key);</div><div class="line">    for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];</div><div class="line">         e != null;</div><div class="line">         e = e.next) {</div><div class="line">        Object k;</div><div class="line">        if (e.hash == hash &amp;&amp;</div><div class="line">            ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">            return e;</div><div class="line">    }</div><div class="line">    return null;</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>get&#x65B9;&#x6CD5;&#x5C31;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x8003;&#x8651;&#x6269;&#x5BB9;&#x95EE;&#x9898;&#xFF0C;&#x9996;&#x5148;&#x662F;&#x6839;&#x636E;key&#x83B7;&#x53D6;&#x6270;&#x4E71;&#x540E;&#x7684;hash&#x503C;&#xFF0C;&#x7136;&#x540E;&#x7531;indexFor()&#x5F97;&#x5230;&#x7D22;&#x5F15;&#x503C;&#xFF0C;&#x6700;&#x540E;&#x5728;&#x8FD9;&#x4E2A;bucket&#x4E0B;&#x904D;&#x5386;&#x624E;&#x5230;key&#x4E00;&#x6837;&#x7684;value&#x5E76;&#x8FD4;&#x56DE;&#xFF0C;&#x627E;&#x4E0D;&#x5230;&#x5219;&#x8FD4;&#x56DE;null.</p>
-<h2 id="HashMap&#x5185;&#x90E8;&#x7C7B;"><a href="#HashMap&#x5185;&#x90E8;&#x7C7B;" class="headerlink" title="HashMap&#x5185;&#x90E8;&#x7C7B;"></a>HashMap&#x5185;&#x90E8;&#x7C7B;</h2><p>Entry<k,v>&#xFF1A;Map&#x4E2D;&#x7684;key-value&#x5BF9;&#x8282;&#x70B9;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">static class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; {</div><div class="line">    final K key;</div><div class="line">    V value;</div><div class="line">    Entry&lt;K,V&gt; next;</div><div class="line">    int hash;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Creates new entry.</div><div class="line">     */</div><div class="line">    Entry(int h, K k, V v, Entry&lt;K,V&gt; n) {</div><div class="line">        value = v;</div><div class="line">        next = n;</div><div class="line">        key = k;</div><div class="line">        hash = h;</div><div class="line">    }</div><div class="line"></div><div class="line">    public final K getKey() {</div><div class="line">        return key;</div><div class="line">    }</div><div class="line"></div><div class="line">    public final V getValue() {</div><div class="line">        return value;</div><div class="line">    }</div><div class="line"></div><div class="line">    public final V setValue(V newValue) {</div><div class="line">        V oldValue = value;</div><div class="line">        value = newValue;</div><div class="line">        return oldValue;</div><div class="line">    }</div><div class="line"></div><div class="line">    public final boolean equals(Object o) {</div><div class="line">        if (!(o instanceof Map.Entry))</div><div class="line">            return false;</div><div class="line">        Map.Entry e = (Map.Entry)o;</div><div class="line">        Object k1 = getKey();</div><div class="line">        Object k2 = e.getKey();</div><div class="line">        if (k1 == k2 || (k1 != null &amp;&amp; k1.equals(k2))) {</div><div class="line">            Object v1 = getValue();</div><div class="line">            Object v2 = e.getValue();</div><div class="line">            if (v1 == v2 || (v1 != null &amp;&amp; v1.equals(v2)))</div><div class="line">                return true;</div><div class="line">        }</div><div class="line">        return false;</div><div class="line">    }</div><div class="line"></div><div class="line">    public final int hashCode() {</div><div class="line">        return Objects.hashCode(getKey()) ^ Objects.hashCode(getValue());</div><div class="line">    }</div><div class="line"></div><div class="line">    public final String toString() {</div><div class="line">        return getKey() + &quot;=&quot; + getValue();</div><div class="line">    }</div><div class="line"></div><div class="line">    /**</div><div class="line">     * This method is invoked whenever the value in an entry is</div><div class="line">     * overwritten by an invocation of put(k,v) for a key k that&apos;s already</div><div class="line">     * in the HashMap.</div><div class="line">     */</div><div class="line">    void recordAccess(HashMap&lt;K,V&gt; m) {</div><div class="line">    }</div><div class="line"></div><div class="line">    /**</div><div class="line">     * This method is invoked whenever the entry is</div><div class="line">     * removed from the table.</div><div class="line">     */</div><div class="line">    void recordRemoval(HashMap&lt;K,V&gt; m) {</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure></k,v></p>
-<p>&#x8FD9;&#x662F;HashMap&#x5B9E;&#x73B0;&#x4E2D;&#x7684;&#x94FE;&#x8868;&#x8282;&#x70B9;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;table&#x662F;&#x6570;&#x7EC4;&#xFF0C;&#x5B58;&#x653E;&#x7684;&#x5C31;&#x662F;Entry&#x8282;&#x70B9;&#x3002;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">private abstract class HashIterator&lt;E&gt; implements Iterator&lt;E&gt; {</div><div class="line">    Entry&lt;K,V&gt; next;        // next entry to return</div><div class="line">    int expectedModCount;   // For fast-fail</div><div class="line">    int index;              // current slot</div><div class="line">    Entry&lt;K,V&gt; current;     // current entry</div><div class="line"></div><div class="line">    HashIterator() {</div><div class="line">        expectedModCount = modCount;</div><div class="line">        if (size &gt; 0) { // advance to first entry</div><div class="line">            Entry[] t = table;</div><div class="line">            while (index &lt; t.length &amp;&amp; (next = t[index++]) == null)</div><div class="line">                ;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    public final boolean hasNext() {</div><div class="line">        return next != null;</div><div class="line">    }</div><div class="line"></div><div class="line">    final Entry&lt;K,V&gt; nextEntry() {</div><div class="line">        if (modCount != expectedModCount)</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">        Entry&lt;K,V&gt; e = next;</div><div class="line">        if (e == null)</div><div class="line">            throw new NoSuchElementException();</div><div class="line"></div><div class="line">        if ((next = e.next) == null) {</div><div class="line">            Entry[] t = table;</div><div class="line">            while (index &lt; t.length &amp;&amp; (next = t[index++]) == null)</div><div class="line">                ;</div><div class="line">        }</div><div class="line">        current = e;</div><div class="line">        return e;</div><div class="line">    }</div><div class="line"></div><div class="line">    public void remove() {</div><div class="line">        if (current == null)</div><div class="line">            throw new IllegalStateException();</div><div class="line">        if (modCount != expectedModCount)</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">        Object k = current.key;</div><div class="line">        current = null;</div><div class="line">        HashMap.this.removeEntryForKey(k);</div><div class="line">        expectedModCount = modCount;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;<br><img src="/2017/09/25/JDK&#x6E90;&#x7801;&#x4E4B;HashMap/img1.png" alt="image"><br>HashMap&#x5C31;&#x662F;&#x7528;&#x5982;&#x56FE;&#x7684;&#x6563;&#x5217;&#x94FE;&#x8868;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;HashIterator&#x4F5C;&#x4E3A;HashMap&#x7684;&#x8FED;&#x4EE3;&#x5668;&#xFF0C;&#x5173;&#x952E;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;nextEntry()&#x3002;&#x5F53;next&#x4E3A;null&#x65F6;&#x5E76;&#x4E0D;&#x8868;&#x793A;HashMap&#x4E2D;&#x6CA1;&#x6709;&#x4E0B;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x4E86;&#xFF0C;&#x6709;&#x53EF;&#x80FD;&#x5F53;&#x524D;bucket&#x4E2D;&#x6CA1;&#x6709;&#x5176;&#x4ED6;&#x5143;&#x7D20;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x5176;&#x4ED6;&#x7684;bucket&#x8FD8;&#x672A;&#x904D;&#x5386;&#xFF0C;&#x6240;&#x4EE5;&#x624D;&#x6709;&#x4E2A;for&#x5FAA;&#x73AF;&#x53BB;&#x67E5;&#x627E;&#x5176;&#x4ED6;bucket&#x7684;&#x5143;&#x7D20;&#x3002;<br>expectedModCount&#x4E3B;&#x8981;&#x7528;&#x4E8E;fast-fail&#x673A;&#x5236;&#x3002;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private final class ValueIterator extends HashIterator&lt;V&gt; {</div><div class="line">    public V next() {</div><div class="line">        return nextEntry().value;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line">private final class KeyIterator extends HashIterator&lt;K&gt; {</div><div class="line">    public K next() {</div><div class="line">        return nextEntry().getKey();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line">private final class EntryIterator extends HashIterator&lt;Map.Entry&lt;K,V&gt;&gt; {</div><div class="line">    public Map.Entry&lt;K,V&gt; next() {</div><div class="line">        return nextEntry();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x4EE5;&#x4E0A;&#x662F;&#x4E09;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x9488;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;HashMap&#x7684;view&#x3002;</p>
-<h2 id="HashMap&#x7684;&#x89C6;&#x56FE;"><a href="#HashMap&#x7684;&#x89C6;&#x56FE;" class="headerlink" title="HashMap&#x7684;&#x89C6;&#x56FE;"></a>HashMap&#x7684;&#x89C6;&#x56FE;</h2><h3 id="Values"><a href="#Values" class="headerlink" title="Values"></a>Values</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private final class Values extends AbstractCollection&lt;V&gt; {</div><div class="line">    public Iterator&lt;V&gt; iterator() {</div><div class="line">        return newValueIterator();</div><div class="line">    }</div><div class="line">    public int size() {</div><div class="line">        return size;</div><div class="line">    }</div><div class="line">    public boolean contains(Object o) {</div><div class="line">        return containsValue(o);</div><div class="line">    }</div><div class="line">    public void clear() {</div><div class="line">        HashMap.this.clear();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x6240;&#x6709;value&#x6784;&#x6210;&#x7684;&#x96C6;&#x5408;&#x3002;</p>
-<h3 id="KeySet"><a href="#KeySet" class="headerlink" title="KeySet"></a>KeySet</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private final class KeySet extends AbstractSet&lt;K&gt; {</div><div class="line">    public Iterator&lt;K&gt; iterator() {</div><div class="line">        return newKeyIterator();</div><div class="line">    }</div><div class="line">    public int size() {</div><div class="line">        return size;</div><div class="line">    }</div><div class="line">    public boolean contains(Object o) {</div><div class="line">        return containsKey(o);</div><div class="line">    }</div><div class="line">    public boolean remove(Object o) {</div><div class="line">        return HashMap.this.removeEntryForKey(o) != null;</div><div class="line">    }</div><div class="line">    public void clear() {</div><div class="line">        HashMap.this.clear();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x6240;&#x6709;key&#x6784;&#x6210;&#x7684;Set&#x96C6;&#x5408;&#x3002;</p>
-<h3 id="EntrySet"><a href="#EntrySet" class="headerlink" title="EntrySet"></a>EntrySet</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private final class KeySet extends AbstractSet&lt;K&gt; {</div><div class="line">    public Iterator&lt;K&gt; iterator() {</div><div class="line">        return newKeyIterator();</div><div class="line">    }</div><div class="line">    public int size() {</div><div class="line">        return size;</div><div class="line">    }</div><div class="line">    public boolean contains(Object o) {</div><div class="line">        return containsKey(o);</div><div class="line">    }</div><div class="line">    public boolean remove(Object o) {</div><div class="line">        return HashMap.this.removeEntryForKey(o) != null;</div><div class="line">    }</div><div class="line">    public void clear() {</div><div class="line">        HashMap.this.clear();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5143;&#x7D20;&#x662F;Entry&#x7684;Set&#x96C6;&#x5408;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1973,7 +1942,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">128</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
