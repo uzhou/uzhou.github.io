@@ -236,6 +236,281 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/Linux中的内存管理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/23/Linux中的内存管理/" itemprop="url">
+                  Linux中的内存管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T22:05:42+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/23/Linux中的内存管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/Linux中的内存管理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/23/Linux中的内存管理/" class="leancloud_visitors" data-flag-title="Linux中的内存管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="&#x4E00;&#x3001;&#x7269;&#x7406;&#x5185;&#x5B58;&#x548C;&#x865A;&#x62DF;&#x5185;&#x5B58;"><a href="#&#x4E00;&#x3001;&#x7269;&#x7406;&#x5185;&#x5B58;&#x548C;&#x865A;&#x62DF;&#x5185;&#x5B58;" class="headerlink" title="&#x4E00;&#x3001;&#x7269;&#x7406;&#x5185;&#x5B58;&#x548C;&#x865A;&#x62DF;&#x5185;&#x5B58;"></a>&#x4E00;&#x3001;&#x7269;&#x7406;&#x5185;&#x5B58;&#x548C;&#x865A;&#x62DF;&#x5185;&#x5B58;</h4><p>&#x7269;&#x7406;&#x5185;&#x5B58;&#x5C31;&#x662F;&#x7CFB;&#x7EDF;&#x786C;&#x4EF6;&#x63D0;&#x4F9B;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#xFF0C;&#x662F;&#x771F;&#x6B63;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x76F8;&#x5BF9;&#x4E8E;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5728;linux&#x4E0B;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x6EE1;&#x8DB3;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x4E0D;&#x8DB3;&#x800C;&#x63D0;&#x51FA;&#x7684;&#x7B56;&#x7565;&#xFF0C;&#x5B83;&#x662F;&#x5229;&#x7528;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x865A;&#x62DF;&#x51FA;&#x7684;&#x4E00;&#x5757;&#x903B;&#x8F91;&#x5185;&#x5B58;&#xFF0C;&#x7528;&#x4F5C;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x88AB;&#x79F0;&#x4E3A;&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#xFF08;Swap Space&#xFF09;&#x3002;</p>
+<p>&#x4F5C;&#x4E3A;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x6269;&#x5C55;&#xFF0C;linux&#x4F1A;&#x5728;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x4F7F;&#x7528;&#x4EA4;&#x6362;&#x5206;&#x533A;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#xFF0C;&#x66F4;&#x8BE6;&#x7EC6;&#x7684;&#x8BF4;&#xFF0C;&#x5C31;&#x662F;&#x5185;&#x6838;&#x4F1A;&#x5C06;&#x6682;&#x65F6;&#x4E0D;&#x7528;&#x7684;&#x5185;&#x5B58;&#x5757;&#x4FE1;&#x606F;&#x5199;&#x5230;&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#xFF0C;&#x8FD9;&#x6837;&#x4EE5;&#x6765;&#xFF0C;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5F97;&#x5230;&#x4E86;&#x91CA;&#x653E;&#xFF0C;&#x8FD9;&#x5757;&#x5185;&#x5B58;&#x5C31;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5176;&#x5B83;&#x76EE;&#x7684;&#xFF0C;&#x5F53;&#x9700;&#x8981;&#x7528;&#x5230;&#x539F;&#x59CB;&#x7684;&#x5185;&#x5BB9;&#x65F6;&#xFF0C;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x4F1A;&#x88AB;&#x91CD;&#x65B0;&#x4ECE;&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#x8BFB;&#x5165;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
+<p>Linux&#x7684;&#x5185;&#x5B58;&#x7BA1;&#x7406;&#x91C7;&#x53D6;&#x7684;&#x662F;&#x5206;&#x9875;&#x5B58;&#x53D6;&#x673A;&#x5236;&#xFF0C;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x7269;&#x7406;&#x5185;&#x5B58;&#x80FD;&#x5F97;&#x5230;&#x5145;&#x5206;&#x7684;&#x5229;&#x7528;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x5728;&#x9002;&#x5F53;&#x7684;&#x65F6;&#x5019;&#x5C06;&#x7269;&#x7406;&#x5185;&#x5B58;&#x4E2D;&#x4E0D;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x5757;&#x81EA;&#x52A8;&#x4EA4;&#x6362;&#x5230;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x800C;&#x5C06;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x4FE1;&#x606F;&#x4FDD;&#x7559;&#x5230;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</p>
+<p>&#x8981;&#x6DF1;&#x5165;&#x4E86;&#x89E3;linux&#x5185;&#x5B58;&#x8FD0;&#x884C;&#x673A;&#x5236;&#xFF0C;&#x9700;&#x8981;&#x77E5;&#x9053;&#x4E0B;&#x9762;&#x63D0;&#x5230;&#x7684;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;</p>
+<p>Linux&#x7CFB;&#x7EDF;&#x4F1A;&#x4E0D;&#x65F6;&#x7684;&#x8FDB;&#x884C;&#x9875;&#x9762;&#x4EA4;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;&#x4EE5;&#x4FDD;&#x6301;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#x7684;&#x7A7A;&#x95F2;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5373;&#x4F7F;&#x5E76;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x4E8B;&#x60C5;&#x9700;&#x8981;&#x5185;&#x5B58;&#xFF0C;Linux&#x4E5F;&#x4F1A;&#x4EA4;&#x6362;&#x51FA;&#x6682;&#x65F6;&#x4E0D;&#x7528;&#x7684;&#x5185;&#x5B58;&#x9875;&#x9762;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x7B49;&#x5F85;&#x4EA4;&#x6362;&#x6240;&#x9700;&#x7684;&#x65F6;&#x95F4;&#x3002;<br>Linux &#x8FDB;&#x884C;&#x9875;&#x9762;&#x4EA4;&#x6362;&#x662F;&#x6709;&#x6761;&#x4EF6;&#x7684;&#xFF0C;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x9875;&#x9762;&#x5728;&#x4E0D;&#x7528;&#x65F6;&#x90FD;&#x4EA4;&#x6362;&#x5230;&#x865A;&#x62DF;&#x5185;&#x5B58;&#xFF0C;linux&#x5185;&#x6838;&#x6839;&#x636E;&#x201D;&#x6700;&#x8FD1;&#x6700;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x201C;&#x7B97;&#x6CD5;&#xFF0C;&#x4EC5;&#x4EC5;&#x5C06;&#x4E00;&#x4E9B;&#x4E0D;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x9875;&#x9762;&#x6587;&#x4EF6;&#x4EA4;&#x6362;&#x5230;&#x865A;&#x62DF; &#x5185;&#x5B58;&#xFF0C;&#x6709;&#x65F6;&#x6211;&#x4EEC;&#x4F1A;&#x770B;&#x5230;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x73B0;&#x8C61;&#xFF1A;linux&#x7269;&#x7406;&#x5185;&#x5B58;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4F46;&#x662F;&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#x4E5F;&#x4F7F;&#x7528;&#x4E86;&#x5F88;&#x591A;&#x3002;&#x5176;&#x5B9E;&#xFF0C;&#x8FD9;&#x5E76;&#x4E0D;&#x5947;&#x602A;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x4E00;&#x4E2A;&#x5360;&#x7528;&#x5F88;&#x5927;&#x5185;&#x5B58;&#x7684;&#x8FDB;&#x7A0B;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x9700; &#x8981;&#x8017;&#x8D39;&#x5F88;&#x591A;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#xFF0C;&#x6B64;&#x65F6;&#x5C31;&#x4F1A;&#x6709;&#x4E00;&#x4E9B;&#x4E0D;&#x5E38;&#x7528;&#x9875;&#x9762;&#x6587;&#x4EF6;&#x88AB;&#x4EA4;&#x6362;&#x5230;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x4F46;&#x540E;&#x6765;&#x8FD9;&#x4E2A;&#x5360;&#x7528;&#x5F88;&#x591A;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x7684;&#x8FDB;&#x7A0B;&#x7ED3;&#x675F;&#x5E76;&#x91CA;&#x653E;&#x4E86;&#x5F88;&#x591A;&#x5185;&#x5B58;&#x65F6;&#xFF0C;&#x521A;&#x624D;&#x88AB;&#x4EA4;&#x6362;&#x51FA;&#x53BB;&#x7684;&#x9875;&#x9762; &#x6587;&#x4EF6;&#x5E76;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x7684;&#x4EA4;&#x6362;&#x8FDB;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x9664;&#x975E;&#x6709;&#x8FD9;&#x4E2A;&#x5FC5;&#x8981;&#xFF0C;&#x90A3;&#x4E48;&#x6B64;&#x523B;&#x7CFB;&#x7EDF;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5C31;&#x4F1A;&#x7A7A;&#x95F2;&#x5F88;&#x591A;&#xFF0C;&#x540C;&#x65F6;&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#x4E5F;&#x5728;&#x88AB;&#x4F7F;&#x7528;&#xFF0C;&#x5C31;&#x51FA;&#x73B0;&#x4E86;&#x521A;&#x624D;&#x6240;&#x8BF4;&#x7684;&#x73B0;&#x8C61;&#x4E86;&#x3002;&#x5173;&#x4E8E;&#x8FD9;&#x70B9;&#xFF0C;&#x4E0D; &#x7528;&#x62C5;&#x5FC3;&#x4EC0;&#x4E48;&#xFF0C;&#x53EA;&#x8981;&#x77E5;&#x9053;&#x662F;&#x600E;&#x4E48;&#x4E00;&#x56DE;&#x4E8B;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;<br>&#x4EA4;&#x6362;&#x7A7A;&#x95F4;&#x7684;&#x9875;&#x9762;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x4F1A;&#x9996;&#x5148;&#x88AB;&#x4EA4;&#x6362;&#x5230;&#x7269;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5982;&#x679C;&#x6B64;&#x65F6;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6765;&#x5BB9;&#x7EB3;&#x8FD9;&#x4E9B;&#x9875; &#x9762;&#xFF0C;&#x5B83;&#x4EEC;&#x53C8;&#x4F1A;&#x88AB;&#x9A6C;&#x4E0A;&#x4EA4;&#x6362;&#x51FA;&#x53BB;&#xFF0C;&#x5982;&#x6B64;&#x4EE5;&#x6765;&#xFF0C;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E2D;&#x53EF;&#x80FD;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7A7A;&#x95F4;&#x6765;&#x5B58;&#x50A8;&#x8FD9;&#x4E9B;&#x4EA4;&#x6362;&#x9875;&#x9762;&#xFF0C;&#x6700;&#x7EC8;&#x4F1A;&#x5BFC;&#x81F4;linux&#x51FA;&#x73B0;&#x5047;&#x6B7B;&#x673A;&#x3001;&#x670D;&#x52A1;&#x5F02;&#x5E38;&#x7B49;&#x95EE;&#x9898;&#xFF0C;linux&#x867D; &#x7136;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x81EA;&#x884C;&#x6062;&#x590D;&#xFF0C;&#x4F46;&#x662F;&#x6062;&#x590D;&#x540E;&#x7684;&#x7CFB;&#x7EDF;&#x5DF2;&#x7ECF;&#x57FA;&#x672C;&#x4E0D;&#x53EF;&#x7528;&#x4E86;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/Linux中断中的irq-desc/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/23/Linux中断中的irq-desc/" itemprop="url">
+                  Linux中断中的irq_desc
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T20:49:30+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/23/Linux中断中的irq-desc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/Linux中断中的irq-desc/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/23/Linux中断中的irq-desc/" class="leancloud_visitors" data-flag-title="Linux中断中的irq_desc">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;os&#x7BA1;&#x7406;&#x4E2D;&#x65AD;&#xFF0C;linux&#x4E5F;&#x4E3A;&#x4E2D;&#x65AD;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x83AB;&#x8FC7;&#x4E8E;irq_desc,&#x987E;&#x540D;&#x601D;&#x4E49;&#x5C31;&#x662F;&#x4E2D;&#x65AD;&#x7684;&#x63CF;&#x8FF0;&#x7ED3;&#x6784;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x662F;&#x4E2D;&#x65AD;&#x7684;&#x6838;&#x5FC3;&#xFF0C;&#x5176;&#x4E2D;&#x53C8;&#x5305;&#x542B;&#x4E86;irq_chip&#x548C;irqaction&#x3002;<br>irq_chip  &#x91CC;&#x9762;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x4E00;&#x4E9B;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x4E2D;&#x5927;&#x591A;&#x7528;&#x4E8E;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x786C;&#x4EF6;&#xFF0C;&#x8BBE;&#x7F6E;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x8BBE;&#x7F6E;GPIO&#x4E3A;&#x4E2D;&#x65AD;&#x8F93;&#x5165;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x4E00;&#x4E0B;&#x76F8;&#x5173;&#x6E90;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">struct irq_chip {</div><div class="line">        const char     *name;</div><div class="line">        unsigned int   (*startup)(unsigned int irq); &#x542F;&#x52A8;&#x4E2D;&#x65AD;</div><div class="line">        void           (*shutdown)(unsigned int irq); &#x5173;&#x95ED;&#x4E2D;&#x65AD;</div><div class="line">        void           (*enable)(unsigned int irq);   &#x4F7F;&#x80FD;&#x4E2D;&#x65AD;</div><div class="line">        void           (*disable)(unsigned int irq);  &#x7981;&#x6B62;&#x4E2D;&#x65AD;</div><div class="line"> </div><div class="line">        void           (*ack)(unsigned int irq);   &#x4E2D;&#x65AD;&#x5E94;&#x7B54;&#x51FD;&#x6570;&#xFF0C;&#x5C31;&#x662F;&#x6E05;&#x9664;&#x4E2D;&#x65AD;&#x6807;&#x8BC6;&#x51FD;&#x6570;</div><div class="line">        void           (*mask)(unsigned int irq);   &#x4E2D;&#x65AD;&#x5C4F;&#x853D;&#x51FD;&#x6570;</div><div class="line">        void           (*mask_ack)(unsigned int irq); &#x5C4F;&#x853D;&#x4E2D;&#x65AD;&#x5E94;&#x7B54;&#x51FD;&#x6570;&#xFF0C;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x7535;&#x5E73;&#x89E6;&#x53D1;&#x65B9;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x5C4F;&#x853D;&#x518D;&#x5E94;&#x7B54;</div><div class="line">        void           (*unmask)(unsigned int irq);  &#x5F00;&#x542F;&#x4E2D;&#x65AD;</div><div class="line">        void           (*eoi)(unsigned int irq);</div><div class="line"> </div><div class="line">        void           (*end)(unsigned int irq);</div><div class="line">        int            (*set_affinity)(unsigned int irq,</div><div class="line">                                      const struct cpumask *dest);</div><div class="line">        int            (*retrigger)(unsigned int irq);</div><div class="line">        int            (*set_type)(unsigned int irq, unsigned int flow_type); &#x8BBE;&#x7F6E;&#x4E2D;&#x65AD;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x8BBE;&#x7F6E;GPIO&#x53E3;&#x4E3A;&#x4E2D;&#x65AD;&#x8F93;&#x5165;</div><div class="line">        int            (*set_wake)(unsigned int irq, unsigned int on);</div><div class="line"> </div><div class="line">        void           (*bus_lock)(unsigned int irq);  &#x4E0A;&#x9501;&#x51FD;&#x6570;</div><div class="line">        void           (*bus_sync_unlock)(unsigned int irq); &#x89E3;&#x9501;</div><div class="line"> </div><div class="line">        /* Currently used only by UML, might disappear one day.*/</div><div class="line">#ifdef CONFIG_IRQ_RELEASE_METHOD</div><div class="line">        void           (*release)(unsigned int irq, void *dev_id);</div><div class="line">#endif</div><div class="line">        /*</div><div class="line">         * For compatibility, -&gt;typename is copied into -&gt;name.</div><div class="line">         * Will disappear.</div><div class="line">         */</div><div class="line">        const char     *typename;</div><div class="line">};</div><div class="line"></div><div class="line">struct irqaction {</div><div class="line">        irq_handler_t handler;  &#x7528;&#x6237;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x51FD;&#x6570;</div><div class="line">        unsigned long flags;    &#x4E2D;&#x65AD;&#x6807;&#x8BC6;</div><div class="line">        const char *name;       &#x7528;&#x6237;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x540D;&#x5B57;&#xFF0C;cat/proc/interrupts&#x65F6;&#x53EF;&#x4EE5;&#x770B;&#x5230;</div><div class="line">        void *dev_id;           &#x53EF;&#x4EE5;&#x662F;&#x7528;&#x6237;&#x4F20;&#x9012;&#x7684;&#x53C2;&#x6570;&#x6216;&#x8005;&#x7528;&#x6765;&#x533A;&#x5206;&#x5171;&#x4EAB;&#x4E2D;&#x65AD;</div><div class="line">        struct irqaction *next; irqaction&#x7ED3;&#x6784;&#x94FE;&#xFF0C;&#x4E00;&#x4E2A;&#x5171;&#x4EAB;&#x4E2D;&#x65AD;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x51FD;&#x6570;</div><div class="line">        int irq;                &#x4E2D;&#x65AD;&#x53F7;</div><div class="line">        struct proc_dir_entry *dir;</div><div class="line">        irq_handler_t thread_fn;</div><div class="line">        struct task_struct *thread;</div><div class="line">        unsigned long thread_flags;</div><div class="line">};</div></pre></td></tr></table></figure>
+<p>&#x5176;&#x5B9E;&#x5C31;&#x662F;linux&#x5DF2;&#x7ECF;&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x6846;&#x67B6;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x586B;&#x5145;&#x91CC;&#x9762;&#x7684;&#x51FD;&#x6570;&#x3002;<br>&#x4E00;&#x822C;&#x7684;&#xFF0C;&#x4E2D;&#x65AD;&#x7684;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>1&#x3001;&#x4E2D;&#x65AD;&#x521D;&#x59CB;&#x5316;&#xFF1A;&#x5185;&#x6838;&#x542F;&#x52A8;&#x65F6;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x5927;&#x90E8;&#x5206;&#x64CD;&#x4F5C;&#xFF0C;&#x5373;&#x521D;&#x59CB;&#x5316;&#x4E86;irq_chip&#x7ED3;&#x6784;</p>
+<p>2&#x3001;&#x4E2D;&#x65AD;&#x6CE8;&#x518C;&#xFF1A;&#x8C03;&#x7528;irq_request&#x6CE8;&#x518C;&#x4E2D;&#x65AD;</p>
+<p>3&#x3001;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#xFF1A;&#x5148;&#x8C03;&#x7528;irq_chip&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x4E2D;&#x65AD;&#x5C4F;&#x853D;&#xFF0C;&#x518D;&#x8C03;&#x7528;irqaction&#x4E2D;&#x6CE8;&#x518C;&#x7684;&#x4E2D;&#x65AD;&#x51FD;&#x6570;&#x53BB;&#x5904;&#x7406;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/linux中断向量是如何分配的/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1322,274 +1597,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/14/StringtoInteger/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/14/StringtoInteger/" itemprop="url">
-                  StringtoInteger
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-14T20:25:20+08:00">
-                2016-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/14/StringtoInteger/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/14/StringtoInteger/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/12/14/StringtoInteger/" class="leancloud_visitors" data-flag-title="StringtoInteger">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public int myAtoi(String str) {</div><div class="line">    	if(str==null)</div><div class="line">    		return 0;</div><div class="line">    	str = str.trim();</div><div class="line">    	if(str.length()==0)</div><div class="line">    		return 0;</div><div class="line">    	double ans = 0;</div><div class="line">    	boolean flag = true;</div><div class="line">    	int i = 0;</div><div class="line">    	if(str.charAt(i)==&apos;-&apos;){</div><div class="line">    		flag = false;</div><div class="line">    		i++;</div><div class="line">    	}else if(str.charAt(i)==&apos;+&apos;)</div><div class="line">    	    i++;</div><div class="line">    	while(i&lt;str.length()&amp;&amp;str.charAt(i)&gt;=&apos;0&apos;&amp;&amp;str.charAt(i)&lt;=&apos;9&apos;){</div><div class="line">    		ans = ans*10+str.charAt(i)-&apos;0&apos;;</div><div class="line">    		i++;</div><div class="line">    	}</div><div class="line">    	if(flag==false)</div><div class="line">    		ans = -ans;</div><div class="line">    	if(ans&gt;Integer.MAX_VALUE)</div><div class="line">    		return Integer.MAX_VALUE;</div><div class="line">    	if(ans&lt;Integer.MIN_VALUE)</div><div class="line">    		return Integer.MIN_VALUE;</div><div class="line">    	return (int)ans;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x4F69;&#x670D;&#x4E00;&#x6B21;&#x5C31;AC&#x7684;&#x4EBA;&#xFF0C;&#x8FD9;&#x79CD;&#x9898;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x592A;&#x591A;&#xFF0C;&#x8981;&#x6CA1;&#x6709;&#x63D0;&#x793A;&#xFF0C;&#x5F88;&#x96BE;&#x5F04;&#xFF0C;&#x73B0;&#x5728;&#x7EC8;&#x4E8E;&#x77E5;&#x9053;&#x4E3A;&#x4EC0;&#x4E48;AC&#x7387;&#x8FD9;&#x4E48;&#x4F4E;&#x4E86;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/13/Reverse-Integer/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/13/Reverse-Integer/" itemprop="url">
-                  Reverse Integer
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-13T17:43:29+08:00">
-                2016-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/13/Reverse-Integer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/13/Reverse-Integer/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/12/13/Reverse-Integer/" class="leancloud_visitors" data-flag-title="Reverse Integer">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public int reverse(int x) {</div><div class="line">        boolean isPositive = true;</div><div class="line">        if(x&lt;0){</div><div class="line">        	isPositive = false;</div><div class="line">        	x = -x;</div><div class="line">        }</div><div class="line">        long m,ans = 0;</div><div class="line">        while(x&gt;0){</div><div class="line">        	m = x%10;</div><div class="line">        	x = x/10;</div><div class="line">        	ans = ans*10+m;</div><div class="line">        }</div><div class="line">        if(!isPositive)</div><div class="line">        	ans = -ans;</div><div class="line">        if(ans&gt;2147483647||ans&lt;-2147483648){</div><div class="line">        	return 0;</div><div class="line">        }</div><div class="line">		return (int)ans;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5F00;&#x59CB;&#x611F;&#x89C9;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x540E;&#x6765;&#x53D1;&#x73B0;&#x6709;&#x4E24;&#x4E2A;case&#x4E3A;0&#x4E00;&#x76F4;&#x8FC7;&#x4E0D;&#x4E86;&#xFF0C;&#x4ED4;&#x7EC6;&#x4E00;&#x60F3;&#xFF0C;&#x539F;&#x6765;&#x662F;int&#x6EA2;&#x51FA;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x6240;&#x4EE5;&#x5C06;ans&#x7C7B;&#x578B;&#x6539;&#x4E3A;long&#xFF0C;&#x518D;&#x505A;&#x4E00;&#x4E0B;&#x5224;&#x65AD;&#x5C31;&#x597D;&#x4E86;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1635,7 +1642,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-count">130</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

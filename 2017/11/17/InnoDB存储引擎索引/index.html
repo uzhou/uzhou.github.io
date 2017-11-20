@@ -1,0 +1,787 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MySQL," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x6982;&amp;#x8FF0;InnoDB&amp;#x4E2D;&amp;#x5E38;&amp;#x89C1;&amp;#x7D22;&amp;#x5F15;&amp;#x7C7B;&amp;#x578B;&amp;#x6709;&amp;#x5982;&amp;#x4E0B;&amp;#x4E09;&amp;#x79CD;&amp;#xFF1A;
+
+B+&amp;#x6811;&amp;#x7D22;&amp;#x5F15;
+&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;
+&amp;#x54C8;&amp;#x5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InnoDB存储引擎索引">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/index.html">
+<meta property="og:site_name" content="uzhou">
+<meta property="og:description" content="&amp;#x6982;&amp;#x8FF0;InnoDB&amp;#x4E2D;&amp;#x5E38;&amp;#x89C1;&amp;#x7D22;&amp;#x5F15;&amp;#x7C7B;&amp;#x578B;&amp;#x6709;&amp;#x5982;&amp;#x4E0B;&amp;#x4E09;&amp;#x79CD;&amp;#xFF1A;
+
+B+&amp;#x6811;&amp;#x7D22;&amp;#x5F15;
+&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;
+&amp;#x54C8;&amp;#x5">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/img1.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/img2.png">
+<meta property="og:updated_time" content="2017-11-20T01:35:07.708Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="InnoDB存储引擎索引">
+<meta name="twitter:description" content="&amp;#x6982;&amp;#x8FF0;InnoDB&amp;#x4E2D;&amp;#x5E38;&amp;#x89C1;&amp;#x7D22;&amp;#x5F15;&amp;#x7C7B;&amp;#x578B;&amp;#x6709;&amp;#x5982;&amp;#x4E0B;&amp;#x4E09;&amp;#x79CD;&amp;#xFF1A;
+
+B+&amp;#x6811;&amp;#x7D22;&amp;#x5F15;
+&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;
+&amp;#x54C8;&amp;#x5">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/img1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/"/>
+
+
+
+
+
+  <title> InnoDB存储引擎索引 | uzhou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">uzhou</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                InnoDB存储引擎索引
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-17T10:16:59+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/11/17/InnoDB存储引擎索引/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/17/InnoDB存储引擎索引/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/11/17/InnoDB存储引擎索引/" class="leancloud_visitors" data-flag-title="InnoDB存储引擎索引">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="&#x6982;&#x8FF0;"><a href="#&#x6982;&#x8FF0;" class="headerlink" title="&#x6982;&#x8FF0;"></a>&#x6982;&#x8FF0;</h1><p>InnoDB&#x4E2D;&#x5E38;&#x89C1;&#x7D22;&#x5F15;&#x7C7B;&#x578B;&#x6709;&#x5982;&#x4E0B;&#x4E09;&#x79CD;&#xFF1A;</p>
+<ul>
+<li>B+&#x6811;&#x7D22;&#x5F15;</li>
+<li>&#x5168;&#x6587;&#x7D22;&#x5F15;</li>
+<li>&#x54C8;&#x5E0C;&#x7D22;&#x5F15;<br>&#x54C8;&#x5E0C;&#x7D22;&#x5F15;&#x53EF;&#x4EE5;&#x770B;&#x6210;&#x662F;&#x5BF9;&#x70ED;&#x70B9;&#x6570;&#x636E;&#x7684;&#x6620;&#x5C04;&#xFF0C;&#x8FD9;&#x4E2A;&#x7D22;&#x5F15;&#x7684;&#x7BA1;&#x7406;&#x662F;&#x6709;InnoDB&#x8D1F;&#x8D23;&#x7684;&#xFF0C;&#x4E0D;&#x9700;&#x8981;DBA&#x7684;&#x5E72;&#x9884;&#x3002;<h2 id="B-&#x6811;&#x7D22;&#x5F15;"><a href="#B-&#x6811;&#x7D22;&#x5F15;" class="headerlink" title="B+&#x6811;&#x7D22;&#x5F15;"></a>B+&#x6811;&#x7D22;&#x5F15;</h2>B+&#x6811;&#x7D22;&#x5F15;&#x7684;&#x672C;&#x8D28;&#x5C31;&#x662F;B+&#x6811;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x7531;&#x4E8E;B+&#x7D22;&#x5F15;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x70B9;&#x662F;&#x9AD8;&#x6247;&#x51FA;&#x6027;&#xFF08;B+&#x6811;&#x4E00;&#x822C;&#x53EA;&#x6709;2-4&#x6B21;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x67E5;&#x8BE2;&#x67D0;&#x4E00;&#x952E;&#x503C;&#x4E00;&#x822C;&#x90FD;&#x8981;2-4&#x6B21;IO&#x64CD;&#x4F5C;&#x3002;<h3 id="&#x805A;&#x96C6;&#x7D22;&#x5F15;"><a href="#&#x805A;&#x96C6;&#x7D22;&#x5F15;" class="headerlink" title="&#x805A;&#x96C6;&#x7D22;&#x5F15;"></a>&#x805A;&#x96C6;&#x7D22;&#x5F15;</h3>&#x805A;&#x96C6;&#x7D22;&#x5F15;&#x5C31;&#x662F;&#x6309;&#x7167;&#x6BCF;&#x5F20;&#x8868;&#x7684;&#x4E3B;&#x952E;&#x6784;&#x9020;&#x4E00;&#x9897;B+&#x6811;&#xFF0C;&#x540C;&#x65F6;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x4E2D;&#x5B58;&#x653E;&#x7684;&#x5373;&#x4E3A;&#x6574;&#x5F20;&#x8868;&#x7684;&#x884C;&#x8BB0;&#x5F55;&#x6570;&#x636E;&#xFF0C;&#x4E5F;&#x5C06;&#x805A;&#x96C6;&#x7D22;&#x5F15;&#x7684;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x79F0;&#x4E3A;&#x6570;&#x636E;&#x9875;&#x3002;&#x67E5;&#x8BE2;&#x4F18;&#x5316;&#x5668;&#x503E;&#x5411;&#x4E8E;&#x91C7;&#x7528;&#x805A;&#x96C6;&#x7D22;&#x5F15;&#xFF0C;&#x56E0;&#x4E3A;&#x805A;&#x96C6;&#x7D22;&#x5F15;&#x80FD;&#x5728;B+&#x6811;&#x7D22;&#x5F15;&#x7684;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x4E0A;&#x76F4;&#x63A5;&#x627E;&#x5230;&#x6570;&#x636E;&#x3002;<br><strong>&#x6CE8;&#x610F;&#xFF1A;</strong>&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x8BB0;&#x5F55;&#x662F;&#x6309;&#x7167;&#x4E3B;&#x952E;&#x903B;&#x8F91;&#x5B58;&#x50A8;&#x7684;&#xFF0C;&#x8FD9;&#x5176;&#x4E2D;&#x6709;&#x4E24;&#x4E2A;&#x610F;&#x601D;&#xFF1A;1&#x3001;&#x9875;&#x901A;&#x8FC7;&#x53CC;&#x5411;&#x94FE;&#x8868;&#x8FDE;&#x63A5;&#xFF0C;&#x9875;&#x4E0E;&#x9875;&#x4E4B;&#x95F4;&#x4E0D;&#x662F;&#x7269;&#x7406;&#x8FDE;&#x7EED;&#x7684;&#xFF1B;2&#x3001;&#x884C;&#x8BB0;&#x5F55;&#x901A;&#x8FC7;&#x53CC;&#x5411;&#x94FE;&#x8868;&#x8FDE;&#x63A5;&#xFF0C;&#x7269;&#x7406;&#x5B58;&#x50A8;&#x4E0A;&#x53EF;&#x4EE5;&#x540C;&#x6837;&#x4E0D;&#x6309;&#x7167;&#x4E3B;&#x952E;&#x5B58;&#x50A8;&#x3002;<h3 id="&#x8F85;&#x52A9;&#x7D22;&#x5F15;"><a href="#&#x8F85;&#x52A9;&#x7D22;&#x5F15;" class="headerlink" title="&#x8F85;&#x52A9;&#x7D22;&#x5F15;"></a>&#x8F85;&#x52A9;&#x7D22;&#x5F15;</h3>&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x7684;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x5E76;&#x4E0D;&#x5305;&#x542B;&#x884C;&#x8BB0;&#x5F55;&#x7684;&#x5168;&#x90E8;&#x6570;&#x636E;&#xFF0C;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x51FA;&#x4E86;&#x5305;&#x542B;&#x952E;&#x503C;&#x5916;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x4E66;&#x7B7E;&#xFF08;bookmark&#xFF09;&#xFF0C;&#x8BE5;&#x4E66;&#x7B7E;&#x8BB0;&#x5F55;&#x4E86;&#x54EA;&#x91CC;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x884C;&#x6570;&#x636E;&#x3002;<br>&#x5F53;&#x901A;&#x8FC7;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x6765;&#x5BFB;&#x627E;&#x6570;&#x636E;&#x65F6;&#xFF0C;InnoDB&#x4F1A;&#x904D;&#x5386;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x5E76;&#x901A;&#x8FC7;&#x9875;&#x7EA7;&#x522B;&#x7684;&#x6307;&#x9488;&#x83B7;&#x5F97;&#x6307;&#x5411;&#x4E3B;&#x952E;&#x7D22;&#x5F15;&#x7684;&#x4E3B;&#x952E;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x4E3B;&#x952E;&#x7D22;&#x5F15;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x884C;&#x8BB0;&#x5F55;&#x3002;<br>&#x53E6;&#x5916;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;B+&#x6811;&#x6BD4;&#x8F83;&#x9002;&#x7528;&#x4E8E;&#x9AD8;&#x9009;&#x62E9;&#x6027;&#x7684;&#x5217;&#x3002;<br>&#x8054;&#x5408;&#x7D22;&#x5F15;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x4E00;&#x6B21;filesort&#x6392;&#x5E8F;&#x64CD;&#x4F5C;&#x3002;<h3 id="&#x8986;&#x76D6;&#x7D22;&#x5F15;"><a href="#&#x8986;&#x76D6;&#x7D22;&#x5F15;" class="headerlink" title="&#x8986;&#x76D6;&#x7D22;&#x5F15;"></a>&#x8986;&#x76D6;&#x7D22;&#x5F15;</h3>&#x8986;&#x76D6;&#x7D22;&#x5F15;&#x6307;&#x7684;&#x662F;&#x4ECE;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x4E2D;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x67E5;&#x8BE2;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x67E5;&#x8BE2;&#x805A;&#x96C6;&#x7D22;&#x5F15;&#x4E2D;&#x7684;&#x8BB0;&#x5F55;&#x3002;&#x4F7F;&#x7528;&#x8986;&#x76D6;&#x7D22;&#x5F15;&#x7684;&#x4E00;&#x4E2A;&#x597D;&#x5904;&#x5C31;&#x662F;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x4E0D;&#x5305;&#x542B;&#x6574;&#x884C;&#x8BB0;&#x5F55;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x5927;&#x5C0F;&#x8FDC;&#x5C0F;&#x4E8E;&#x805A;&#x96C6;&#x7D22;&#x5F15;&#xFF0C;&#x56E0;&#x6B64;&#x51CF;&#x5C11;&#x4E86;&#x5927;&#x91CF;&#x7684;IO&#x64CD;&#x4F5C;&#x3002;<h3 id="MRR"><a href="#MRR" class="headerlink" title="MRR"></a>MRR</h3>MRR&#x5DE5;&#x4F5C;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;<br>1&#x3001;&#x5C06;&#x67E5;&#x8BE2;&#x5230;&#x7684;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x952E;&#x503C;&#x5B58;&#x653E;&#x4E8E;&#x4E00;&#x4E2A;&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x8FD9;&#x65F6;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x6839;&#x636E;&#x8F85;&#x52A9;&#x7D22;&#x5F15;&#x952E;&#x503C;&#x6392;&#x5E8F;&#x7684;&#x3002;<br>2&#x3001;&#x5C06;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x952E;&#x503C;&#x6309;&#x7167;&#x4E3B;&#x952E;&#x6392;&#x5E8F;<br>3&#x3001;&#x6839;&#x636E;&#x4E3B;&#x952E;&#x7684;&#x6392;&#x5E8F;&#x987A;&#x5E8F;&#x6765;&#x8BBF;&#x95EE;&#x5B9E;&#x9645;&#x7684;&#x6570;&#x636E;&#x6587;&#x4EF6;<h3 id="ICP&#x4F18;&#x5316;"><a href="#ICP&#x4F18;&#x5316;" class="headerlink" title="ICP&#x4F18;&#x5316;"></a>ICP&#x4F18;&#x5316;</h3>&#x672A;&#x542F;&#x7528;ICP&#xFF08;Index Condition Pushdown&#xFF09;&#x65F6;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x5148;&#x6839;&#x636E;&#x7D22;&#x5F15;&#x67E5;&#x8BE2;&#x8BB0;&#x5F55;&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;where&#x6761;&#x4EF6;&#x6765;&#x8FC7;&#x6EE4;&#x8BB0;&#x5F55;&#x3002;&#x542F;&#x7528;&#x540E;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x5728;&#x53D6;&#x51FA;&#x7D22;&#x5F15;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x5C31;&#x5224;&#x65AD;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;where&#x6761;&#x4EF6;&#x7684;&#x8FC7;&#x6EE4;&#x3002;<br>&#x4E3E;&#x4E2A;&#x6817;&#x5B50;&#xFF1A;<br>&#x67D0;&#x5F20;&#x8868;&#x6709;&#x8054;&#x5408;&#x7D22;&#x5F15;(zip_code,last_name,first_name)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select * from people</div><div class="line">    where zip_code = &apos;95054&apos;</div><div class="line">    and last_name like &apos;%jim%&apos;</div><div class="line">    and address like &apos;%Main Street%&apos;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>&#x5BF9;&#x4E8E;&#x4E0A;&#x8FF0;&#x8BED;&#x53E5;&#xFF0C;MySQL&#x6570;&#x636E;&#x5E93;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7D22;&#x5F15;&#x6765;&#x5B9A;&#x4F4D;zip_code=&#x2019;95054&#x2019;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x4F46;&#x662F;&#x7D22;&#x5F15;&#x5BF9;&#x4E8E;&#x540E;&#x4E24;&#x4E2A;&#x6761;&#x4EF6;&#x6CA1;&#x6709;&#x5E2E;&#x52A9;&#x3002;&#xFF0C;&#x6B64;&#x65F6;&#x4E0D;&#x542F;&#x7528;ICP&#xFF0C;&#x5219;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x5148;&#x901A;&#x8FC7;&#x7D22;&#x5F15;&#x53D6;&#x51FA;&#x6240;&#x6709;zip_code=&#x2019;95054&#x2019;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x518D;&#x8FC7;&#x6EE4;&#x3002;<br>&#x5982;&#x679C;&#x542F;&#x7528;&#x4E86;ICP&#xFF0C;&#x5219;&#x53D6;&#x51FA;&#x7D22;&#x5F15;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x5BF9;last_name&#x8FD9;&#x4E2A;&#x6761;&#x4EF6;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#xFF0C;&#x4E0D;&#x4F1A;&#x5BF9;address&#x6761;&#x4EF6;&#x8FC7;&#x6EE4;&#xFF0C;&#x56E0;&#x4E3A;address&#x6CA1;&#x6709;&#x88AB;&#x5305;&#x62EC;&#x5728;&#x7D22;&#x5F15;&#x4E2D;&#x3002;</p>
+<h2 id="&#x5168;&#x6587;&#x7D22;&#x5F15;"><a href="#&#x5168;&#x6587;&#x7D22;&#x5F15;" class="headerlink" title="&#x5168;&#x6587;&#x7D22;&#x5F15;"></a>&#x5168;&#x6587;&#x7D22;&#x5F15;</h2><p>&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x53EF;&#x4EE5;&#x4E3A;&#x5B57;&#x6BB5;&#x7684;&#x524D;&#x7F00;&#x6DFB;&#x52A0;&#x7D22;&#x5F15;&#xFF0C;&#x6BD4;&#x5982;&#x4E0B;&#x9762;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from blog where content like &apos;xxx%&apos;</div></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6761;sql&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x535A;&#x5BA2;&#x5185;&#x5BB9;&#x4EE5;xxx&#x5F00;&#x5934;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x5E76;&#x4E14;&#x53EA;&#x8981;content&#x6DFB;&#x52A0;&#x4E86;B+&#x6811;&#x7D22;&#x5F15;&#xFF0C;&#x5C31;&#x80FD;&#x5FEB;&#x901F;&#x67E5;&#x8BE2;&#x3002;&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x9700;&#x6C42;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from blog where content like &apos;%xxx%&apos;</div></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;B+&#x6811;&#x7D22;&#x5F15;&#x5C31;&#x4E0D;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x5B8C;&#x6210;&#x5DE5;&#x4F5C;&#x4E86;&#x3002;<br>&#x5168;&#x6587;&#x68C0;&#x7D22;&#xFF08;full-text search&#xFF09;&#x662F;&#x5C06;&#x5B58;&#x50A8;&#x4E8E;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x6574;&#x672C;&#x4E66;&#x6216;&#x6574;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x7684;&#x4EFB;&#x610F;&#x5185;&#x5BB9;&#x4FE1;&#x606F;&#x67E5;&#x627E;&#x51FA;&#x6765;&#x7684;&#x6280;&#x672F;&#x3002;<br>MySQL&#x4E2D;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x67E5;&#x8BE2;&#x6709;&#x5176;&#x56FA;&#x5B9A;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select * from fts_a </div><div class="line">    where match(body)</div><div class="line">    against(&apos;porridge&apos; in natural language mode);</div></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;&#xFF0C;fts_a&#x662F;&#x8868;&#x540D;&#xFF0C;body&#x662F;&#x5B9A;&#x4E49;&#x4E86;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5B57;&#x6BB5;&#xFF0C;natural language mode&#x662F;&#x67E5;&#x8BE2;&#x6A21;&#x5F0F;&#x3002;</p>
+<h3 id="&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5B9E;&#x73B0;"><a href="#&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5B9E;&#x73B0;" class="headerlink" title="&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5B9E;&#x73B0;"></a>&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5B9E;&#x73B0;</h3><p>B+&#x6811;&#x7D22;&#x5F15;&#x662F;&#x901A;&#x8FC7;B+&#x6811;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x800C;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x5219;&#x662F;&#x901A;&#x8FC7;&#x4E00;&#x79CD;&#x5012;&#x6392;&#x7D22;&#x5F15;&#x5B9E;&#x73B0;&#x7684;&#x3002;&#x5B83;&#x5728;&#x8F85;&#x52A9;&#x8868;&#x4E2D;&#x5B58;&#x50A8;&#x4E86;&#x5355;&#x8BCD;&#x4E0E;&#x5355;&#x8BCD;&#x81EA;&#x8EAB;&#x5728;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x6587;&#x6863;&#x4E2D;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x4E4B;&#x95F4;&#x7684;&#x6620;&#x5C04;&#x3002;&#x6BD4;&#x5982;&#x6709;&#x8868;t&#x5982;&#x4E0B;&#x56FE;&#xFF1A;<br><img src="/2017/11/17/InnoDB&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x7D22;&#x5F15;/img1.png" alt="image"><br>&#x5219;&#x8F85;&#x52A9;&#x8868;&#x4E3A;&#xFF1A;<br><img src="/2017/11/17/InnoDB&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x7D22;&#x5F15;/img2.png" alt="image"><br>&#x5168;&#x6587;&#x7D22;&#x5F15;&#x9700;&#x8981;&#x5C06;&#x5355;&#x8BCD;&#xFF08;word&#xFF09;&#x653E;&#x5230;&#x4E00;&#x5F20;&#x8868;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x79F0;&#x4E3A;Auxiliary Table&#xFF08;&#x8F85;&#x52A9;&#x8868;&#xFF09;&#x3002;&#x5728;InnoDB&#x7684;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x63D0;&#x9AD8;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7684;&#x5E76;&#x884C;&#x6027;&#x80FD;&#xFF0C;&#x6709;6&#x5F20;&#x8F85;&#x52A9;&#x8868;&#x3002;&#x53E6;&#x5916;&#x4E3A;&#x4E86;&#x7F13;&#x548C;&#x5185;&#x5B58;&#x548C;&#x78C1;&#x76D8;&#x7684;&#x8BBF;&#x95EE;&#x901F;&#x5EA6;&#xFF0C;&#x800C;&#x8BBE;&#x7F6E;&#x4E86;FTS Index Cache&#xFF08;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x7F13;&#x5B58;&#xFF09;&#xFF0C;&#x7528;&#x6765;&#x63D0;&#x9AD8;&#x8BBF;&#x95EE;&#x6027;&#x80FD;&#x3002;<br>&#x5168;&#x6587;&#x7D22;&#x5F15;&#x5BF9;&#x4E8E;&#x4E2D;&#x6587;&#x4E0D;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x4E2D;&#x6587;&#x4E0D;&#x50CF;&#x82F1;&#x6587;&#x90A3;&#x6837;&#x6709;&#x660E;&#x663E;&#x7684;&#x5206;&#x8BCD;&#x7B26;&#xFF08;&#x7A7A;&#x683C;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x4F60;&#x65E0;&#x6CD5;&#x786E;&#x5B9A;word&#x662F;&#x54EA;&#x4E00;&#x4E2A;&#x3002;mysql5.7&#x4E4B;&#x540E;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;cgram&#x7684;&#x5206;&#x8BCD;&#x63D2;&#x4EF6;&#xFF0C;&#x5B8C;&#x6210;&#x5BF9;&#x4E2D;&#x6587;&#x7684;&#x5168;&#x6587;&#x68C0;&#x7D22;&#xFF0C;&#x5176;&#x539F;&#x7406;&#x5F88;&#x7B80;&#x5355;&#x3002;&#x6BD4;&#x5982;&#x6709;&#x4E00;&#x6BB5;&#x8BDD;&#xFF1A;&#x201C;&#x6211;&#x662F;&#x5E05;&#x54E5;&#x3002;&#x201D;&#x5E76;&#x4E14;&#x5206;&#x8BCD;&#x89C4;&#x6A21;&#x4E3A;2&#xFF0C;&#x90A3;&#x4E48;&#x5206;&#x8BCD;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#xFF1A;&#x6211;&#x662F;&#x3001;&#x662F;&#x5E05;&#x3001;&#x5E05;&#x54E5;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/13/InnoDB中的表/" rel="next" title="InnoDB中的表">
+                <i class="fa fa-chevron-left"></i> InnoDB中的表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/11/17/InnoDB存储引擎索引/"
+           data-title="InnoDB存储引擎索引" data-url="http://yoursite.com/2017/11/17/InnoDB存储引擎索引/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="uzhou" />
+          <p class="site-author-name" itemprop="name">uzhou</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">130</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树索引"><span class="nav-number">1.1.</span> <span class="nav-text">B+树索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#聚集索引"><span class="nav-number">1.1.1.</span> <span class="nav-text">聚集索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#辅助索引"><span class="nav-number">1.1.2.</span> <span class="nav-text">辅助索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖索引"><span class="nav-number">1.1.3.</span> <span class="nav-text">覆盖索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MRR"><span class="nav-number">1.1.4.</span> <span class="nav-text">MRR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICP优化"><span class="nav-number">1.1.5.</span> <span class="nav-text">ICP优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全文索引"><span class="nav-number">1.2.</span> <span class="nav-text">全文索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全文索引的实现"><span class="nav-number">1.2.1.</span> <span class="nav-text">全文索引的实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">uzhou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uzhou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cx68mo8YeMcWfXT4VAmB9AXK-gzGzoHsz", "scXvv2AUsd0NQ4YTKKoSNmTl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -236,6 +236,316 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/Comparable和Comparator介绍/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/28/Comparable和Comparator介绍/" itemprop="url">
+                  Comparable和Comparator介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-28T16:23:22+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/09/28/Comparable和Comparator介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/28/Comparable和Comparator介绍/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/28/Comparable和Comparator介绍/" class="leancloud_visitors" data-flag-title="Comparable和Comparator介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Comparable&#x4ECB;&#x7ECD;"><a href="#Comparable&#x4ECB;&#x7ECD;" class="headerlink" title="Comparable&#x4ECB;&#x7ECD;"></a>Comparable&#x4ECB;&#x7ECD;</h1><p>Comparable&#x63A5;&#x53E3;&#x4F1A;&#x5F3A;&#x5236;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x7C7B;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;compareTo(E e)&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x4E2A;compareTo&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x8BE5;&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x81EA;&#x7136;&#x6392;&#x5E8F;&#x65B9;&#x6CD5;&#x3002;&#x51E1;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x96C6;&#x5408;&#x90FD;&#x80FD;&#x591F;&#x76F4;&#x63A5;&#x4F7F;&#x7528;Arrays#sort&#x6216;&#x8005;Cllections#sort&#x65B9;&#x6CD5;&#x6392;&#x5E8F;&#xFF0C;&#x53E6;&#x5916;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x5BF9;&#x8C61;&#x8FD8;&#x80FD;&#x4F5C;&#x4E3A;&#x6709;&#x5E8F;&#x96C6;&#x5408;&#x7684;key&#xFF0C;&#x6BD4;&#x5982;SortedMap&#x7684;key&#x6216;&#x8005;&#x4F5C;&#x4E3A;SortedSet&#x7684;&#x5143;&#x7D20;&#x3002;<br>&#x4EC0;&#x4E48;&#x53EB;&#x81EA;&#x7136;&#x6392;&#x5E8F;&#xFF0C;JDK&#x4E2D;&#x662F;natural ordering&#xFF0C;&#x4E0D;&#x77E5;&#x9053;&#x6211;&#x7FFB;&#x8BD1;&#x7684;&#x51C6;&#x4E0D;&#x51C6;&#x3002;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;Class C&#x6765;&#x8BF4;&#xFF0C;natural ordering&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x81F4;&#x6027;&#x76F8;&#x7B49;&#x7684;&#x610F;&#x601D;&#x3002;&#x6240;&#x8C13;&#x4E00;&#x81F4;&#x6027;&#x76F8;&#x7B49;&#xFF0C;&#x5373;C&#x7684;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;e1&#x548C;e2&#x6EE1;&#x8DB3;e1.compareTo(e2) == 0&#x548C;e1.equals(e2)&#x8FD4;&#x56DE;&#x76F8;&#x540C;&#x7684;boolean&#x503C;&#x3002;&#x53E6;&#x5916;compareTo&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x4E0D;&#x5141;&#x8BB8;&#x4E3A;null&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x629B;&#x51FA;null&#x5F02;&#x5E38;&#x3002;<br>JDK&#x4E2D;&#x5F3A;&#x70C8;&#x5EFA;&#x8BAE;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x5BF9;&#x8C61;&#x90FD;&#x8981;&#x6EE1;&#x8DB3;&#x4E00;&#x81F4;&#x6027;&#x76F8;&#x7B49;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x90A3;&#x4E9B;&#x672A;&#x6307;&#x5B9A;&#x6BD4;&#x8F83;&#x5668;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x73B0;Comparable&#x63A5;&#x53E3;&#x7684;&#x6709;&#x5E8F;&#x96C6;&#x5408;&#x4E0D;&#x4F1A;&#x8868;&#x73B0;&#x51FA;&#x8FDD;&#x80CC;&#x5BF9;&#x5E94;&#x96C6;&#x5408;&#x89C4;&#x8303;&#x7684;&#x884C;&#x4E3A;&#x3002;<br>&#x4F8B;&#x5982;&#xFF1A;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x672A;&#x6307;&#x5B9A;&#x6BD4;&#x8F83;&#x5668;&#xFF0C;&#x76F4;&#x63A5;&#x5B9E;&#x73B0;Comparable&#x63A5;&#x53E3;&#x7684;&#x6709;&#x5E8F;&#x96C6;&#x5408;SortedSet<e>,a&#x3001;b&#x4E3A;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x7684;&#x4E24;&#x4E2A;&#x5143;&#x7D20;&#x4E14;&#x6EE1;&#x8DB3;(!a.equals(b) &amp;&amp; a.compareTo(b) == 0)&#xFF0C;&#x90A3;&#x4E48;&#x6DFB;&#x52A0;a&#x4E4B;&#x540E;&#xFF0C;b&#x662F;&#x6DFB;&#x52A0;&#x4E0D;&#x8FDB;&#x53BB;&#x7684;&#x3002;</e></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public interface Comparable&lt;T&gt; {</div><div class="line">    /*</div><div class="line">     * @param   o the object to be compared.</div><div class="line">     * @return  a negative integer, zero, or a positive integer as this object</div><div class="line">     *          is less than, equal to, or greater than the specified object.</div><div class="line">     *</div><div class="line">     * @throws NullPointerException if the specified object is null</div><div class="line">     * @throws ClassCastException if the specified object&apos;s type prevents it</div><div class="line">     *         from being compared to this object.</div><div class="line">     */</div><div class="line">    public int compareTo(T o);</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7801;&#x90E8;&#x5206;&#x5341;&#x5206;&#x7B80;&#x5355;&#x3002;</p>
+<h1 id="Comparator&#x4ECB;&#x7ECD;"><a href="#Comparator&#x4ECB;&#x7ECD;" class="headerlink" title="Comparator&#x4ECB;&#x7ECD;"></a>Comparator&#x4ECB;&#x7ECD;</h1><p>Comparators&#x80FD;&#x591F;&#x4F5C;&#x4E3A;Arrays#sort&#x65B9;&#x6CD5;&#x6216;&#x8005;Collections#sort&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x7528;&#x6765;&#x6307;&#x5B9A;&#x5BF9;&#x5E94;&#x96C6;&#x5408;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#x3002;Comparator&#x662F;&#x7528;&#x6765;&#x63A7;&#x5236;&#x67D0;&#x4E24;&#x4E2A;&#x5143;&#x7D20;&#x5E94;&#x8BE5;&#x5982;&#x4F55;&#x786E;&#x5B9A;&#x5927;&#x5C0F;&#x5173;&#x7CFB;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#xFF0C;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x80FD;&#x591F;&#x4F7F;&#x5B9E;&#x73B0;&#x7C7B;&#x62E5;&#x6709;&#x6392;&#x5E8F;&#x80FD;&#x529B;&#xFF0C;&#x53EA;&#x80FD;&#x8BF4;&#x8BE5;&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5668;&#x3002;<br>Comparator&#x4E5F;&#x5E94;&#x8BE5;&#x6EE1;&#x8DB3;&#x4E00;&#x81F4;&#x6027;&#x76F8;&#x7B49;&#x7684;&#x539F;&#x5219;&#xFF0C;&#x8FD9;&#x6837;&#x6307;&#x5B9A;&#x8BE5;&#x6BD4;&#x8F83;&#x5668;&#x7684;&#x6709;&#x5E8F;&#x96C6;&#x5408;&#x5C31;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x5947;&#x602A;&#x7684;&#x884C;&#x4E3A;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public interface Comparator&lt;T&gt; {</div><div class="line">    /*</div><div class="line">     * @param o1 the first object to be compared.</div><div class="line">     * @param o2 the second object to be compared.</div><div class="line">     * @return a negative integer, zero, or a positive integer as the</div><div class="line">     *         first argument is less than, equal to, or greater than the</div><div class="line">     *         second.</div><div class="line">     * @throws NullPointerException if an argument is null and this</div><div class="line">     *         comparator does not permit null arguments</div><div class="line">     * @throws ClassCastException if the arguments&apos; types prevent them from</div><div class="line">     *         being compared by this comparator.</div><div class="line">     */</div><div class="line">    int compare(T o1, T o2);</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Indicates whether some other object is &amp;quot;equal to&amp;quot; this</div><div class="line">     * comparator.  This method must obey the general contract of</div><div class="line">     * {@link Object#equals(Object)}.  Additionally, this method can return</div><div class="line">     * &lt;tt&gt;true&lt;/tt&gt; &lt;i&gt;only&lt;/i&gt; if the specified object is also a comparator</div><div class="line">     * and it imposes the same ordering as this comparator.  Thus,</div><div class="line">     * &lt;code&gt;comp1.equals(comp2)&lt;/code&gt; implies that &lt;tt&gt;sgn(comp1.compare(o1,</div><div class="line">     * o2))==sgn(comp2.compare(o1, o2))&lt;/tt&gt; for every object reference</div><div class="line">     * &lt;tt&gt;o1&lt;/tt&gt; and &lt;tt&gt;o2&lt;/tt&gt;.&lt;p&gt;</div><div class="line">     *</div><div class="line">     * Note that it is &lt;i&gt;always&lt;/i&gt; safe &lt;i&gt;not&lt;/i&gt; to override</div><div class="line">     * &lt;tt&gt;Object.equals(Object)&lt;/tt&gt;.  However, overriding this method may,</div><div class="line">     * in some cases, improve performance by allowing programs to determine</div><div class="line">     * that two distinct comparators impose the same order.</div><div class="line">     *</div><div class="line">     * @param   obj   the reference object with which to compare.</div><div class="line">     * @return  &lt;code&gt;true&lt;/code&gt; only if the specified object is also</div><div class="line">     *          a comparator and it imposes the same ordering as this</div><div class="line">     *          comparator.</div><div class="line">     * @see Object#equals(Object)</div><div class="line">     * @see Object#hashCode()</div><div class="line">     */</div><div class="line">    boolean equals(Object obj);</div><div class="line">}</div></pre></td></tr></table></figure>
+<h1 id="Comparable&#x548C;Comparator&#x533A;&#x522B;"><a href="#Comparable&#x548C;Comparator&#x533A;&#x522B;" class="headerlink" title="Comparable&#x548C;Comparator&#x533A;&#x522B;"></a>Comparable&#x548C;Comparator&#x533A;&#x522B;</h1><p>&#x7F51;&#x4E0A;&#x641C;&#x4E86;&#x4E0B;&#xFF0C;Comparable&#x662F;&#x5185;&#x6392;&#x5E8F;&#x7684;&#x63A5;&#x53E3;&#xFF0C;Comparator&#x662F;&#x5916;&#x6392;&#x5E8F;&#x7684;&#x63A5;&#x53E3;&#x3002;&#x8C8C;&#x4F3C;&#x8FD9;&#x8FD8;&#x662F;&#x96BE;&#x4EE5;&#x7406;&#x89E3;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x6765;&#x770B;&#x770B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">public class Person implements Comparator&lt;Object&gt;{</div><div class="line">	private int age;</div><div class="line">	private int money;</div><div class="line">	private String name;</div><div class="line">	public int getAge() {</div><div class="line">		return age;</div><div class="line">	}</div><div class="line">	public void setAge(int age) {</div><div class="line">		this.age = age;</div><div class="line">	}</div><div class="line">	public int getMoney() {</div><div class="line">		return money;</div><div class="line">	}</div><div class="line">	public void setMoney(int money) {</div><div class="line">		this.money = money;</div><div class="line">	}</div><div class="line">	public String getName() {</div><div class="line">		return name;</div><div class="line">	}</div><div class="line">	public void setName(String name) {</div><div class="line">		this.name = name;</div><div class="line">	}</div><div class="line">	public Person(int age, int money, String name) {</div><div class="line">		super();</div><div class="line">		this.age = age;</div><div class="line">		this.money = money;</div><div class="line">		this.name = name;</div><div class="line">	}</div><div class="line">	@Override</div><div class="line">	public String toString() {</div><div class="line">		return &quot;Person [age=&quot; + age + &quot;, money=&quot; + money + &quot;, name=&quot; + name</div><div class="line">				+ &quot;]&quot;;</div><div class="line">	}</div><div class="line">	@Override</div><div class="line">	public int compare(Object o1, Object o2) {</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		int money1 = ((Teacher)o1).getMoney();</div><div class="line">		int money2 = ((Teacher)o2).getMoney();</div><div class="line">		return (money1 &gt; money2) ? 1 : (money1 == money2 ? 0 : -1);</div><div class="line">	}</div><div class="line">	</div><div class="line">	</div><div class="line">	</div><div class="line">	</div><div class="line">    public class Teacher{</div><div class="line">    	private int age;</div><div class="line">    	private int money;</div><div class="line">    	private String name;</div><div class="line">    	private int score;</div><div class="line">    	public int getAge() {</div><div class="line">    		return age;</div><div class="line">    	}</div><div class="line">    	public void setAge(int age) {</div><div class="line">    		this.age = age;</div><div class="line">    	}</div><div class="line">    	public int getMoney() {</div><div class="line">    		return money;</div><div class="line">    	}</div><div class="line">    	public void setMoney(int money) {</div><div class="line">    		this.money = money;</div><div class="line">    	}</div><div class="line">    	public String getName() {</div><div class="line">    		return name;</div><div class="line">    	}</div><div class="line">    	public void setName(String name) {</div><div class="line">    		this.name = name;</div><div class="line">    	}</div><div class="line">    	public int getScore() {</div><div class="line">    		return score;</div><div class="line">    	}</div><div class="line">    	public void setScore(int score) {</div><div class="line">    		this.score = score;</div><div class="line">    	}</div><div class="line">    </div><div class="line">    	public Teacher(int age, int money, String name, int score) {</div><div class="line">    		super();</div><div class="line">    		this.age = age;</div><div class="line">    		this.money = money;</div><div class="line">    		this.name = name;</div><div class="line">    		this.score = score;</div><div class="line">    	}</div><div class="line">    	@Override</div><div class="line">    	public String toString() {</div><div class="line">    		return &quot;Teacher [age=&quot; + age + &quot;, money=&quot; + money + &quot;, name=&quot; + name</div><div class="line">    				+ &quot;, score=&quot; + score + &quot;]&quot;;</div><div class="line">    	}</div><div class="line">    }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;Person&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x4E86;Comparator&#x63A5;&#x53E3;&#xFF0C;&#x6309;&#x7167;&#x6211;&#x521A;&#x624D;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;Person&#x867D;&#x7136;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x8FD9;&#x4E2A;&#x6392;&#x5E8F;&#x63A5;&#x53E3;&#xFF0C;&#x4F46;&#x662F;Person&#x7684;&#x5BF9;&#x8C61;&#x4E0D;&#x4E00;&#x5B9A;&#x62E5;&#x6709;&#x81EA;&#x6211;&#x6392;&#x5E8F;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x770B;&#x4E0B;&#x4E0B;&#x9762;&#x7684;&#x6D4B;&#x8BD5;&#x8F93;&#x51FA;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class CompareTest {</div><div class="line">	public static void main(String[] args) {</div><div class="line">		Person p1 = new Person(19,24,&quot;&#x5C0F;&#x660E;&quot;);</div><div class="line">		Person p2 = new Person(19,1000000000,&quot;&#x9A6C;&#x5316;&#x817E;&#xB7;D&#xB7;&#x817E;&#x8BAF;&quot;);</div><div class="line">		Teacher t1 = new Teacher(23,329,&quot;&#x9A6C;&#x4E91;&quot;,3);</div><div class="line">		Teacher t2 = new Teacher(23,3292,&quot;&#x96F7;&#x519B;&quot;,3);</div><div class="line"></div><div class="line">		List&lt;Teacher&gt; list = new ArrayList&lt;Teacher&gt;();</div><div class="line">		list.add(t1);</div><div class="line">		list.add(t2);</div><div class="line">		Collections.sort(list,p1);</div><div class="line">		System.out.println(list.toString());</div><div class="line">		</div><div class="line">		List&lt;Person&gt; listPerson = new ArrayList&lt;&gt;();</div><div class="line">		listPerson.add(p1);</div><div class="line">		listPerson.add(p2);</div><div class="line">		Collections.sort(listPerson,p1);</div><div class="line">		System.out.println(listPerson.toString());</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5177;&#x4F53;&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;<br><img src="/2017/09/28/Comparable&#x548C;Comparator&#x4ECB;&#x7ECD;/img1.png" alt="image"><br>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x4EE5;Teacher&#x4F5C;&#x4E3A;&#x5143;&#x7D20;&#x7684;&#x96C6;&#x5408;&#x80FD;&#x591F;&#x6392;&#x5E8F;&#x6B63;&#x5E38;&#xFF0C;&#x800C;&#x4EE5;Person&#x4F5C;&#x4E3A;&#x5143;&#x7D20;&#x7684;&#x96C6;&#x5408;&#x4E0D;&#x80FD;&#x6392;&#x5E8F;&#xFF0C;&#x4E14;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;&#x867D;&#x7136;&#x662F;Person&#x5B9E;&#x73B0;&#x7684;Comparator&#xFF0C;&#x4F46;&#x662F;&#x5374;&#x662F;Teacher&#x5BF9;&#x8C61;&#x5177;&#x5907;&#x4E86;&#x6392;&#x5E8F;&#x80FD;&#x529B;&#xFF0C;&#x8FD9;&#x8BF4;&#x660E;&#x4E86;Comparator&#x7684;&#x5916;&#x6392;&#x5E8F;&#x6027;&#x3002;<br>&#x6700;&#x540E;&#x6211;&#x4EEC;&#x770B;&#x4E0B;Comparable&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">public class Teacher implements Comparable&lt;Teacher&gt;{</div><div class="line">	private int age;</div><div class="line">	private int money;</div><div class="line">	private String name;</div><div class="line">	private int score;</div><div class="line">	public int getAge() {</div><div class="line">		return age;</div><div class="line">	}</div><div class="line">	public void setAge(int age) {</div><div class="line">		this.age = age;</div><div class="line">	}</div><div class="line">	public int getMoney() {</div><div class="line">		return money;</div><div class="line">	}</div><div class="line">	public void setMoney(int money) {</div><div class="line">		this.money = money;</div><div class="line">	}</div><div class="line">	public String getName() {</div><div class="line">		return name;</div><div class="line">	}</div><div class="line">	public void setName(String name) {</div><div class="line">		this.name = name;</div><div class="line">	}</div><div class="line">	public int getScore() {</div><div class="line">		return score;</div><div class="line">	}</div><div class="line">	public void setScore(int score) {</div><div class="line">		this.score = score;</div><div class="line">	}</div><div class="line"></div><div class="line">	public Teacher(int age, int money, String name, int score) {</div><div class="line">		super();</div><div class="line">		this.age = age;</div><div class="line">		this.money = money;</div><div class="line">		this.name = name;</div><div class="line">		this.score = score;</div><div class="line">	}</div><div class="line">	@Override</div><div class="line">	public String toString() {</div><div class="line">		return &quot;Teacher [age=&quot; + age + &quot;, money=&quot; + money + &quot;, name=&quot; + name</div><div class="line">				+ &quot;, score=&quot; + score + &quot;]&quot;;</div><div class="line">	}</div><div class="line">	@Override</div><div class="line">	public int compareTo(Teacher o) {</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return this.money-o.getMoney();</div><div class="line">	}</div><div class="line">	</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line">public class CompareTest {</div><div class="line">	public static void main(String[] args) {</div><div class="line"></div><div class="line">		Teacher t1 = new Teacher(23,329,&quot;&#x9A6C;&#x4E91;&quot;,3);</div><div class="line">		Teacher t2 = new Teacher(23,3292,&quot;&#x96F7;&#x519B;&quot;,3);</div><div class="line">		</div><div class="line">		List&lt;Teacher&gt; list = new ArrayList&lt;&gt;();</div><div class="line">		list.add(t1);</div><div class="line">		list.add(t2);</div><div class="line">		Collections.sort(list);</div><div class="line">		System.out.println(list.toString());</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x53EA;&#x8981;&#x5B9E;&#x73B0;&#x4E86;Comparable&#x63A5;&#x53E3;&#xFF0C;&#x90A3;&#x4E48;&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x5C31;&#x4E00;&#x5B9A;&#x80FD;&#x62E5;&#x6709;&#x6392;&#x5E8F;&#x7684;&#x80FD;&#x529B;&#x3002;</p>
+<p>&#x4ED6;&#x4E24;&#x533A;&#x522B;&#x53EF;&#x4EE5;&#x603B;&#x7ED3;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>Comparable&#x4F7F;&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x5177;&#x5907;&#x6392;&#x5E8F;&#x80FD;&#x529B;&#xFF1B;&#x800C;Comparator&#x4F7F;&#x5B9E;&#x73B0;&#x7C7B;&#x5BF9;&#x8C61;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5668;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x5916;&#x90E8;&#x5BF9;&#x8C61;&#x7684;&#x6392;&#x5E8F;&#x3002;</li>
+<li>&#x5B9E;&#x73B0;&#x4E86;Comparable&#x7684;&#x7C7B;&#x7684;&#x6392;&#x5E8F;&#x89C4;&#x5219;&#x96BE;&#x4EE5;&#x6539;&#x53D8;&#xFF0C;&#x9664;&#x975E;&#x4FEE;&#x6539;&#x6E90;&#x7801;&#xFF0C;&#x800C;&#x4F7F;&#x7528;&#x6BD4;&#x8F83;&#x5668;&#x5219;&#x66F4;&#x52A0;&#x7075;&#x6D3B;&#xFF0C;&#x56E0;&#x4E3A;Comparator&#x5B9E;&#x73B0;&#x4E86;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;&#x548C;&#x6570;&#x636E;&#x5206;&#x79BB;&#x3002;&#x6211;&#x4EEC;&#x6839;&#x636E;&#x9700;&#x8981;&#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#x3002;</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/红黑树/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/27/红黑树/" itemprop="url">
+                  红黑树
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-27T21:39:15+08:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/09/27/红黑树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/27/红黑树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/27/红黑树/" class="leancloud_visitors" data-flag-title="红黑树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="&#x7EA2;&#x9ED1;&#x6811;&#x5B9A;&#x4E49;"><a href="#&#x7EA2;&#x9ED1;&#x6811;&#x5B9A;&#x4E49;" class="headerlink" title="&#x7EA2;&#x9ED1;&#x6811;&#x5B9A;&#x4E49;"></a>&#x7EA2;&#x9ED1;&#x6811;&#x5B9A;&#x4E49;</h1><p>&#x6EE1;&#x8DB3;&#x4E0B;&#x9762;&#x4E94;&#x6761;&#x6027;&#x8D28;&#x7684;&#x4E8C;&#x53C9;&#x67E5;&#x627E;&#x6811;&#x79F0;&#x4E3A;&#x7EA2;&#x9ED1;&#x6811;&#xFF1A;</p>
+<ol>
+<li>&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x8981;&#x4E48;&#x4E3A;&#x7EA2;&#x8272;&#x8981;&#x4E48;&#x4E3A;&#x9ED1;&#x8272;</li>
+<li>&#x6839;&#x8282;&#x70B9;&#x4E3A;&#x9ED1;&#x8272;</li>
+<li>&#x6BCF;&#x4E2A;&#x53F6;&#x5B50;&#x8282;&#x70B9;(NIL)&#x4E3A;&#x9ED1;&#x8272;</li>
+<li>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x7684;&#x5B50;&#x8282;&#x70B9;&#x4E00;&#x5B9A;&#x4E3A;&#x7EA2;&#x8272;</li>
+<li>&#x4ECE;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x7684;&#x5B50;&#x5B59;&#x8282;&#x70B9;&#x7684;&#x6240;&#x6709;&#x8DEF;&#x5F84;&#x4E0A;&#x5305;&#x542B;&#x76F8;&#x540C;&#x6570;&#x76EE;&#x7684;&#x9ED1;&#x8272;&#x8282;&#x70B9;&#xFF08;&#x8BE5;&#x6027;&#x8D28;&#x4FDD;&#x8BC1;&#x4E86;&#x7EA2;&#x9ED1;&#x6811;&#x662F;&#x63A5;&#x8FD1;&#x5E73;&#x8861;&#x4E8C;&#x53C9;&#x6811;&#x7684;&#xFF09;</li>
+</ol>
+<h2 id="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5E94;&#x7528;"><a href="#&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5E94;&#x7528;" class="headerlink" title="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5E94;&#x7528;"></a>&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5E94;&#x7528;</h2><p>java&#x4E2D;&#x7684;TreeMap&#xFF0C;Linux&#x4E2D;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7BA1;&#x7406;&#xFF0C;JDK1.8&#x4E2D;&#xFF0C;HashMap&#x4E5F;&#x7528;&#x5230;&#x4E86;&#x7EA2;&#x9ED1;&#x6811;&#x3002;</p>
+<h2 id="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x63D2;&#x5165;"><a href="#&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x63D2;&#x5165;" class="headerlink" title="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x63D2;&#x5165;"></a>&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x63D2;&#x5165;</h2><p>&#x9996;&#x5148;&#x7EA2;&#x9ED1;&#x6811;&#x662F;&#x4E00;&#x68F5;&#x4E8C;&#x53C9;&#x67E5;&#x627E;&#x6811;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x6B21;&#x63D2;&#x5165;&#x7684;&#x4F4D;&#x7F6E;&#x4E00;&#x5B9A;&#x662F;&#x5728;&#x53F6;&#x8282;&#x70B9;&#x5904;&#x3002;&#x800C;&#x63D2;&#x5165;&#x65F6;&#x80FD;&#x591F;&#x4FDD;&#x8BC1;&#x5B83;&#x4F9D;&#x7136;&#x662F;&#x4E8C;&#x53C9;&#x67E5;&#x627E;&#x6811;&#xFF0C;&#x4F46;&#x662F;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x6027;&#x8D28;&#x4E0D;&#x4E00;&#x5B9A;&#x80FD;&#x6EE1;&#x8DB3;&#x3002;</p>
+<ul>
+<li>&#x6027;&#x8D28;1&#x5F88;&#x597D;&#x6EE1;&#x8DB3;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6D82;&#x8272;&#x5C31;&#x53EF;&#x4EE5;&#xFF1B;</li>
+<li>&#x6027;&#x8D28;2&#x505A;&#x4E00;&#x4E2A;&#x7279;&#x5224;&#xFF0C;&#x5982;&#x679C;&#x63D2;&#x5165;&#x7684;&#x662F;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x5219;&#x5C06;&#x6839;&#x8282;&#x70B9;&#x6D82;&#x4E3A;&#x9ED1;&#x8272;&#xFF1B;&#x5426;&#x5219;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x8FD9;&#x6761;&#x6027;&#x8D28;&#xFF1B;</li>
+<li>&#x6027;&#x8D28;3&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#xFF1B;</li>
+<li>&#x6027;&#x8D28;4&#x53EF;&#x80FD;&#x4F1A;&#x5F71;&#x54CD;</li>
+<li>&#x6027;&#x8D28;5&#x53EF;&#x80FD;&#x4F1A;&#x5F71;&#x54CD;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x89C4;&#x5B9A;&#x63D2;&#x5165;&#x7684;&#x8282;&#x70B9;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x5219;&#x4E5F;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;<br>&#x6240;&#x4EE5;&#xFF0C;&#x4E0B;&#x9762;&#x53EA;&#x7528;&#x89E3;&#x51B3;&#x6027;&#x8D28;4&#x5E26;&#x6765;&#x7684;&#x51B2;&#x7A81;&#x3002;&#x6211;&#x4EEC;&#x89C4;&#x5B9A;&#xFF1A;</li>
+<li>&#x88AB;&#x63D2;&#x8282;&#x70B9;&#x4E3A;X</li>
+<li>&#x7236;&#x8282;&#x70B9;&#x4E3A;P</li>
+<li>&#x53D4;&#x53D4;&#x8282;&#x70B9;&#x4E3A;U</li>
+<li>&#x7956;&#x7236;&#x8282;&#x70B9;&#x4E3A;G<h3 id="P&#x4E3A;&#x9ED1;&#x8272;"><a href="#P&#x4E3A;&#x9ED1;&#x8272;" class="headerlink" title="P&#x4E3A;&#x9ED1;&#x8272;"></a>P&#x4E3A;&#x9ED1;&#x8272;</h3>&#x63D2;&#x5165;&#x540E;&#xFF0C;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x4E0D;&#x505A;&#x4EFB;&#x4F55;&#x5904;&#x7406;&#x3002;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img1.png" alt="image"><br>&#x56FE;&#x4E2D;&#x53EA;&#x5C55;&#x793A;&#x4E86;&#x7956;&#x7236;&#x3001;&#x53D4;&#x53D4;&#x3001;&#x7236;&#x4EB2;&#x8282;&#x70B9;&#x548C;&#x88AB;&#x63D2;&#x5165;&#x8282;&#x70B9;&#x8FD9;&#x4E09;&#x5C42;&#xFF0C;&#x5E76;&#x4E0D;&#x4EE3;&#x8868;G&#x5C31;&#x662F;&#x6839;&#x8282;&#x70B9;&#x3002;<h3 id="P&#x4E3A;&#x7EA2;&#x8272;&#x8282;&#x70B9;"><a href="#P&#x4E3A;&#x7EA2;&#x8272;&#x8282;&#x70B9;" class="headerlink" title="P&#x4E3A;&#x7EA2;&#x8272;&#x8282;&#x70B9;"></a>P&#x4E3A;&#x7EA2;&#x8272;&#x8282;&#x70B9;</h3>&#x5F71;&#x54CD;&#x4E86;&#x6027;&#x8D28;4&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</li>
+</ul>
+<ol>
+<li>P&#x4E3A;&#x7EA2;&#xFF0C;U&#x4E3A;&#x9ED1;&#xFF0C;X&#x4E3A;P&#x7684;left&#x8282;&#x70B9;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img2.png" alt="image"></li>
+<li>P&#x4E3A;&#x7EA2;&#xFF0C;U&#x4E3A;&#x9ED1;&#xFF0C;X&#x4E3A;P&#x7684;right&#x8282;&#x70B9;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img3.png" alt="image"><br>&#x53EF;&#x4EE5;&#x4ECE;&#x4E0A;&#x56FE;&#x770B;&#x51FA;&#xFF0C;&#x5176;&#x5B9E;case2&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x5148;&#x8F6C;&#x4E3A;case1&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x505A;&#x4E00;&#x6B21;&#x5904;&#x7406;&#x3002;</li>
+<li>P&#x4E3A;&#x7EA2;&#xFF0C;U&#x4E3A;&#x7EA2;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img4.png" alt="image"><br>&#x63D2;&#x5165;&#x60C5;&#x51B5;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x597D;&#x7406;&#x89E3;&#xFF0C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x5C31;&#x590D;&#x6742;&#x5F97;&#x591A;&#x3002;<h2 id="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;"><a href="#&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;" class="headerlink" title="&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;"></a>&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;</h2>&#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x4E0B;&#x666E;&#x901A;&#x7684;&#x4E8C;&#x53C9;&#x67E5;&#x627E;&#x6811;&#x7684;&#x5220;&#x9664;&#x3002;<br>&#x5F53;&#x88AB;&#x5220;&#x9664;&#x8282;&#x70B9;&#x6CA1;&#x6709;&#x5B50;&#x8282;&#x70B9;&#x65F6;&#xFF0C;&#x76F4;&#x63A5;&#x5220;&#x9664;&#xFF1B;<br>&#x5F53;&#x88AB;&#x5220;&#x9664;&#x8282;&#x70B9;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5B69;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5219;&#x8BA9;&#x8BE5;&#x5B69;&#x5B50;&#x8282;&#x70B9;&#x4EE3;&#x66FF;&#x88AB;&#x5220;&#x8282;&#x70B9;&#xFF1B;<br>&#x5F53;&#x88AB;&#x5220;&#x9664;&#x8282;&#x70B9;&#x6709;&#x4E24;&#x4E2A;&#x5B69;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5219;&#x5C06;&#x540E;&#x7EE7;&#x8282;&#x70B9;&#x548C;&#x88AB;&#x5220;&#x8282;&#x70B9;&#x4EA4;&#x6362;&#xFF0C;&#x5E76;&#x5220;&#x9664;&#x88AB;&#x5220;&#x8282;&#x70B9;&#xFF1B;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img5.png" alt="image"><br>&#x800C;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;&#x6709;&#x70B9;&#x533A;&#x522B;&#xFF1A;&#x9996;&#x5148;&#x4ED6;&#x4E5F;&#x9700;&#x8981;&#x5220;&#x9664;&#x8282;&#x70B9;&#xFF0C;&#x4F46;&#x5220;&#x9664;&#x540E;&#x4ECD;&#x7136;&#x8981;&#x505A;&#x8282;&#x70B9;&#x989C;&#x8272;&#x7684;&#x4FEE;&#x6B63;&#x3002;<br>&#x6211;&#x4EEC;&#x89C4;&#x5B9A;&#xFF1A;<br>&#x88AB;&#x5220;&#x8282;&#x70B9;&#x4E3A;D&#xFF08;&#x4E00;&#x822C;&#x5728;&#x989C;&#x8272;&#x4FEE;&#x6B63;&#x65F6;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#xFF0C;&#x53EA;&#x5728;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x51FA;&#x73B0;&#xFF09;<br>&#x6700;&#x7EC8;&#x5220;&#x9664;&#x8282;&#x70B9;&#xFF1A;F<br>&#x66FF;&#x4EE3;&#x8282;&#x70B9;&#xFF1A;X&#xFF08;&#x989C;&#x8272;&#x4FEE;&#x6B63;&#x4E2D;&#x5341;&#x5206;&#x5173;&#x952E;&#x7684;&#x8282;&#x70B9;&#xFF09;<br>&#x66FF;&#x4EE3;&#x8282;&#x70B9;&#x7684;&#x7236;&#x8282;&#x70B9;&#xFF1A;P<br>&#x66FF;&#x4EE3;&#x8282;&#x70B9;&#x7684;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#xFF1A;U<br>U&#x7684;&#x4E24;&#x4E2A;&#x5B69;&#x5B50;&#x8282;&#x70B9;&#xFF1A;UL&#x3001;UR<br>&#x5F53;&#x6700;&#x7EC8;&#x5220;&#x9664;&#x8282;&#x70B9;&#x4E3A;&#x7EA2;&#x8272;&#x65F6;&#xFF0C;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x6027;&#x8D28;&#xFF1B;&#x5F53;&#x6700;&#x7EC8;&#x5220;&#x9664;&#x8282;&#x70B9;&#x4E3A;&#x9ED1;&#x8272;&#x65F6;&#xFF0C;&#x5219;&#x5BF9;&#x4E8E;&#x6574;&#x4E2A;&#x7EA2;&#x9ED1;&#x6811;&#x6765;&#x8BF4;&#x6027;&#x8D28;5&#x80AF;&#x5B9A;&#x88AB;&#x6253;&#x7834;&#x4E86;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6700;&#x7EC8;&#x5220;&#x9664;&#x8282;&#x70B9;&#x6240;&#x5728;&#x8DEF;&#x5F84;&#x4E0A;&#x7684;&#x9ED1;&#x8272;&#x8282;&#x70B9;&#x5C11;&#x4E00;&#x4E2A;&#x3002;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x6839;&#x636E;&#x66FF;&#x4EE3;&#x8282;&#x70B9;&#x989C;&#x8272;&#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x5206;&#x60C5;&#x51B5;&#x8BA8;&#x8BBA;&#xFF1A;</li>
+<li>X&#x4E3A;&#x7EA2;&#x8272;&#xFF1A;&#x76F4;&#x63A5;&#x5C06;X&#x8BBE;&#x4E3A;&#x9ED1;&#x8272;</li>
+<li>X&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;X&#x4E3A;&#x6839;&#xFF1A;nothing to do</li>
+<li>X&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;X&#x4E0D;&#x4E3A;&#x6839;&#x65F6;&#xFF0C;&#x53C8;&#x8981;&#x5206;&#x4E0B;&#x9762;4&#x79CD;&#x60C5;&#x51B5;&#xFF1A;<br>case 1&#xFF1A;X&#x7684;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x4E3A;&#x7EA2;&#x8272;&#xFF1B;<br>case 2&#xFF1A;X&#x7684;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x7684;&#x4E24;&#x4E2A;&#x5B69;&#x5B50;&#x90FD;&#x4E3A;&#x9ED1;&#x8272;&#xFF1B;<br>case 3&#xFF1A;X&#x7684;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x5B69;&#x5B50;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x53F3;&#x5B69;&#x5B50;&#x4E3A;&#x9ED1;&#x8272;&#xFF1B;<br>case 4&#xFF1A;X&#x7684;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x5144;&#x5F1F;&#x8282;&#x70B9;&#x7684;&#x53F3;&#x5B69;&#x5B50;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x505A;&#x5B69;&#x5B50;&#x4E3A;&#x9ED1;&#x8272;&#xFF1B;<br>&#x9488;&#x5BF9;&#x4E0A;&#x8FF0;4&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x6211;&#x505A;&#x4E86;&#x51E0;&#x5F20;&#x56FE;&#xFF0C;&#x4E00;&#x770B;&#x5C31;&#x80FD;&#x660E;&#x767D;&#xFF1A;<br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img7.jpg" alt="image"><br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img8.jpg" alt="image"><br><img src="/2017/09/27/&#x7EA2;&#x9ED1;&#x6811;/img9.jpg" alt="image"><br>&#x6240;&#x6709;&#x7684;&#x5220;&#x9664;&#x60C5;&#x51B5;&#x90FD;&#x5728;&#x56FE;&#x4E0A;&#xFF0C;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x770B;&#x5C31;&#x77E5;&#x9053;&#x4E86;&#x662F;&#x600E;&#x4E48;&#x56DE;&#x4E8B;&#x3002;&#x81F3;&#x6B64;&#xFF0C;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;&#x4E5F;&#x4ECB;&#x7ECD;&#x5B8C;&#x4E86;&#x3002;</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/JDK源码之HashMap/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1417,293 +1727,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/MongoDB入门-简介/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/07/MongoDB入门-简介/" itemprop="url">
-                  MongoDB入门--简介
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-07T09:21:24+08:00">
-                2017-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/06/07/MongoDB入门-简介/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/07/MongoDB入门-简介/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/06/07/MongoDB入门-简介/" class="leancloud_visitors" data-flag-title="MongoDB入门--简介">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="&#x6982;&#x8FF0;"><a href="#&#x6982;&#x8FF0;" class="headerlink" title="&#x6982;&#x8FF0;"></a>&#x6982;&#x8FF0;</h1><p>MongoDB &#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x5E93;&#x3002;&#x7531; C++ &#x8BED;&#x8A00;&#x7F16;&#x5199;&#x3002;&#x65E8;&#x5728;&#x4E3A; WEB &#x5E94;&#x7528;&#x63D0;&#x4F9B;&#x53EF;&#x6269;&#x5C55;&#x7684;&#x9AD8;&#x6027;&#x80FD;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;<br>MongoDB &#x662F;&#x4E00;&#x4E2A;&#x4ECB;&#x4E8E;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x4E4B;&#x95F4;&#x7684;&#x4EA7;&#x54C1;&#xFF0C;&#x662F;&#x975E;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x5F53;&#x4E2D;&#x529F;&#x80FD;&#x6700;&#x4E30;&#x5BCC;&#xFF0C;&#x6700;&#x50CF;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x7684;&#x3002;</p>
-<h1 id="&#x5173;&#x7CFB;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;"><a href="#&#x5173;&#x7CFB;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;" class="headerlink" title="&#x5173;&#x7CFB;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;"></a>&#x5173;&#x7CFB;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;</h1><p>&#x65E2;&#x7136;MongoDB&#x662F;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x548C;&#x6211;&#x4EEC;&#x5E73;&#x65F6;&#x5E38;&#x7528;&#x7684;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x6BD4;&#x5982;MySQL&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;&#x5462;&#x3002;<br>&#x9996;&#x5148;&#xFF0C;&#x8FD9;&#x4E2A;&#x201C;&#x5173;&#x7CFB;&#x201D;&#x4EE3;&#x8868;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;&#x6211;&#x4EEC;&#x77E5;&#x9053;MySQL&#x4E2D;&#x5BF9;&#x6570;&#x636E;&#x7BA1;&#x7406;&#x662F;&#x901A;&#x8FC7;&#x8868;&#x7ED3;&#x6784;&#x6765;&#x7BA1;&#x7406;&#x7684;&#xFF0C;&#x4E00;&#x4E2A;&#x8868;&#x5C31;&#x4EE3;&#x8868;&#x4E86;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x800C;&#x5173;&#x7CFB;&#x5C31;&#x662F;&#x5B9E;&#x4F53;&#x4E0E;&#x5B9E;&#x4F53;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#xFF08;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x5173;&#x7CFB;&#x6709;1&#x5BF9;1,1&#x5BF9;&#x591A;&#xFF0C;&#x591A;&#x5BF9;&#x591A;&#x7B49;&#xFF09;&#x3002;<br>&#x53E6;&#x5916;&#xFF0C;&#x83F2;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x9075;&#x5FAA;&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;&#x539F;&#x5219;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x7684;ACID&#x539F;&#x5219;&#x3002;</p>
-<h1 id="&#x6982;&#x5FF5;&#x4ECB;&#x7ECD;"><a href="#&#x6982;&#x5FF5;&#x4ECB;&#x7ECD;" class="headerlink" title="&#x6982;&#x5FF5;&#x4ECB;&#x7ECD;"></a>&#x6982;&#x5FF5;&#x4ECB;&#x7ECD;</h1><h2 id="&#x4E0E;MySQL&#x7C7B;&#x6BD4;"><a href="#&#x4E0E;MySQL&#x7C7B;&#x6BD4;" class="headerlink" title="&#x4E0E;MySQL&#x7C7B;&#x6BD4;"></a>&#x4E0E;MySQL&#x7C7B;&#x6BD4;</h2><p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x770B;&#x770B;&#x4ED6;&#x548C;MySQL&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x6982;&#x5FF5;&#x7684;&#x5BF9;&#x6BD4;&#xFF1A;<br><img src="/2017/06/07/MongoDB&#x5165;&#x95E8;-&#x7B80;&#x4ECB;/img1.png" alt="image"><br>&#x901A;&#x8FC7;&#x4E00;&#x7EC4;&#x5B9E;&#x4F8B;&#x53EF;&#x80FD;&#x66F4;&#x52A0;&#x76F4;&#x89C2;&#x70B9;&#xFF1A;<br><img src="/2017/06/07/MongoDB&#x5165;&#x95E8;-&#x7B80;&#x4ECB;/img2.png" alt="image"></p>
-<h2 id="&#x5143;&#x6570;&#x636E;"><a href="#&#x5143;&#x6570;&#x636E;" class="headerlink" title="&#x5143;&#x6570;&#x636E;"></a>&#x5143;&#x6570;&#x636E;</h2><p>&#x5143;&#x6570;&#x636E;&#x7684;&#x5B9A;&#x4E49;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x63CF;&#x8FF0;&#x6570;&#x636E;&#x7684;&#x6570;&#x636E;&#x3002;&#x5728;MongoDB&#x4E2D;&#xFF0C;&#x5143;&#x6570;&#x636E;&#x6307;&#x7684;&#x662F;&#x63CF;&#x8FF0;&#x6570;&#x636E;&#x5E93;&#x4FE1;&#x606F;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x90FD;&#x5B58;&#x653E;&#x5728;system&#x8FD9;&#x4E2A;&#x7279;&#x6B8A;&#x96C6;&#x5408;&#x4E2D;&#x3002;<br><img src="/2017/06/07/MongoDB&#x5165;&#x95E8;-&#x7B80;&#x4ECB;/img3.png" alt="image"></p>
-<h2 id="&#x5BF9;MongoDB&#x7684;&#x7B2C;&#x4E00;&#x5370;&#x8C61;"><a href="#&#x5BF9;MongoDB&#x7684;&#x7B2C;&#x4E00;&#x5370;&#x8C61;" class="headerlink" title="&#x5BF9;MongoDB&#x7684;&#x7B2C;&#x4E00;&#x5370;&#x8C61;"></a>&#x5BF9;MongoDB&#x7684;&#x7B2C;&#x4E00;&#x5370;&#x8C61;</h2><p>&#x7B2C;&#x4E00;&#x6B21;&#x63A5;&#x89E6;MongoDB&#xFF0C;&#x6700;&#x5927;&#x7684;&#x5370;&#x8C61;&#x5C31;&#x662F;MongoDB&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x662F;&#x4EE5;BSON&#x5F62;&#x5F0F;&#x5B58;&#x50A8;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x540C;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x4E0D;&#x540C;&#x7684;&#x6587;&#x6863;&#xFF08;&#x76F8;&#x5F53;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;table&#x4E2D;&#x4E0D;&#x540C;&#x7684;&#x884C;&#xFF09;&#x53EF;&#x4EE5;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x822C;&#x6587;&#x6863;&#x4E4B;&#x95F4;&#x7684;&#x7ED3;&#x6784;&#x57FA;&#x672C;&#x4E00;&#x81F4;&#xFF0C;&#x8FD9;&#x4E5F;&#x8BB8;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x8BF4;MongoDB&#x662F;&#x6700;&#x50CF;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x5427;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/Java设计模式-迭代器模式/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/05/Java设计模式-迭代器模式/" itemprop="url">
-                  Java设计模式--迭代器模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-05T09:27:08+08:00">
-                2017-06-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/06/05/Java设计模式-迭代器模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/05/Java设计模式-迭代器模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/06/05/Java设计模式-迭代器模式/" class="leancloud_visitors" data-flag-title="Java设计模式--迭代器模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="&#x5B9A;&#x4E49;"><a href="#&#x5B9A;&#x4E49;" class="headerlink" title="&#x5B9A;&#x4E49;"></a>&#x5B9A;&#x4E49;</h1><p>&#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE5;&#x4FBF;&#x80FD;&#x591F;&#x987A;&#x5E8F;&#x8BBF;&#x95EE;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x4F46;&#x53C8;&#x4E0D;&#x66B4;&#x9732;&#x96C6;&#x5408;&#x7684;&#x5185;&#x90E8;&#x8868;&#x793A;&#x3002;</p>
-<h1 id="&#x6A21;&#x5F0F;&#x7684;&#x89D2;&#x8272;&#x6784;&#x6210;"><a href="#&#x6A21;&#x5F0F;&#x7684;&#x89D2;&#x8272;&#x6784;&#x6210;" class="headerlink" title="&#x6A21;&#x5F0F;&#x7684;&#x89D2;&#x8272;&#x6784;&#x6210;"></a>&#x6A21;&#x5F0F;&#x7684;&#x89D2;&#x8272;&#x6784;&#x6210;</h1><ol>
-<li>&#x8FED;&#x4EE3;&#x5668;&#x63A5;&#x53E3;&#xFF1A;&#x5305;&#x542B;hasNext&#x3001;next&#x3001;remove&#x7B49;&#x65B9;&#x6CD5;</li>
-<li>&#x5177;&#x4F53;&#x8FED;&#x4EE3;&#x5668;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#xFF1A;</li>
-<li>&#x96C6;&#x5408;&#x63A5;&#x53E3;&#xFF1A;&#x9700;&#x8981;&#x88AB;&#x904D;&#x5386;&#x7684;&#x5BF9;&#x8C61;</li>
-<li>&#x96C6;&#x5408;&#x5B9E;&#x73B0;&#x7C7B;<h1 id="&#x610F;&#x4E49;"><a href="#&#x610F;&#x4E49;" class="headerlink" title="&#x610F;&#x4E49;"></a>&#x610F;&#x4E49;</h1></li>
-</ol>
-<ul>
-<li>&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x800C;&#x4E0D;&#x7528;&#x66B4;&#x9732;&#x4ED6;&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;</li>
-<li>&#x53EF;&#x4EE5;&#x4E3A;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x5B9E;&#x73B0;&#x7684;&#x96C6;&#x5408;&#x63D0;&#x4F9B;&#x7EDF;&#x4E00;&#x7684;&#x904D;&#x5386;&#x65B9;&#x6CD5;<h1 id="&#x4EE3;&#x7801;&#x5B9E;&#x73B0;"><a href="#&#x4EE3;&#x7801;&#x5B9E;&#x73B0;" class="headerlink" title="&#x4EE3;&#x7801;&#x5B9E;&#x73B0;"></a>&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h1>&#x5B9A;&#x4E49;&#x8FED;&#x4EE3;&#x5668;&#x89D2;&#x8272;(Iterator)&#xFF1A;</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface Iterator {</div><div class="line">    public boolean hasNext();</div><div class="line">    public Object next();</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5B9A;&#x4E49;&#x5177;&#x4F53;&#x8FED;&#x4EE3;&#x5668;&#x89D2;&#x8272;(Concrete Iterator)&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public class ConcreteIterator implements Iterator {</div><div class="line">    private List list = null;</div><div class="line">    private int index;</div><div class="line"></div><div class="line">    public ConcreteIterator(List list) {</div><div class="line">        super();</div><div class="line">        this.list = list;</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean hasNext() {</div><div class="line">        if (index &gt;= list.getSize()) {</div><div class="line">            return false;</div><div class="line">        } else {</div><div class="line">            return true;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object next() {</div><div class="line">        Object object = list.get(index);</div><div class="line">        index++;</div><div class="line">        return object;</div><div class="line">    }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x81EA;&#x5B9A;&#x4E49;&#x96C6;&#x5408;&#x63A5;&#x53E3;List&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//&#x5B9A;&#x4E49;&#x96C6;&#x5408;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x7684;&#x64CD;&#x4F5C;</div><div class="line">public interface List {</div><div class="line"></div><div class="line">    public void add(Object obj);  </div><div class="line">    public Object get(int index);</div><div class="line">    public Iterator iterator();  </div><div class="line">    public int getSize();</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5177;&#x4F53;List&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public class ConcreteAggregate implements List{</div><div class="line"></div><div class="line">    private Object[] list;</div><div class="line">    private int size=0;</div><div class="line">    private int index=0;</div><div class="line">    public ConcreteAggregate(){</div><div class="line">        index=0;</div><div class="line">        size=0;</div><div class="line">        list=new Object[100];</div><div class="line">    }</div><div class="line">    @Override</div><div class="line">    public void add(Object obj) {</div><div class="line">        list[index++]=obj;</div><div class="line">        size++;</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Iterator iterator() {</div><div class="line">        </div><div class="line">        return new ConcreteIterator(this);</div><div class="line">    }</div><div class="line">    @Override</div><div class="line">    public Object get(int index) {</div><div class="line">        </div><div class="line">        return list[index];</div><div class="line">    }</div><div class="line">    @Override</div><div class="line">    public int getSize() {</div><div class="line">        </div><div class="line">        return size;</div><div class="line">    }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1749,7 +1772,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-count">130</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
