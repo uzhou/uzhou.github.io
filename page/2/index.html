@@ -236,6 +236,359 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/Spring-Aop原理及实现/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/10/20/Spring-Aop原理及实现/" itemprop="url">
+                  Spring Aop原理及实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-20T14:11:13+08:00">
+                2017-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/10/20/Spring-Aop原理及实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/20/Spring-Aop原理及实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/20/Spring-Aop原理及实现/" class="leancloud_visitors" data-flag-title="Spring Aop原理及实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Aop"><a href="#Aop" class="headerlink" title="Aop"></a>Aop</h1><p>Aop&#x7684;&#x5168;&#x79F0;&#x662F;&#x9762;&#x5411;&#x5207;&#x9762;&#x7F16;&#x7A0B;&#xFF0C;&#x8FD9;&#x662F;&#x76F8;&#x5BF9;&#x4E8E;OOP&#x6765;&#x8BF4;&#x7684;&#xFF0C;OOP&#x4E2D;&#x662F;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7F16;&#x7A0B;&#x3002;AOP&#x548C;OOP&#x89E3;&#x51B3;&#x7684;&#x90FD;&#x662F;&#x4EE3;&#x7801;&#x590D;&#x7528;&#x95EE;&#x9898;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;OOP&#x901A;&#x8FC7;&#x7EE7;&#x627F;&#x6765;&#x89E3;&#x51B3;&#x7EB5;&#x5411;&#x7684;&#x4EE3;&#x7801;&#x590D;&#x7528;&#xFF0C;&#x800C;AOP&#x901A;&#x8FC7;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6280;&#x672F;&#x89E3;&#x51B3;&#x6A2A;&#x5411;&#x7684;&#x4EE3;&#x7801;&#x590D;&#x7528;&#x3002;&#x5177;&#x4F53;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;Person&#x548C;Teacher&#x90FD;&#x6709;name&#x5C5E;&#x6027;&#xFF0C;Person&#x662F;Teacher&#x7684;&#x7236;&#x7C7B;&#xFF0C;&#x6240;&#x4EE5;Teacher&#x7EE7;&#x627F;&#x4E86;Person&#x540E;&#x5C31;&#x4F1A;&#x76F4;&#x63A5;&#x5177;&#x6709;name&#x5C5E;&#x6027;&#x8FD9;&#x5C31;&#x662F;&#x7EB5;&#x5411;&#x7684;&#x4EE3;&#x7801;&#x590D;&#x7528;&#xFF1B;&#x800C;&#x6A2A;&#x5411;&#x4EE3;&#x7801;&#x590D;&#x7528;&#x5C31;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x65E5;&#x5FD7;&#x7BA1;&#x7406;&#x3001;&#x6027;&#x80FD;&#x68C0;&#x6D4B;&#x8FD9;&#x4E2A;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x573A;&#x666F;&#x4E2D;&#x53EF;&#x80FD;&#x662F;&#x4E00;&#x6837;&#x7684;&#x4E0D;&#x9700;&#x8981;&#x6539;&#x52A8;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x4E3A;&#x4E86;&#x4EE3;&#x7801;&#x590D;&#x7528;&#x6211;&#x4EEC;&#x4E0D;&#x53EF;&#x80FD;&#x5C06;&#x5176;&#x5728;&#x6BCF;&#x4E00;&#x4E2A;&#x573A;&#x666F;&#x4E2D;&#x90FD;&#x5199;&#x4E00;&#x904D;&#xFF0C;&#x6240;&#x4EE5;&#x6B64;&#x65F6;&#x9700;&#x8981;&#x4EE3;&#x7406;&#x6280;&#x672F;&#x5C06;&#x8FD9;&#x4E9B;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x62BD;&#x51FA;&#x6765;&#x5E76;&#x7EC7;&#x5165;&#x5230;&#x76EE;&#x6807;&#x573A;&#x666F;&#x4E2D;&#x3002;</p>
+<h2 id="Aop&#x7684;&#x5B9E;&#x73B0;&#x57FA;&#x7840;"><a href="#Aop&#x7684;&#x5B9E;&#x73B0;&#x57FA;&#x7840;" class="headerlink" title="Aop&#x7684;&#x5B9E;&#x73B0;&#x57FA;&#x7840;"></a>Aop&#x7684;&#x5B9E;&#x73B0;&#x57FA;&#x7840;</h2><p>JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6280;&#x672F;&#x548C;CGLib&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6280;&#x672F;&#x3002;Spring&#x4E2D;&#x7684;AOP&#x5E95;&#x5C42;&#x4E5F;&#x662F;&#x4F7F;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x6280;&#x672F;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x914D;&#x7F6E;&#x9009;&#x62E9;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#x3002;&#x4EE5;&#x4E0A;&#x4E24;&#x4E2A;&#x6280;&#x672F;&#x53EF;&#x89C1;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x3002;</p>
+<h2 id="AOP&#x672F;&#x8BED;"><a href="#AOP&#x672F;&#x8BED;" class="headerlink" title="AOP&#x672F;&#x8BED;"></a>AOP&#x672F;&#x8BED;</h2><ul>
+<li>Jointpoint&#xFF08;&#x8FDE;&#x63A5;&#x70B9;&#xFF09;&#xFF1A;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x4F4D;&#x7F6E;&#x3002;Spring&#x4E2D;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;&#x7528;&#x7684;&#x5C11;&#xFF0C;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x662F;&#x5BF9;PointCut&#x64CD;&#x4F5C;&#x3002;&#x8FDE;&#x63A5;&#x70B9;&#x7531;&#x4E24;&#x4E2A;&#x4FE1;&#x606F;&#x786E;&#x5B9A;&#xFF1A;&#x7528;&#x65B9;&#x6CD5;&#x63CF;&#x8FF0;&#x7684;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x70B9;&#xFF1B;&#x8868;&#x793A;&#x8BE5;&#x6267;&#x884C;&#x70B9;&#x65B9;&#x4F4D;&#x7684;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#xFF08;&#x6BD4;&#x5982;Before&#x3001;after&#x7B49;&#xFF09;</li>
+<li>PointCut&#xFF1A;&#x4E1A;&#x52A1;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x7EC7;&#x5165;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7684;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x4F4D;&#x7F6E;&#xFF0C;&#x6CE8;&#x610F;&#xFF1A;Pointcut&#x4E0D;&#x5177;&#x5907;&#x8868;&#x793A;&#x65B9;&#x4F4D;&#x4FE1;&#x606F;&#x7684;&#x80FD;&#x529B;&#x3002;&#x7531;&#x4E8E;&#x5927;&#x90E8;&#x5206;Aop&#x90FD;&#x662F;&#x9488;&#x5BF9;&#x4E8E;&#x65B9;&#x6CD5;&#x7EC7;&#x5165;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5C06;Pointcut&#x63CF;&#x8FF0;&#x4E3A;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x8BE5;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x9700;&#x8981;&#x7EC7;&#x5165;&#x6A2A;&#x5207;&#x903B;&#x8F91;&#x7684;&#x3002;</li>
+<li>Advice&#xFF1A;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#xFF0C;&#x5E76;&#x5305;&#x542B;&#x4E86;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;&#x6BD4;&#x5982;&#x524D;&#x7F6E;&#x589E;&#x5F3A;&#x3001;&#x540E;&#x7F6E;&#x589E;&#x5F3A;&#x7B49;</li>
+<li>Target&#xFF1A;&#x9700;&#x8981;&#x589E;&#x5F3A;&#x7684;&#x76EE;&#x6807;&#x7C7B;</li>
+<li>Weaving&#xFF1A;&#x5C06;Advice&#x6DFB;&#x52A0;&#x5230;Pointcut&#x7684;&#x8FC7;&#x7A0B;</li>
+<li>Proxy&#xFF1A;&#x7EC7;&#x5165;&#x540E;&#x4EA7;&#x751F;&#x7684;&#x4EE3;&#x7406;&#x7C7B;</li>
+<li>Aspect&#xFF1A;Pointcut+Advice<h2 id="Spring-Aop&#x7684;&#x5B9E;&#x4F8B;"><a href="#Spring-Aop&#x7684;&#x5B9E;&#x4F8B;" class="headerlink" title="Spring Aop&#x7684;&#x5B9E;&#x4F8B;"></a>Spring Aop&#x7684;&#x5B9E;&#x4F8B;</h2>&#x76EE;&#x6807;&#x63A5;&#x53E3;&#xFF1A;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public interface Waiter {</div><div class="line">    void greetTo(String name);</div><div class="line">    void serveTo(String name);</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x76EE;&#x6807;&#x5B9E;&#x73B0;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class NaiveWaiter implements Waiter {</div><div class="line">    public void greetTo(String name) {</div><div class="line">        System.out.println(&quot;greet to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line"></div><div class="line">    public void serveTo(String name) {</div><div class="line">        System.out.println(&quot;serve to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x524D;&#x7F6E;&#x589E;&#x5F3A;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class GreetingBeforeAdvice implements MethodBeforeAdvice {</div><div class="line">    public void before(Method method, Object[] objects, Object o) throws Throwable {</div><div class="line">        String clientName = (String)objects[0];</div><div class="line">        System.out.println(&quot;How are you!Mr.&quot;+clientName+&quot;.&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class TestBeforeAdvice {</div><div class="line">    public static void main(String[] args){</div><div class="line">        Waiter waiter = new NaiveWaiter();</div><div class="line">        BeforeAdvice advice = new GreetingBeforeAdvice();</div><div class="line">        //Spring&#x63D0;&#x4F9B;&#x7684;&#x4EE3;&#x7406;&#x5DE5;&#x5382;</div><div class="line">        ProxyFactory pf = new ProxyFactory();</div><div class="line"></div><div class="line">        pf.setTarget(waiter);</div><div class="line"></div><div class="line">        pf.addAdvice(advice);</div><div class="line"></div><div class="line">        Waiter proxy = (Waiter)pf.getProxy();</div><div class="line">        proxy.greetTo(&quot;John&quot;);</div><div class="line">        proxy.serveTo(&quot;Smith&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5176;&#x5B9E;&#x4E0A;&#x9762;&#x4EE3;&#x7801;&#x548C;JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x3001;CGLib&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6CA1;&#x6709;&#x5B9E;&#x8D28;&#x7684;&#x533A;&#x522B;&#xFF1A;&#x90FD;&#x662F;&#x5B9A;&#x4E49;&#x597D;Target&#x3001;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7C7B;&#xFF08;Advice&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x5229;&#x7528;&#x4EE3;&#x7406;&#x6280;&#x672F;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x5B9E;&#x73B0;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x548C;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x7684;&#x7ED3;&#x5408;&#x3002;&#x53EA;&#x4E0D;&#x8FC7;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x751F;&#x6210;&#x662F;&#x7531;Spring&#x7684;ProxyFactory&#x4E3A;&#x6211;&#x4EEC;&#x505A;&#x597D;&#x4E86;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x7B80;&#x5355;&#x7684;&#x521D;&#x59CB;&#x53C2;&#x6570;&#x3002;<br>&#x6211;&#x5728;&#x5B66;&#x4E60;&#x8FD9;&#x91CC;&#x7684;&#x65F6;&#x5019;&#x6709;&#x70B9;&#x56F0;&#x60D1;&#xFF0C;&#x8BF4;&#x597D;&#x7684;Aop&#x80FD;&#x591F;&#x5728;&#x4E0D;&#x6539;&#x53D8;&#x539F;&#x6709;&#x4EE3;&#x7801;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x7EC7;&#x5165;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x8FD9;&#x4E2A;&#x5B9E;&#x4F8B;&#x4E2D;&#x8FD8;&#x662F;&#x8981;&#x8C03;&#x7528;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x554A;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x76EE;&#x6807;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x80FD;&#x5B9E;&#x73B0;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x548C;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x7684;&#x7ED3;&#x5408;&#xFF0C;&#x8FD9;&#x624D;&#x662F;&#x771F;&#x6B63;&#x7684;&#x5BF9;&#x4FEE;&#x6539;&#x5C01;&#x95ED;&#x5BF9;&#x589E;&#x52A0;&#x5F00;&#x653E;&#x3002;&#x8FD9;&#x4E2A;&#x56F0;&#x60D1;&#x540E;&#x9762;&#x4F1A;&#x8BB2;&#x5230;&#x3002;<br><strong>ProxyFactory</strong><br>ProxyFactory&#x7528;&#x4E8E;&#x751F;&#x6210;&#x6700;&#x540E;&#x7684;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;&#x800C;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;&#x5C06;&#x76EE;&#x6807;&#x7684;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x548C;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x7684;&#x7ED3;&#x5408;&#x4F53;&#xFF0C;&#x6240;&#x4EE5;ProxyFactory&#x5173;&#x5FC3;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;target&#x548C;advice&#x3002;&#x5982;&#x679C;Target&#x4E2D;&#x662F;&#x63A5;&#x53E3;&#x5219;ProxyFactory&#x4F1A;&#x4F7F;&#x7528;Jdk&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6280;&#x672F;&#xFF0C;&#x5F53;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;CGLib&#x4EE3;&#x7406;&#x6280;&#x672F;&#x3002;</p>
+<h2 id="&#x5207;&#x9762;&#x5B9E;&#x4F8B;"><a href="#&#x5207;&#x9762;&#x5B9E;&#x4F8B;" class="headerlink" title="&#x5207;&#x9762;&#x5B9E;&#x4F8B;"></a>&#x5207;&#x9762;&#x5B9E;&#x4F8B;</h2><p>&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x4F8B;&#x662F;&#x5BF9;&#x76EE;&#x6807;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x4E86;&#x589E;&#x5F3A;&#xFF0C;&#x4F46;&#x6709;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6709;&#x9009;&#x62E9;&#x7684;&#x589E;&#x5F3A;&#x65B9;&#x6CD5;&#x3002;<br>&#x5207;&#x9762;&#x6709;&#x591A;&#x79CD;&#x5206;&#x7C7B;&#xFF0C;&#x4EE5;&#x9759;&#x6001;&#x666E;&#x901A;&#x65B9;&#x6CD5;&#x540D;&#x5339;&#x914D;&#x5207;&#x9762;&#x4E3A;&#x4F8B;&#xFF1A;<br>&#x76EE;&#x6807;&#x7C7B;1&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class Waiter {</div><div class="line">    public void greetTo(String name) {</div><div class="line">        System.out.println(&quot;waiter greet to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line"></div><div class="line">    public void serveTo(String name) {System.out.println(&quot;waiter serve to &quot;+name+&quot;...&quot;);}</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x76EE;&#x6807;&#x7C7B;2&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class Seller {</div><div class="line">    public void greetTo(String name){</div><div class="line">        System.out.println(&quot;seller greet to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x589E;&#x5F3A;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class GreetingBeforeAdvice implements MethodBeforeAdvice {</div><div class="line">    public void before(Method method, Object[] objects, Object o) throws Throwable {</div><div class="line">        System.out.println(o.getClass().getName()+&quot;.&quot;+method.getName());</div><div class="line">        String clientName = (String)objects[0];</div><div class="line">        System.out.println(&quot;How are you!Mr.&quot;+clientName+&quot;.&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5207;&#x9762;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class GreetingAdvisor extends StaticMethodMatcherPointcutAdvisor {</div><div class="line">    public boolean matches(Method method, Class&lt;?&gt; aClass) {</div><div class="line">        return &quot;greetTo&quot;.equals(method.getName());</div><div class="line">    }</div><div class="line">    public ClassFilter getClassFilter(){</div><div class="line">        return new ClassFilter() {</div><div class="line">            public boolean matches(Class&lt;?&gt; aClass) {</div><div class="line">                return Waiter.class.isAssignableFrom(aClass);</div><div class="line">            }</div><div class="line">        };</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class TestAdvisor {</div><div class="line">    public static void main(String[] args){</div><div class="line">        ApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;spring-aop-advisor.xml&quot;);</div><div class="line">        Waiter waiter = (Waiter)ctx.getBean(&quot;waiter&quot;);</div><div class="line">        Seller seller = (Seller)ctx.getBean(&quot;seller&quot;);</div><div class="line">        waiter.greetTo(&quot;John&quot;);</div><div class="line">        waiter.serveTo(&quot;Smith&quot;);</div><div class="line">        seller.greetTo(&quot;Smith&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>spring-aop-advisor.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">       xsi:schemaLocation=&quot;</div><div class="line">       http://www.springframework.org/schema/beans</div><div class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line">    &lt;bean id=&quot;waiterTarget&quot; class=&quot;com.uzhou.advisor.Waiter&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;sellerTarget&quot; class=&quot;com.uzhou.advisor.Seller&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;greetingAdvice&quot; class=&quot;com.uzhou.advisor.GreetingBeforeAdvice&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;greetingAdvisor&quot; class=&quot;com.uzhou.advisor.GreetingAdvisor&quot;</div><div class="line">        p:advice-ref=&quot;greetingAdvice&quot;&gt;&lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;parent&quot; abstract=&quot;true&quot; class=&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;</div><div class="line">        p:interceptorNames=&quot;greetingAdvisor&quot;</div><div class="line">        p:proxyTargetClass=&quot;true&quot;&gt;&lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;waiter&quot; parent=&quot;parent&quot; p:target-ref=&quot;waiterTarget&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;seller&quot; parent=&quot;parent&quot; p:target-ref=&quot;sellerTarget&quot;&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x7684;GreetingAdvisor&#x4EE3;&#x7801;&#x5177;&#x4F53;&#x7684;&#x6307;&#x660E;&#x4E86;&#x9700;&#x8981;&#x589E;&#x5F3A;&#x7684;&#x662F;&#x54EA;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x8FD8;&#x662F;&#x9700;&#x8981;&#x4E3A;&#x6BCF;&#x4E00;&#x4E2A;target&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5341;&#x5206;&#x7E41;&#x7410;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<h2 id="&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4EE3;&#x7406;"><a href="#&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4EE3;&#x7406;" class="headerlink" title="&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4EE3;&#x7406;"></a>&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4EE3;&#x7406;</h2><p>Spring&#x662F;&#x5229;&#x7528;&#x4EE3;&#x7406;&#x521B;&#x5EFA;&#x5668;&#x751F;&#x6210;target&#x5BF9;&#x5E94;&#x7684;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x5E76;&#x8FD4;&#x56DE;&#x7ED9;&#x7A0B;&#x5E8F;&#x7684;&#xFF0C;&#x4E0B;&#x9762;&#x4EE5;BeanNameAutoProxyCreator&#x4E3A;&#x4F8B;&#xFF1A;<br>&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x6539;&#x53D8;&#x4E0A;&#x9762;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;spring&#x7684;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4EE3;&#x7406;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<p>spring-aop-auto-proxy-creator.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">       xsi:schemaLocation=&quot;</div><div class="line">       http://www.springframework.org/schema/beans</div><div class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line">    &lt;bean id=&quot;waiter&quot; class=&quot;com.uzhou.advisor.Waiter&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;seller&quot; class=&quot;com.uzhou.advisor.Seller&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;greetingAdvice&quot; class=&quot;com.uzhou.advisor.GreetingBeforeAdvice&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean class=&quot;org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator&quot;</div><div class="line">        p:beanNames=&quot;*er&quot;</div><div class="line">        p:interceptorNames=&quot;greetingAdvice&quot;</div><div class="line">        p:optimize=&quot;true&quot;&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class TestAdvisor {</div><div class="line">    public static void main(String[] args){</div><div class="line">        ApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;spring-aop-auto-proxy-creator.xml&quot;);</div><div class="line">        Waiter waiter = (Waiter)ctx.getBean(&quot;waiter&quot;);</div><div class="line">        Seller seller = (Seller)ctx.getBean(&quot;seller&quot;);</div><div class="line">        waiter.greetTo(&quot;John&quot;);</div><div class="line">        waiter.serveTo(&quot;Smith&quot;);</div><div class="line">        seller.greetTo(&quot;Smith&quot;);</div><div class="line">        System.out.println(waiter.getClass());</div><div class="line">        System.out.println(seller.getClass());</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;&#x622A;&#x56FE;&#xFF1A;<br><img src="/2017/10/20/Spring-Aop&#x539F;&#x7406;&#x53CA;&#x5B9E;&#x73B0;/img1.png" alt="image"><br>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x867D;&#x7136;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x662F;com.uzhou.advisor.Waiter&#xFF0C;&#x4F46;&#x662F;&#x4E8B;&#x5B9E;&#x8FD0;&#x884C;&#x540E;&#x7684;&#x8F93;&#x51FA;&#x662F;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x5C31;&#x8BF4;&#x660E;Spring&#x4E3A;&#x6211;&#x4EEC;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4E86;&#x4EE3;&#x7406;&#x90FD;&#x7CFB;&#x6602;&#x5E76;&#x4ED8;&#x7ED9;&#x4E86;target&#x5F15;&#x7528;&#x3002;&#x5230;&#x4E86;&#x8FD9;&#x4E00;&#x6B65;&#x624D;&#x80FD;&#x771F;&#x5219;&#x5F88;&#x96BE;&#x610F;&#x4E49;&#x4E0A;&#x5B9E;&#x73B0;&#x4E0D;&#x4FEE;&#x6539;&#x6E90;&#x7801;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#x589E;&#x5F3A;&#x65B9;&#x6CD5;&#x3002;&#x7EC8;&#x4E8E;&#x89E3;&#x51B3;&#x4E86;&#x6211;&#x7684;&#x56F0;&#x60D1;&#x3002;</p>
+<h2 id="AspectJ"><a href="#AspectJ" class="headerlink" title="AspectJ"></a>AspectJ</h2><p>AspectJ&#x662F;Aop&#x7684;&#x5B9E;&#x73B0;&#x8005;&#xFF0C;SpringAop&#x5B8C;&#x7F8E;&#x7684;&#x96C6;&#x6210;&#x4E86;AspectJ&#xFF0C;&#x4F7F;&#x7528;AspectJ&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x5148;&#x4E86;&#x89E3;&#x4E0B;&#x6CE8;&#x89E3;&#x7684;&#x76F8;&#x5173;&#x77E5;&#x8BC6;&#x3002;</p>
+<h3 id="&#x6CE8;&#x89E3;"><a href="#&#x6CE8;&#x89E3;" class="headerlink" title="&#x6CE8;&#x89E3;"></a>&#x6CE8;&#x89E3;</h3><p>&#x6CE8;&#x89E3;&#x53EF;&#x4EE5;&#x770B;&#x6210;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x8BC6;&#xFF0C;&#x6839;&#x636E;&#x6CE8;&#x89E3;&#x7684;&#x4F5C;&#x7528;&#x5BF9;&#x8C61;&#x4E0D;&#x540C;&#xFF0C;&#x6CE8;&#x89E3;&#x53EF;&#x4EE5;&#x6807;&#x8BC6;&#x65B9;&#x6CD5;&#x3001;&#x7C7B;&#x3001;&#x5C5E;&#x6027;&#x7B49;&#x3002;&#x6CE8;&#x89E3;&#x4E0D;&#x5F71;&#x54CD;&#x7A0B;&#x5E8F;&#x7684;&#x6267;&#x884C;&#xFF0C;&#x4F46;&#x662F;&#x7B2C;&#x4E09;&#x65B9;&#x7684;&#x89E3;&#x6790;&#x5668;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x8FD9;&#x4E2A;&#x6807;&#x8BC6;&#xFF0C;&#x7136;&#x540E;&#x63A7;&#x5236;&#x7A0B;&#x5E8F;&#x7684;&#x6267;&#x884C;&#x3002;<br>&#x6CE8;&#x89E3;&#x7684;&#x5B9A;&#x4E49;&#x548C;&#x4F7F;&#x7528;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line"></div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Target(ElementType.METHOD)</div><div class="line">public @interface NeedTest {</div><div class="line">    boolean value() default true;</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class AnnotationService {</div><div class="line">    @NeedTest</div><div class="line">    public void testAnnotation(){</div><div class="line">        System.out.println(&quot;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6CE8;&#x89E3;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x89E3;&#x7684;&#x8BBF;&#x95EE;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> * &#x8FD9;&#x4E2A;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x4E2A;&#x7B2C;&#x4E09;&#x65B9;&#x6CE8;&#x89E3;&#x89E3;&#x6790;&#x5668;</div><div class="line"> */</div><div class="line">public class TestAnnotation {</div><div class="line">    public static void main(String[] args){</div><div class="line">        Class clzz = AnnotationService.class;</div><div class="line">        Method[] methods = clzz.getDeclaredMethods();</div><div class="line">        for (Method m:methods) {</div><div class="line">            NeedTest nt = m.getAnnotation(NeedTest.class);</div><div class="line">            if(nt!=null){</div><div class="line">                System.out.println(nt.value());</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x8F93;&#x51FA;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">true</div></pre></td></tr></table></figure>
+<h3 id="AspectJ&#x6CE8;&#x89E3;&#x7684;&#x4F7F;&#x7528;"><a href="#AspectJ&#x6CE8;&#x89E3;&#x7684;&#x4F7F;&#x7528;" class="headerlink" title="AspectJ&#x6CE8;&#x89E3;&#x7684;&#x4F7F;&#x7528;"></a>AspectJ&#x6CE8;&#x89E3;&#x7684;&#x4F7F;&#x7528;</h3><p>AspectJ&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x6CE8;&#x89E3;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x6781;&#x5927;&#x7684;&#x7B80;&#x5316;&#x4E86;Spring Aop&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x63D0;&#x9AD8;&#x4E86;&#x7A0B;&#x5E8F;&#x5458;&#x7684;&#x6548;&#x7387;&#x3002;<br>Waiter&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public interface Waiter {</div><div class="line">    void greetTo(String name);</div><div class="line">    void serveTo(String name);</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>NaiveWaiter&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class NaiveWaiter implements Waiter {</div><div class="line">    @NeedTest</div><div class="line">    public void greetTo(String name) {</div><div class="line">        System.out.println(&quot;greet to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line">    </div><div class="line">    public void serveTo(String name) {</div><div class="line">        System.out.println(&quot;serve to &quot;+name+&quot;...&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>PreGreetingAspect&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">public class PreGreetingAspect {</div><div class="line">    @Before(&quot;@annotation(com.uzhou.annotation.NeedTest)&quot;)</div><div class="line">    public void beforeGreeting(){</div><div class="line">        System.out.println(&quot;How are you&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5207;&#x9762;&#x4FE1;&#x606F;&#x7EC4;&#x6210;&#xFF1A;<br><img src="/2017/10/20/Spring-Aop&#x539F;&#x7406;&#x53CA;&#x5B9E;&#x73B0;/img2.png" alt="image"></p>
+<p>spring-aop-aspectj.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:p=&quot;http://www.springframework.org/schema/p&quot; xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;</div><div class="line">    &lt;aop:aspectj-autoproxy/&gt;</div><div class="line">    &lt;bean id=&quot;waiter&quot; class=&quot;com.uzhou.aspect.NaiveWaiter&quot;&gt;&lt;/bean&gt;</div><div class="line">    &lt;bean class=&quot;com.uzhou.aspect.PreGreetingAspect&quot;&gt;&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/20.</div><div class="line"> */</div><div class="line">public class TestAspectJ {</div><div class="line">    public static void main(String[] args){</div><div class="line">        ApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;spring-aop-aspectj.xml&quot;);</div><div class="line">        Waiter waiter = (Waiter) ctx.getBean(&quot;waiter&quot;);</div><div class="line">        waiter.serveTo(&quot;John&quot;);</div><div class="line">        waiter.greetTo(&quot;John&quot;);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x8F93;&#x51FA;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">serve to John...</div><div class="line">How are you</div><div class="line">greet to John...</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure>
+<p><aop:aspectj-autoproxy>&#x5B8C;&#x6210;&#x4E86;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x3002;</aop:aspectj-autoproxy></p>
+<p>&#x7EFC;&#x4E0A;&#xFF1A;Spring Aop&#x7684;&#x5E95;&#x5C42;&#x6280;&#x672F;&#x8FD8;&#x662F;jdk&#x548C;CGLib&#x7684;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6280;&#x672F;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;Spring&#x4E3A;&#x6211;&#x4EEC;&#x9690;&#x85CF;&#x4E86;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x521B;&#x5EFA;&#x4EE5;&#x53CA;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7684;&#x7EC7;&#x5165;&#x8FC7;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5173;&#x6CE8;&#x4E8E;&#x76EE;&#x6807;&#x7C7B;&#x3001;&#x589E;&#x5F3A;&#x7C7B;&#x7684;&#x7F16;&#x5199;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/19/Java代理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/10/19/Java代理/" itemprop="url">
+                  Java代理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-19T15:17:56+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/10/19/Java代理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/19/Java代理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/19/Java代理/" class="leancloud_visitors" data-flag-title="Java代理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="&#x4EE3;&#x7406;"><a href="#&#x4EE3;&#x7406;" class="headerlink" title="&#x4EE3;&#x7406;"></a>&#x4EE3;&#x7406;</h1><p>&#x4EE3;&#x7406;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#x4EE3;&#x8868;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x53BB;&#x5B8C;&#x6210;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x4E0D;&#x8FC7;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x4E2A;&#x4EE3;&#x8868;&#x5BF9;&#x8C61;&#x4E0A;&#x505A;&#x70B9;&#x624B;&#x811A;&#xFF0C;&#x52A0;&#x4E0A;&#x4E00;&#x4E9B;&#x81EA;&#x5DF1;&#x7684;&#x4E1C;&#x897F;&#x3002;&#x6BD4;&#x5982;&#x5546;&#x54C1;&#x7684;&#x4EE3;&#x7406;&#x5546;&#x53EF;&#x4EE5;&#x4EE3;&#x8868;&#x5382;&#x5BB6;&#x9500;&#x552E;&#x5546;&#x54C1;&#xFF0C;&#x5728;&#x9500;&#x552E;&#x5546;&#x54C1;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x4EE3;&#x7406;&#x5546;&#x53EF;&#x4EE5;&#x505A;&#x5176;&#x4ED6;&#x7684;&#x4E8B;&#xFF0C;&#x6BD4;&#x5982;&#x6253;&#x5E7F;&#x544A;&#x3001;&#x6346;&#x7ED1;&#x9500;&#x552E;&#x7B49;&#x3002;&#x5728;java&#x4E2D;&#xFF0C;&#x5382;&#x5BB6;&#x662F;&#x76EE;&#x6807;&#x7C7B;&#xFF08;&#x6216;&#x8005;&#x63A5;&#x53E3;&#xFF09;&#xFF0C;&#x9500;&#x552E;&#x662F;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x4EE3;&#x7801;&#xFF0C;&#x6253;&#x5E7F;&#x544A;&#x3001;&#x6346;&#x7ED1;&#x9500;&#x552E;&#x662F;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#xFF0C;&#x4EE3;&#x7406;&#x5546;&#x5C06;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x4EE3;&#x7801;&#x548C;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7ED3;&#x5408;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#x3002;<br>&#x7136;&#x540E;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x4E0B;&#xFF0C;&#x9759;&#x6001;&#x4EE3;&#x7406;&#x548C;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x7684;&#x533A;&#x522B;&#xFF1A;&#x9759;&#x6001;&#x4EE3;&#x7406;&#x6307;&#x4E00;&#x4E2A;&#x76EE;&#x6807;&#x7C7B;&#xFF08;&#x76EE;&#x6807;&#x63A5;&#x53E3;&#xFF09;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x7C7B;&#xFF0C;&#x4E14;&#x4EE3;&#x7406;&#x7C7B;&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x5C31;&#x786E;&#x5B9A;&#x4E86;&#xFF1B;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x6307;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x624D;&#x53BB;&#x751F;&#x6210;&#x4EE3;&#x7406;&#x7C7B;&#x3002;</p>
+<h2 id="JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;"><a href="#JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;" class="headerlink" title="JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;"></a>JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;</h2><p>JDK&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x4E3B;&#x8981;&#x662F;&#x9488;&#x5BF9;&#x4E8E;&#x76EE;&#x6807;&#x662F;&#x63A5;&#x53E3;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5373;&#x63A5;&#x53E3;&#x7684;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x3002;<br>&#x76EE;&#x6807;&#x63A5;&#x53E3;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/18.</div><div class="line"> */</div><div class="line">public interface ForumServiceIntf {</div><div class="line">    void addUser();</div><div class="line">    void deleteUser();</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5B9E;&#x73B0;&#x7C7B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/18.</div><div class="line"> */</div><div class="line">public class ForumServiceImpl implements ForumServiceIntf {</div><div class="line">    @Override</div><div class="line">    public void addUser() {</div><div class="line">        System.out.println(&quot;&#x6DFB;&#x52A0;&#x7528;&#x6237;&quot;);</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void deleteUser() {</div><div class="line">        System.out.println(&quot;&#x5220;&#x9664;&#x7528;&#x6237;&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/18.</div><div class="line"> */</div><div class="line">public class MonitorAdvice implements InvocationHandler {</div><div class="line"></div><div class="line">    private Object target;</div><div class="line"></div><div class="line">    public MonitorAdvice(Object target){</div><div class="line">        this.target = target;</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {</div><div class="line">        System.out.println(&quot;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x6027;&#x80FD;&#x68C0;&#x6D4B;&quot;);</div><div class="line">        Object obj = method.invoke(target,args);</div><div class="line">        System.out.println(&quot;&#x6027;&#x80FD;&#x68C0;&#x6D4B;&#x7ED3;&#x675F;&quot;);</div><div class="line">        return obj;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/18.</div><div class="line"> */</div><div class="line">public class TestJDKProxy {</div><div class="line">    public static void main(String[] args){</div><div class="line">        ForumServiceIntf service = new ForumServiceImpl();</div><div class="line">        MonitorAdvice advice = new MonitorAdvice(service);</div><div class="line">        ForumServiceIntf proxy = (ForumServiceIntf) Proxy.newProxyInstance(</div><div class="line">                service.getClass().getClassLoader(),</div><div class="line">                service.getClass().getInterfaces(),</div><div class="line">                advice</div><div class="line">        );</div><div class="line">        //&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x4E0B;&#x751F;&#x6210;&#x5B57;&#x8282;&#x7801;&#x6587;&#x4EF6;</div><div class="line">        byte[] classFile = ProxyGenerator.generateProxyClass(&quot;com.sun.proxy.$Proxy.1&quot;, service.getClass().getInterfaces());</div><div class="line">        FileOutputStream out = null;</div><div class="line">        try {</div><div class="line">            out = new FileOutputStream(&quot;com.sun.proxy.$Proxy.1.class&quot;);</div><div class="line">            out.write(classFile);</div><div class="line">            out.flush();</div><div class="line">        } catch (FileNotFoundException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        } catch (IOException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        }</div><div class="line">        </div><div class="line">        //&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x8C03;&#x7528;&#x65B9;&#x6CD5;</div><div class="line">        proxy.addUser();</div><div class="line">        proxy.deleteUser();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#xFF1A;<br><img src="/2017/10/19/Java&#x4EE3;&#x7406;/img1.png" alt="image"><br>&#x751F;&#x6210;&#x7684;&#x4EE3;&#x7406;&#x7C7B;&#x5B57;&#x8282;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">import com.uzhou.jdk.proxy.ForumServiceIntf;</div><div class="line">import java.lang.reflect.InvocationHandler;</div><div class="line">import java.lang.reflect.Method;</div><div class="line">import java.lang.reflect.Proxy;</div><div class="line">import java.lang.reflect.UndeclaredThrowableException;</div><div class="line"></div><div class="line">public final class 1 extends Proxy implements ForumServiceIntf {</div><div class="line">    private static Method m1;</div><div class="line">    private static Method m2;</div><div class="line">    private static Method m0;</div><div class="line">    private static Method m3;</div><div class="line">    private static Method m4;</div><div class="line"></div><div class="line">    public _/* $FF was: 1*/(InvocationHandler var1) throws  {</div><div class="line">        super(var1);</div><div class="line">    }</div><div class="line"></div><div class="line">    public final boolean equals(Object var1) throws  {</div><div class="line">        try {</div><div class="line">            return ((Boolean)super.h.invoke(this, m1, new Object[]{var1})).booleanValue();</div><div class="line">        } catch (RuntimeException | Error var3) {</div><div class="line">            throw var3;</div><div class="line">        } catch (Throwable var4) {</div><div class="line">            throw new UndeclaredThrowableException(var4);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    public final String toString() throws  {</div><div class="line">        try {</div><div class="line">            return (String)super.h.invoke(this, m2, (Object[])null);</div><div class="line">        } catch (RuntimeException | Error var2) {</div><div class="line">            throw var2;</div><div class="line">        } catch (Throwable var3) {</div><div class="line">            throw new UndeclaredThrowableException(var3);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    public final int hashCode() throws  {</div><div class="line">        try {</div><div class="line">            return ((Integer)super.h.invoke(this, m0, (Object[])null)).intValue();</div><div class="line">        } catch (RuntimeException | Error var2) {</div><div class="line">            throw var2;</div><div class="line">        } catch (Throwable var3) {</div><div class="line">            throw new UndeclaredThrowableException(var3);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    public final void addUser() throws  {</div><div class="line">        try {</div><div class="line">            super.h.invoke(this, m3, (Object[])null);</div><div class="line">        } catch (RuntimeException | Error var2) {</div><div class="line">            throw var2;</div><div class="line">        } catch (Throwable var3) {</div><div class="line">            throw new UndeclaredThrowableException(var3);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    public final void deleteUser() throws  {</div><div class="line">        try {</div><div class="line">            super.h.invoke(this, m4, (Object[])null);</div><div class="line">        } catch (RuntimeException | Error var2) {</div><div class="line">            throw var2;</div><div class="line">        } catch (Throwable var3) {</div><div class="line">            throw new UndeclaredThrowableException(var3);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    static {</div><div class="line">        try {</div><div class="line">            m1 = Class.forName(&quot;java.lang.Object&quot;).getMethod(&quot;equals&quot;, new Class[]{Class.forName(&quot;java.lang.Object&quot;)});</div><div class="line">            m2 = Class.forName(&quot;java.lang.Object&quot;).getMethod(&quot;toString&quot;, new Class[0]);</div><div class="line">            m0 = Class.forName(&quot;java.lang.Object&quot;).getMethod(&quot;hashCode&quot;, new Class[0]);</div><div class="line">            m3 = Class.forName(&quot;com.uzhou.jdk.proxy.ForumServiceIntf&quot;).getMethod(&quot;addUser&quot;, new Class[0]);</div><div class="line">            m4 = Class.forName(&quot;com.uzhou.jdk.proxy.ForumServiceIntf&quot;).getMethod(&quot;deleteUser&quot;, new Class[0]);</div><div class="line">        } catch (NoSuchMethodException var2) {</div><div class="line">            throw new NoSuchMethodError(var2.getMessage());</div><div class="line">        } catch (ClassNotFoundException var3) {</div><div class="line">            throw new NoClassDefFoundError(var3.getMessage());</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;Proxy.newProxyInstance()&#x751F;&#x6210;&#x4E86;&#x4E00;&#x4E2A;proxy&#x5BF9;&#x8C61;&#xFF0C;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x7684;&#x5B57;&#x8282;&#x7801;&#x8868;&#x660E;&#x8BE5;&#x7C7B;&#x7EE7;&#x627F;&#x81EA;Proxy&#x4E14;&#x5B9E;&#x73B0;&#x4E86;ForumServiceIntf&#x3002;&#x53E6;&#x5916;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x5728;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ForumServiceIntf proxy = (ForumServiceIntf) Proxy.newProxyInstance(</div><div class="line">                service.getClass().getClassLoader(),</div><div class="line">                service.getClass().getInterfaces(),</div><div class="line">                advice</div><div class="line">        );</div></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7801;&#x4E2D;&#x7684;advice&#x5C31;&#x662F;&#x4E00;&#x4E2A;InvocatioHandler&#x5B9E;&#x73B0;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x8BE5;&#x5BF9;&#x8C61;&#x5C06;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x3002;&#x4E14;&#x8BE5;&#x5BF9;&#x8C61;&#x88AB;&#x4F20;&#x5165;&#x751F;&#x6210;&#x7684;&#x4EE3;&#x7406;&#x7C7B;&#x4E2D;&#xFF0C;&#x4EE3;&#x7406;&#x7C7B;&#x7684;&#x884C;&#x4E3A;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x8BE5;advice.invoke&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x7684;&#xFF0C;&#x8FD9;&#x5C31;&#x4F7F;proxy&#x7684;&#x884C;&#x4E3A;&#x7ED3;&#x5408;&#x4E86;&#x6A2A;&#x5411;&#x903B;&#x8F91;&#x548C;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x3002;</p>
+<h3 id="newProxyInstance"><a href="#newProxyInstance" class="headerlink" title="newProxyInstance"></a>newProxyInstance</h3><p>&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x751F;&#x6210;&#x8FC7;&#x7A0B;&#x7531;Proxy&#x7C7B;&#x7684;newProxyInstance&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#xFF0C;&#x5206;&#x4E3A;3&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;<br>1&#x3001;ProxyGenerator.generateProxyClass&#x65B9;&#x6CD5;&#x8D1F;&#x8D23;&#x751F;&#x6210;&#x4EE3;&#x7406;&#x7C7B;&#x7684;&#x5B57;&#x8282;&#x7801;&#xFF0C;&#x751F;&#x6210;&#x903B;&#x8F91;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x540C;&#x5B66;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x5206;&#x6790;&#x6E90;&#x7801; sun.misc.ProxyGenerator&#xFF1B;</p>
+<p>// proxyName&#xFF1A;&#x683C;&#x5F0F;&#x5982; &#x201C;com.sun.proxy.$Proxy.1&#x201D;&#xFF1B;<br>// interfaces&#xFF1A;&#x4EE3;&#x7406;&#x7C7B;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x7684;&#x63A5;&#x53E3;&#x6570;&#x7EC4;&#xFF1B;<br>// accessFlags&#xFF1A;&#x4EE3;&#x7406;&#x7C7B;&#x7684;&#x8BBF;&#x95EE;&#x6807;&#x8BC6;&#xFF1B;<br>byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);<br>2&#x3001;native&#x65B9;&#x6CD5;Proxy.defineClass0&#x8D1F;&#x8D23;&#x5B57;&#x8282;&#x7801;&#x52A0;&#x8F7D;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x5BF9;&#x5E94;&#x7684;Class&#x5BF9;&#x8C61;&#x3002;</p>
+<p>Class clazz = defineClass0(loader, proxyName, proxyClassFile, 0, proxyClassFile.length);<br>3&#x3001;&#x5229;&#x7528;clazz.newInstance&#x53CD;&#x5C04;&#x673A;&#x5236;&#x751F;&#x6210;&#x4EE3;&#x7406;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#xFF1B;</p>
+<h2 id="CGLIB&#x52A8;&#x6001;&#x4EE3;&#x7406;"><a href="#CGLIB&#x52A8;&#x6001;&#x4EE3;&#x7406;" class="headerlink" title="CGLIB&#x52A8;&#x6001;&#x4EE3;&#x7406;"></a>CGLIB&#x52A8;&#x6001;&#x4EE3;&#x7406;</h2><p>CGLib&#x91C7;&#x7528;&#x4E86;&#x975E;&#x5E38;&#x5E95;&#x5C42;&#x7684;&#x5B57;&#x8282;&#x7801;&#x6280;&#x672F;&#xFF0C;&#x5176;&#x539F;&#x7406;&#x662F;&#x901A;&#x8FC7;&#x5B57;&#x8282;&#x7801;&#x6280;&#x672F;&#x4E3A;&#x4E00;&#x4E2A;&#x7C7B;&#x521B;&#x5EFA;&#x5B50;&#x7C7B;&#xFF0C;&#x5E76;&#x5728;&#x5B50;&#x7C7B;&#x4E2D;&#x91C7;&#x7528;&#x65B9;&#x6CD5;&#x62E6;&#x622A;&#x7684;&#x6280;&#x672F;&#x62E6;&#x622A;&#x6240;&#x6709;&#x7236;&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#xFF0C;&#x987A;&#x52BF;&#x7EC7;&#x5165;&#x6A2A;&#x5207;&#x903B;&#x8F91;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x770B;&#x770B;CGLib&#x7684;&#x5B9E;&#x4F8B;&#x3002;<br>&#x9700;&#x8981;&#x88AB;&#x4EE3;&#x7406;&#x7684;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/19.</div><div class="line"> */</div><div class="line">public class ForumService {</div><div class="line">    public void addUser(){</div><div class="line">        System.out.println(&quot;&#x6DFB;&#x52A0;&#x7528;&#x6237;&quot;);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7406;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/19.</div><div class="line"> */</div><div class="line">public class CglibProxy implements MethodInterceptor {</div><div class="line">    private Enhancer enhancer = new Enhancer();</div><div class="line">    public Object getProxy(Class clazz){</div><div class="line">        //&#x8BBE;&#x7F6E;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x5B50;&#x7C7B;&#x7684;&#x7C7B;</div><div class="line">        enhancer.setSuperclass(clazz);</div><div class="line">        enhancer.setCallback(this);</div><div class="line">        //&#x901A;&#x8FC7;&#x5B57;&#x8282;&#x7801;&#x6280;&#x672F;&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x5B50;&#x7C7B;&#x5B9E;&#x4F8B;</div><div class="line">        return enhancer.create();</div><div class="line">    }</div><div class="line">    //&#x5B9E;&#x73B0;MethodInterceptor&#x63A5;&#x53E3;&#x65B9;&#x6CD5;</div><div class="line">    public Object intercept(Object obj, Method method, Object[] args,</div><div class="line">                            MethodProxy proxy) throws Throwable {</div><div class="line">        System.out.println(&quot;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x6027;&#x80FD;&#x68C0;&#x6D4B;&quot;);</div><div class="line">        //&#x901A;&#x8FC7;&#x4EE3;&#x7406;&#x7C7B;&#x8C03;&#x7528;&#x7236;&#x7C7B;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;</div><div class="line">        Object result = proxy.invokeSuper(obj, args);</div><div class="line">        System.out.println(&quot;&#x6027;&#x80FD;&#x68C0;&#x6D4B;&#x7ED3;&#x675F;&quot;);</div><div class="line">        return result;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>getProxy(SuperClass.class)&#x65B9;&#x6CD5;&#x901A;&#x8FC7;&#x5165;&#x53C2;&#x5373;&#x7236;&#x7C7B;&#x7684;&#x5B57;&#x8282;&#x7801;&#xFF0C;&#x901A;&#x8FC7;&#x6269;&#x5C55;&#x7236;&#x7C7B;&#x7684;class&#x6765;&#x521B;&#x5EFA;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x3002;intercept()&#x65B9;&#x6CD5;&#x62E6;&#x622A;&#x6240;&#x6709;&#x76EE;&#x6807;&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#xFF0C;obj&#x8868;&#x793A;&#x76EE;&#x6807;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;method&#x4E3A;&#x76EE;&#x6807;&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x53CD;&#x5C04;&#x5BF9;&#x8C61;&#xFF0C;args&#x4E3A;&#x65B9;&#x6CD5;&#x7684;&#x52A8;&#x6001;&#x5165;&#x53C2;&#xFF0C;proxy&#x4E3A;&#x4EE3;&#x7406;&#x7C7B;&#x5B9E;&#x4F8B;&#x3002;proxy.invokeSuper(obj, args)&#x901A;&#x8FC7;&#x4EE3;&#x7406;&#x7C7B;&#x8C03;&#x7528;&#x7236;&#x7C7B;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x6D4B;&#x8BD5;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by uzhou on 2017/10/19.</div><div class="line"> */</div><div class="line">public class CglibProxyTest {</div><div class="line">    public static void main(String[] args) {</div><div class="line">        CglibProxy proxy = new CglibProxy();</div><div class="line">        //&#x901A;&#x8FC7;&#x751F;&#x6210;&#x5B50;&#x7C7B;&#x7684;&#x65B9;&#x5F0F;&#x521B;&#x5EFA;&#x4EE3;&#x7406;&#x7C7B;</div><div class="line">        ForumService proxyImp = (ForumService)proxy.getProxy(ForumService.class);</div><div class="line">        proxyImp.addUser();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<h2 id="&#x533A;&#x522B;"><a href="#&#x533A;&#x522B;" class="headerlink" title="&#x533A;&#x522B;"></a>&#x533A;&#x522B;</h2><ul>
+<li>jdk&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x53EA;&#x80FD;&#x7528;&#x4E8E;&#x76EE;&#x6807;&#x7C7B;&#x5B9E;&#x73B0;&#x4E86;&#x63A5;&#x53E3;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x63A5;&#x53E3;&#x5219;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;jdk&#x52A8;&#x6001;&#x4EE3;&#x7406;&#xFF0C;&#x800C;CGLib&#x5219;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x76EE;&#x6807;&#x662F;&#x7C7B;&#x7684;&#x60C5;&#x51B5;&#x3002;</li>
+<li>jdk&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x751F;&#x6210;&#x5BF9;&#x8C61;&#x7684;&#x901F;&#x5EA6;&#x5FEB;&#xFF0C;&#x4F46;&#x662F;&#x6267;&#x884C;&#x65B9;&#x6CD5;&#x7684;&#x6027;&#x80FD;&#x8981;&#x6162;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x5355;&#x4F8B;&#x6765;&#x8BF4;CGLib&#x66F4;&#x9002;&#x5408;&#x3002;</li>
+<li>&#x7531;&#x4E8E;CGLib&#x751F;&#x6210;&#x7684;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x662F;&#x76EE;&#x6807;&#x7C7B;&#x7684;&#x5B50;&#x7C7B;&#xFF08;jdk&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x751F;&#x6210;&#x7684;&#x5BF9;&#x8C61;&#x662F;Proxy&#x7684;&#x5B50;&#x7C7B;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;final&#x3001;private&#x65B9;&#x6CD5;&#x4E0D;&#x80FD;&#x88AB;&#x589E;&#x5F3A;&#x3002;</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/JDK源码之TreeMap/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1434,286 +1787,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/Redis入门-redis的持久化/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/10/Redis入门-redis的持久化/" itemprop="url">
-                  Redis入门-redis的持久化
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-10T22:23:00+08:00">
-                2017-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/07/10/Redis入门-redis的持久化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/10/Redis入门-redis的持久化/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/07/10/Redis入门-redis的持久化/" class="leancloud_visitors" data-flag-title="Redis入门-redis的持久化">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="&#x6301;&#x4E45;&#x5316;&#x7B80;&#x4ECB;"><a href="#&#x6301;&#x4E45;&#x5316;&#x7B80;&#x4ECB;" class="headerlink" title="&#x6301;&#x4E45;&#x5316;&#x7B80;&#x4ECB;"></a>&#x6301;&#x4E45;&#x5316;&#x7B80;&#x4ECB;</h1><p>redis&#x6301;&#x4E45;&#x5316;&#x7684;&#x76EE;&#x7684;&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x4E3B;&#x673A;&#x5728;&#x4E0B;&#x6B21;&#x91CD;&#x542F;&#x65F6;&#x80FD;&#x591F;&#x4FDD;&#x6301;redis&#x6570;&#x636E;&#x5E93;&#x548C;&#x73B0;&#x5728;&#x72B6;&#x6001;&#x4E00;&#x81F4;&#xFF0C;&#x4F20;&#x7EDF;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6301;&#x4E45;&#x5316;&#x6BD4;&#x8F83;&#x597D;&#x7406;&#x89E3;&#xFF0C;&#x6BD4;&#x5982;MySQL&#x8FD9;&#x7C7B;&#x6570;&#x636E;&#x5E93;&#x5C31;&#x662F;&#x5C06;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x5199;&#x5165;&#x78C1;&#x76D8;&#xFF0C;&#x4F7F;&#x7528;&#x65F6;&#x518D;&#x4ECE;&#x78C1;&#x76D8;&#x4E2D;&#x8BFB;&#x53D6;&#x3002;&#x4F46;&#x662F;redis&#x4E0D;&#x4E00;&#x6837;&#xFF0C;&#x56E0;&#x4E3A;redis&#x662F;&#x5185;&#x5B58;&#x578B;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x65E6;&#x65AD;&#x7535;&#x5C31;&#x4E0D;&#x80FD;&#x4FDD;&#x6301;&#x6570;&#x636E;&#x7684;&#x4E00;&#x81F4;&#x6027;&#x4E86;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5408;&#x9002;&#x7684;&#x6301;&#x4E45;&#x5316;&#x7B56;&#x7565;&#x3002;&#x5728;redis&#x4E2D;&#xFF0C;&#x6BD4;&#x8F83;&#x5E38;&#x89C1;&#x7684;&#x662F;rdb&#x548C;aof&#x7B56;&#x7565;&#x3002;</p>
-<h2 id="RDB&#x7B56;&#x7565;"><a href="#RDB&#x7B56;&#x7565;" class="headerlink" title="RDB&#x7B56;&#x7565;"></a>RDB&#x7B56;&#x7565;</h2><p>RDB&#x7684;&#x601D;&#x60F3;&#x5C31;&#x662F;&#x5C06;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x7684;&#x6570;&#x636E;&#x5FEB;&#x7167;&#x5907;&#x4EFD;&#x4E0B;&#x6765;&#xFF0C;rdb&#x672C;&#x8EAB;&#x662F;&#x4E00;&#x79CD;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x8FD9;&#x79CD;&#x6587;&#x4EF6;&#x5341;&#x5206;&#x7D27;&#x51D1;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x7684;&#x5927;&#x5C0F;&#x4F1A;&#x5C0F;&#x4E8E;redis&#x6570;&#x636E;&#x5E93;&#x672C;&#x8EAB;&#x6570;&#x636E;&#x96C6;&#x7684;&#x5927;&#x5C0F;&#x3002;<br>&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C;rdb&#x6709;&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;&#x7B2C;&#x4E00;&#x79CD;fork&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x8BA9;&#x5B50;&#x7EBF;&#x7A0B;&#x53BB;&#x5B8C;&#x6210;rdb&#x7684;&#x5907;&#x4EFD;&#xFF1B;&#x7B2C;&#x4E8C;&#x79CD;&#x662F;&#x7236;&#x8FDB;&#x7A0B;&#x76F4;&#x63A5;&#x4FDD;&#x5B58;rdb&#x6587;&#x4EF6;&#xFF0C;&#x6B64;&#x65F6;&#x670D;&#x52A1;&#x7AEF;&#x65E0;&#x6CD5;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#xFF0C;&#x56E0;&#x4E3A;&#x7236;&#x8FDB;&#x7A0B;&#x4F1A;&#x963B;&#x585E;&#x3002;<br>RDB&#x5728;&#x5907;&#x4EFD;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4E0D;&#x4F1A;&#x4FEE;&#x6539;&#x539F;&#x6709;&#x7684;rdb&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x662F;&#x7B49;&#x5230;&#x6574;&#x4E2A;rdb&#x6587;&#x4EF6;&#x5907;&#x4EFD;&#x597D;&#x540E;&#xFF0C;&#x5229;&#x7528;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x53BB;&#x66FF;&#x6362;&#x65E7;&#x7684;rdb&#x6587;&#x4EF6;&#x3002;&#x8FD9;&#x4E2A;&#x4FDD;&#x5B58;&#x7684;&#x65F6;&#x95F4;&#x4E00;&#x822C;&#x6BD4;&#x8F83;&#x4E45;&#xFF08;5min&#x5DE6;&#x53F3;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x65E6;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x51FA;&#x73B0;&#x5F02;&#x5E38;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x5C06;&#x4F1A;&#x88AB;&#x4E22;&#x5931;&#x3002;<br>&#x597D;&#x5904;&#x5728;&#x4E8E;&#xFF0C;rdb&#x5728;&#x6570;&#x636E;&#x8010;&#x4E45;&#x6027;&#x8981;&#x6C42;&#x4E0D;&#x9AD8;&#x7684;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x5B83;&#x7684;&#x6548;&#x7387;&#x662F;&#x9AD8;&#x4E8E;AOF&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x5728;&#x5927;&#x6570;&#x636E;&#x96C6;&#x4E0B;&#xFF0C;&#x6548;&#x7387;&#x4E5F;&#x6BD4;aof&#x9AD8;&#x3002;<br>redis&#x9ED8;&#x8BA4;&#x7684;&#x6301;&#x4E45;&#x5316;&#x64CD;&#x4F5C;&#x5C31;&#x662F;rdb&#xFF0C;&#x6BCF;&#x6B21;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x4F1A;&#x5728;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x4E0B;&#x751F;&#x6210;&#x4E00;&#x4E2A;dump.rdb&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x5C31;&#x662F;redis&#x7684;&#x6570;&#x636E;&#x5907;&#x4EFD;&#xFF0C;&#x5F53;&#x7136;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x4FDD;&#x5B58;dump.rdb&#x3002;<br>&#x4F55;&#x65F6;&#x8FDB;&#x884C;rdb&#x5FEB;&#x7167;&#x5462;&#xFF1F;<br>&#x5728;redis&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6709;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#xFF1A;<br>save n m<br>&#x8868;&#x793A;ms&#x5185;&#x6709;n&#x6B21;&#x6570;&#x636E;&#x6539;&#x53D8;&#x65F6;&#xFF0C;&#x6267;&#x884C;&#x4E00;&#x6B21;rdb&#x64CD;&#x4F5C;&#x3002;</p>
-<h2 id="AOF&#x7B56;&#x7565;"><a href="#AOF&#x7B56;&#x7565;" class="headerlink" title="AOF&#x7B56;&#x7565;"></a>AOF&#x7B56;&#x7565;</h2><p>AOF&#x6307;&#x7684;&#x662F;append only file&#xFF0C;&#x53EA;&#x5141;&#x8BB8;&#x5728;&#x6587;&#x4EF6;&#x672B;&#x5C3E;&#x6DFB;&#x52A0;&#x5185;&#x5BB9;&#x3002;redis&#x6BCF;&#x9694;&#x4E00;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#x4F1A;&#x5411;aof&#x6587;&#x4EF6;&#x4E2D;&#x5199;&#x5165;redis&#x6267;&#x884C;&#x8FC7;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x6765;redis&#x9700;&#x8981;&#x6062;&#x590D;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x8FD0;&#x884C;&#x4E00;&#x904D;aof&#x4E2D;&#x7684;&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x3002;AOF&#x9ED8;&#x8BA4;&#x7684;fsync&#x7B56;&#x7565;&#x662F;&#x6BCF;&#x5206;&#x949F;&#x4E00;&#x6B21;&#xFF0C;&#x4ED6;&#x7684;&#x6267;&#x884C;&#x6A21;&#x5F0F;&#x662F;&#x7236;&#x8FDB;&#x7A0B;fork&#x51FA;&#x4E00;&#x4E2A;&#x5B50;&#x8FDB;&#x7A0B;&#x53BB;&#x6267;&#x884C;&#x3002;<br>AOF&#x4F18;&#x70B9;&#xFF1A;<br>&#x6570;&#x636E;&#x8010;&#x4E45;&#x6027;&#x5F97;&#x5230;&#x4E86;&#x6781;&#x5927;&#x4FDD;&#x8BC1;&#xFF0C;&#x56E0;&#x4E3A;AOF&#x5728;&#x8FDB;&#x884C;&#x5199;&#x5165;&#x65F6;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x5BF9;&#x6574;&#x4E2A;aof&#x91CD;&#x5199;&#xFF0C;&#x4ED6;&#x53EA;&#x662F;&#x5C06;&#x65B0;&#x64CD;&#x4F5C;&#x7684;&#x547D;&#x4EE4;&#x8FFD;&#x52A0;&#x5230;aof&#x6587;&#x4EF6;&#x672B;&#x5C3E;&#xFF0C;&#x5373;&#x4F7F;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x53D1;&#x751F;&#x5B95;&#x673A;&#xFF0C;&#x4E5F;&#x53EA;&#x4F1A;&#x635F;&#x5931;&#x6781;&#x5C11;&#x7684;&#x6570;&#x636E;&#x3002;&#x53E6;&#x5916;&#x53D1;&#x751F;&#x5F02;&#x5E38;&#x65F6;&#xFF0C;redis&#x8FD8;&#x80FD;&#x591F;&#x901A;&#x8FC7;redis-check-aof&#x5DE5;&#x5177;&#x53BB;&#x6062;&#x590D;aof&#x6587;&#x4EF6;&#x3002;<br>AOF&#x7F3A;&#x70B9;&#xFF1A;<br>&#x56E0;&#x4E3A;AOF&#x4FDD;&#x5B58;&#x7684;&#x662F;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x6240;&#x4EE5;&#x4ED6;&#x7684;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x662F;&#x80AF;&#x5B9A;&#x6BD4;&#x6570;&#x636E;&#x96C6;&#x672C;&#x8EAB;&#x662F;&#x8981;&#x5927;&#x7684;&#x3002;&#x53E6;&#x5916;&#xFF0C;aof&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;bug&#xFF0C;&#x6BD4;&#x5982;aof&#x4E2D;&#x6709;&#x963B;&#x585E;&#x547D;&#x4EE4;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x8FD8;&#x539F;&#x6570;&#x636E;&#x65F6;&#x4F1A;&#x4F7F;redis&#x963B;&#x585E;&#x4F4F;&#x3002;<br>AOF&#x91CD;&#x5199;&#xFF1A;<br>AOF&#x901A;&#x8FC7;&#x91CD;&#x5199;&#xFF0C;&#x7CBE;&#x7B80;&#x4E86;aof&#x6587;&#x4EF6;&#xFF0C;&#x91CD;&#x5199;&#x8FC7;&#x7A0B;&#xFF1A;<br>&#x5355;&#x7EAF;&#x7684;&#x9760;&#x547D;&#x4EE4;&#x5206;&#x6790;&#x53BB;&#x7B80;&#x5316;&#xFF0C;&#x662F;&#x975E;&#x5E38;&#x4E0D;&#x5408;&#x9002;&#x7684;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x901A;&#x8FC7;&#x6570;&#x636E;&#x96C6;&#x7684;&#x6700;&#x7EC8;&#x72B6;&#x6001;&#x53BB;&#x8BBE;&#x7F6E;&#x547D;&#x4EE4;&#xFF0C;&#x6BD4;&#x5982;&#x4E00;&#x4E2A;key&#x6267;&#x884C;&#x4E86;10000&#x6B21;&#x81EA;&#x589E;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x4E48;aof&#x6587;&#x4EF6;&#x4E2D;&#x4F1A;&#x6709;10000&#x6761;&#x81EA;&#x589E;&#x547D;&#x4EE4;&#xFF0C;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;key&#x7684;&#x6700;&#x7EC8;&#x72B6;&#x6001;&#x76F4;&#x63A5;&#x8BBE;&#x7F6E;set key 10000&#x5C31;&#x80FD;&#x8FBE;&#x5230;&#x76EE;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x91CD;&#x5199;&#x7684;&#x539F;&#x7406;&#x5C31;&#x662F;&#x904D;&#x5386;&#x6570;&#x636E;&#x96C6;&#x6700;&#x7EC8;&#x72B6;&#x6001;&#x76F4;&#x63A5;&#x91CD;&#x5199;&#x547D;&#x4EE4;&#x3002;<br>AOF&#x91CD;&#x5199;&#x65F6;&#xFF0C;&#x662F;&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x8010;&#x4E45;&#x6027;&#x7684;&#xFF1F;<br>Redis&#x4E0D;&#x5E0C;&#x671B;AOF&#x91CD;&#x5199;&#x4F1A;&#x9020;&#x6210;&#x670D;&#x52A1;&#x5668;&#x65E0;&#x6CD5;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#xFF0C;&#x6240;&#x4EE5;Redis&#x51B3;&#x5B9A;&#x5C06;AOF&#x91CD;&#x5199;&#x7A0B;&#x5E8F;&#x653E;&#x5230;&#xFF08;&#x540E;&#x53F0;&#xFF09;&#x5B50;&#x8FDB;&#x7A0B;&#x91CC;&#x6267;&#x884C;&#x3002;&#x8FD9;&#x6837;&#x5904;&#x7406;&#x7684;&#x6700;&#x5927;&#x597D;&#x5904;&#x662F;&#xFF1A;<br>1&#x3001; &#x5B50;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;AOF&#x91CD;&#x5199;&#x671F;&#x95F4;&#xFF0C;&#x4E3B;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x547D;&#x4EE4;&#x8BF7;&#x6C42;&#xFF1B;<br>2&#x3001; &#x5B50;&#x8FDB;&#x7A0B;&#x5E26;&#x6709;&#x4E3B;&#x8FDB;&#x7A0B;&#x7684;&#x6570;&#x636E;&#x526F;&#x672C;&#xFF0C;&#x4F7F;&#x7528;&#x5B50;&#x8FDB;&#x7A0B;&#x800C;&#x4E0D;&#x662F;&#x7EBF;&#x7A0B;&#xFF0C;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x5728;&#x9501;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x5B89;&#x5168;&#x6027;&#x3002;</p>
-<p>&#x5B50;&#x8FDB;&#x7A0B;&#x5728;&#x8FDB;&#x884C;AOF&#x91CD;&#x5199;&#x671F;&#x95F4;&#xFF0C;&#x4E3B;&#x8FDB;&#x7A0B;&#x8FD8;&#x8981;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x547D;&#x4EE4;&#x8BF7;&#x6C42;&#xFF0C;&#x800C;&#x65B0;&#x7684;&#x547D;&#x4EE4;&#x53EF;&#x80FD;&#x5BF9;&#x73B0;&#x6709;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF0C;&#x8FD9;&#x4F1A;&#x8BA9;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6570;&#x636E;&#x548C;&#x91CD;&#x5199;&#x540E;&#x7684;AOF&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x4E00;&#x81F4;&#x3002;</p>
-<p>&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;Redis&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;AOF&#x91CD;&#x5199;&#x7F13;&#x5B58;&#xFF0C;&#x8FD9;&#x4E2A;&#x7F13;&#x5B58;&#x5728;fork&#x51FA;&#x5B50;&#x8FDB;&#x7A0B;&#x4E4B;&#x540E;&#x5F00;&#x59CB;&#x542F;&#x7528;&#xFF0C;Redis&#x4E3B;&#x8FDB;&#x7A0B;&#x5728;&#x63A5;&#x5230;&#x65B0;&#x7684;&#x5199;&#x547D;&#x4EE4;&#x4E4B;&#x540E;&#xFF0C;&#x9664;&#x4E86;&#x4F1A;&#x5C06;&#x8FD9;&#x4E2A;&#x5199;&#x547D;&#x4EE4;&#x7684;&#x5185;&#x5BB9;&#x8FFD;&#x52A0;&#x5230;&#x73B0;&#x6709;&#x7684;AOF&#x6587;&#x4EF6;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x4F1A;&#x8FFD;&#x52A0;&#x5230;&#x8FD9;&#x4E2A;&#x7F13;&#x5B58;&#x4E2D;&#xFF1A;<br><img src="/2017/07/10/Redis&#x5165;&#x95E8;-redis&#x7684;&#x6301;&#x4E45;&#x5316;/img1.png" alt="image"><br>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5B50;&#x8FDB;&#x7A0B;&#x5728;&#x6267;&#x884C;AOF&#x91CD;&#x5199;&#x65F6;&#xFF0C;&#x4E3B;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x5DE5;&#x4F5C;&#xFF1A;<br>1&#x3001;&#x5904;&#x7406;&#x547D;&#x4EE4;&#x8BF7;&#x6C42;&#xFF1B;<br>2&#x3001;&#x5C06;&#x5199;&#x547D;&#x4EE4;&#x8FFD;&#x52A0;&#x5230;&#x73B0;&#x6709;&#x7684;AOF&#x6587;&#x4EF6;&#x4E2D;&#xFF1B;<br>3&#x3001;&#x5C06;&#x5199;&#x547D;&#x4EE4;&#x8FFD;&#x52A0;&#x5230;AOF&#x91CD;&#x5199;&#x7F13;&#x5B58;&#x4E2D;&#x3002;<br>&#x5982;&#x6B64;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#xFF1A;<br>1&#xFF09;&#x3001;&#x73B0;&#x6709;&#x7684;AOF&#x529F;&#x80FD;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF0C;&#x5373;&#x4F7F;AOF&#x91CD;&#x5199;&#x671F;&#x95F4;&#x53D1;&#x751F;&#x505C;&#x673A;&#xFF0C;&#x4E5F;&#x4E0D;&#x4F1A;&#x6709;&#x4EFB;&#x4F55;&#x6570;&#x636E;&#x4E22;&#x5931;&#xFF1B;<br>2&#xFF09;&#x3001;&#x6240;&#x6709;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x7684;&#x547D;&#x4EE4;&#x90FD;&#x4F1A;&#x88AB;&#x8BB0;&#x5F55;&#x5230;AOF&#x91CD;&#x5199;&#x7F13;&#x5B58;&#x4E2D;&#x3002;</p>
-<p>&#x5F53;&#x5B50;&#x8FDB;&#x7A0B;&#x5B8C;&#x6210;&#x5BF9;AOF&#x6587;&#x4EF6;&#x91CD;&#x5199;&#x4E4B;&#x540E;&#xFF0C;&#x5B83;&#x4F1A;&#x5411;&#x7236;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4E00;&#x4E2A;&#x5B8C;&#x6210;&#x4FE1;&#x53F7;&#xFF0C;&#x7236;&#x8FDB;&#x7A0B;&#x63A5;&#x5230;&#x8BE5;&#x5B8C;&#x6210;&#x4FE1;&#x53F7;&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x8BE5;&#x51FD;&#x6570;&#x5B8C;&#x6210;&#x4EE5;&#x4E0B;&#x5DE5;&#x4F5C;&#xFF1A;<br>1&#xFF09;&#x3001;&#x5C06;AOF&#x91CD;&#x5199;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x5168;&#x90E8;&#x5199;&#x5165;&#x5230;&#x65B0;&#x7684;AOF&#x6587;&#x4EF6;&#x4E2D;&#xFF1B;<br>2&#xFF09;&#x3001;&#x5BF9;&#x65B0;&#x7684;AOF&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x6539;&#x540D;&#xFF0C;&#x8986;&#x76D6;&#x539F;&#x6709;&#x7684;AOF&#x6587;&#x4EF6;&#x3002;<br>&#x4EE5;&#x4E0A;&#x9610;&#x8FF0;&#xFF0C;&#x5C31;&#x662F;AOF&#x540E;&#x53F0;&#x91CD;&#x5199;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;BGREWRITEAOF&#x547D;&#x4EE4;&#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/MongoDB入门-高级属性/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/28/MongoDB入门-高级属性/" itemprop="url">
-                  MongoDB入门——高级属性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-28T20:25:54+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/06/28/MongoDB入门-高级属性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/28/MongoDB入门-高级属性/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/06/28/MongoDB入门-高级属性/" class="leancloud_visitors" data-flag-title="MongoDB入门——高级属性">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="MongoDB&#x4E2D;&#x7684;&#x5173;&#x7CFB;"><a href="#MongoDB&#x4E2D;&#x7684;&#x5173;&#x7CFB;" class="headerlink" title="MongoDB&#x4E2D;&#x7684;&#x5173;&#x7CFB;"></a>MongoDB&#x4E2D;&#x7684;&#x5173;&#x7CFB;</h2><p>MongoDB &#x7684;&#x5173;&#x7CFB;&#x8868;&#x793A;&#x591A;&#x4E2A;&#x6587;&#x6863;&#x4E4B;&#x95F4;&#x5728;&#x903B;&#x8F91;&#x4E0A;&#x7684;&#x76F8;&#x4E92;&#x8054;&#x7CFB;&#xFF0C;&#x4E0E;MySQL&#x4E0D;&#x540C;&#x7684;&#x662F;MongoDB&#x662F;&#x901A;&#x8FC7;&#x5D4C;&#x5165;&#x548C;&#x5F15;&#x7528;&#x6765;&#x63CF;&#x8FF0;&#x8FD9;&#x79CD;&#x8054;&#x7CFB;&#xFF0C;&#x800C;MySQL&#x5219;&#x662F;&#x901A;&#x8FC7;&#x5916;&#x952E;&#x7EA6;&#x675F;&#x548C;&#x8054;&#x7ED3;&#x7B49;&#x6765;&#x8868;&#x793A;&#x7684;&#x3002;<br>&#x6BD4;&#x5982;&#xFF0C;&#x4E00;&#x4E2A;user&#x7684;&#x6587;&#x6863;&#x4E2D;&#x6709;address&#x7684;&#x5B57;&#x6BB5;&#xFF0C;&#x8FD9;&#x4E2A;address&#x5B57;&#x6BB5;&#x662F;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x90A3;&#x4E48;&#x6B64;&#x65F6;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5C06;&#x8FD9;&#x4E2A;&#x6587;&#x6863;&#x5D4C;&#x5165;&#x5230;user&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06;&#x8BE5;address&#x6587;&#x6863;&#x7684;ObjectId&#x5F15;&#x7528;&#x5230;user&#x6587;&#x6863;&#x4E2D;&#x3002;<br>&#x5D4C;&#x5165;&#x5F0F;&#x5173;&#x7CFB;&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">   &quot;_id&quot;:ObjectId(&quot;52ffc33cd85242f436000001&quot;),</div><div class="line">   &quot;contact&quot;: &quot;987654321&quot;,</div><div class="line">   &quot;dob&quot;: &quot;01-01-1991&quot;,</div><div class="line">   &quot;name&quot;: &quot;Tom Benzamin&quot;,</div><div class="line">   &quot;address&quot;: [</div><div class="line">      {</div><div class="line">         &quot;building&quot;: &quot;22 A, Indiana Apt&quot;,</div><div class="line">         &quot;pincode&quot;: 123456,</div><div class="line">         &quot;city&quot;: &quot;Los Angeles&quot;,</div><div class="line">         &quot;state&quot;: &quot;California&quot;</div><div class="line">      },</div><div class="line">      {</div><div class="line">         &quot;building&quot;: &quot;170 A, Acropolis Apt&quot;,</div><div class="line">         &quot;pincode&quot;: 456789,</div><div class="line">         &quot;city&quot;: &quot;Chicago&quot;,</div><div class="line">         &quot;state&quot;: &quot;Illinois&quot;</div><div class="line">      }]</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x5D4C;&#x5165;&#x5F0F;&#x7684;&#x597D;&#x5904;&#x5728;&#x4E8E;&#x5BF9;&#x4E8E;user&#x6587;&#x6863;&#x7684;&#x67E5;&#x8BE2;&#x53EA;&#x9700;&#x8981;&#x6267;&#x884C;&#x4E00;&#x6B21;query&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x6570;&#x636E;&#x91CF;&#x5927;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F1A;&#x4E3A;&#x5B58;&#x50A8;&#x5E26;&#x6765;&#x989D;&#x5916;&#x7684;&#x6D88;&#x8017;&#x3002;</p>
-<p>&#x5F15;&#x7528;&#x5F0F;&#x5173;&#x7CFB;&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">   &quot;_id&quot;:ObjectId(&quot;52ffc33cd85242f436000001&quot;),</div><div class="line">   &quot;contact&quot;: &quot;987654321&quot;,</div><div class="line">   &quot;dob&quot;: &quot;01-01-1991&quot;,</div><div class="line">   &quot;name&quot;: &quot;Tom Benzamin&quot;,</div><div class="line">   &quot;address_ids&quot;: [</div><div class="line">      ObjectId(&quot;52ffc4a5d85242602e000000&quot;),</div><div class="line">      ObjectId(&quot;52ffc4a5d85242602e000001&quot;)</div><div class="line">   ]</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x8981;&#x60F3;&#x83B7;&#x53D6;user&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x5FC5;&#x987B;&#x8FDB;&#x884C;&#x4E24;&#x6B21;&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;&#x3002;</p>
-<h2 id="MongoDB&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;"><a href="#MongoDB&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;" class="headerlink" title="MongoDB&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;"></a>MongoDB&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;</h2><p>&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;MongoDB&#x4E0D;&#x652F;&#x6301;&#x4E8B;&#x52A1;&#x64CD;&#x4F5C;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x4E3A;&#x6587;&#x6863;&#x7684;&#x5220;&#x9664;&#x3001;&#x4FEE;&#x6539;&#x3001;&#x589E;&#x52A0;&#x7B49;&#x63D0;&#x4F9B;&#x4E86;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x3002;<br>db.collection.findAndModify()&#x65B9;&#x6CD5;&#x5219;&#x8868;&#x793A;&#x5BF9;&#x6307;&#x5B9A;&#x6587;&#x6863;&#x8FDB;&#x884C;&#x67E5;&#x627E;&#x5E76;&#x4FEE;&#x6539;&#x7684;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x90FD;&#x662F;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x3002;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">db.books.findAndModify ( {</div><div class="line">   query: {</div><div class="line">            _id: 123456789,</div><div class="line">            available: { $gt: 0 }</div><div class="line">          },</div><div class="line">   update: {</div><div class="line">             $inc: { available: -1 },</div><div class="line">             $push: { checkout: { by: &quot;abc&quot;, date: new Date() } }</div><div class="line">           }</div><div class="line">} )</div></pre></td></tr></table></figure>
-<p>&#x5F53;&#x7136;&#x8FD8;&#x6709;&#x5176;&#x4ED6;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x6BD4;&#x5982;&#x5BF9;&#x67D0;&#x4E2A;&#x5EFA;&#x7684;CRUD&#x7B49;&#x3002;</p>
-<h2 id="MongoDB-Map-Reduce"><a href="#MongoDB-Map-Reduce" class="headerlink" title="MongoDB Map Reduce"></a>MongoDB Map Reduce</h2><p>Map Reduce&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x79CD;&#x8BA1;&#x7B97;&#x6A21;&#x578B;&#xFF0C;&#x5148;&#x5C06;&#x5927;&#x95EE;&#x9898;&#x5206;&#x89E3;&#x6210;&#x82E5;&#x5E72;&#x4E2A;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x6574;&#x5408;&#x7B54;&#x6848;&#x3002;<br>&#x4F7F;&#x7528;MapReduce&#x8981;&#x5B9E;&#x73B0;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x662F;Map&#x51FD;&#x6570;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5219;&#x662F;Reduce&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">db.collection.mapReduce(</div><div class="line">   function() {emit(key,value);},  //map &#x51FD;&#x6570;</div><div class="line">   function(key,values) {return reduceFunction},   //reduce &#x51FD;&#x6570;</div><div class="line">   {</div><div class="line">      out: collection,</div><div class="line">      query: document,</div><div class="line">      sort: document,</div><div class="line">      limit: number</div><div class="line">   }</div><div class="line">)</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1759,7 +1832,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">131</span>
+              <span class="site-state-item-count">133</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1769,7 +1842,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1809,7 +1882,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
