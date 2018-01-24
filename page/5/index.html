@@ -236,6 +236,274 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/Validate-Binary-Search-Tree/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/Validate-Binary-Search-Tree/" itemprop="url">
+                  Validate Binary Search Tree
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T20:32:15+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/03/14/Validate-Binary-Search-Tree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/Validate-Binary-Search-Tree/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/14/Validate-Binary-Search-Tree/" class="leancloud_visitors" data-flag-title="Validate Binary Search Tree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode {</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) { val = x; }</div><div class="line"> * }</div><div class="line"> */</div><div class="line">public class Solution {</div><div class="line">    public boolean isValidBST(TreeNode root) {</div><div class="line">    	List&lt;Integer&gt; BSTList = new ArrayList&lt;Integer&gt;();</div><div class="line">    	nodeToList(root,BSTList);</div><div class="line">    	for(int i=0;i&lt;BSTList.size()-1;i++){</div><div class="line">    		if(BSTList.get(i)&gt;=BSTList.get(i+1)) return false;</div><div class="line">    	}</div><div class="line">    	return true;</div><div class="line">    }</div><div class="line">    </div><div class="line">    public void nodeToList(TreeNode root,List&lt;Integer&gt; list){</div><div class="line">    	if(root==null) return;</div><div class="line">    	nodeToList(root.left,list);</div><div class="line">    	list.add(root.val);</div><div class="line">    	nodeToList(root.right,list);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x6280;&#x5DE7;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x6B63;&#x786E;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x4E2D;&#x5E8F;&#x5E8F;&#x5217;&#x4E00;&#x5B9A;&#x662F;&#x9012;&#x589E;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5148;&#x4E2D;&#x5E8F;&#x904D;&#x5386;&#x4E00;&#x4E0B;&#xFF0C;&#x5728;&#x5224;&#x65AD;&#x5F97;&#x5230;&#x7684;list&#x662F;&#x5426;&#x9012;&#x589E;&#x5373;&#x53EF;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/Unique-Binary-Search-Trees2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/Unique-Binary-Search-Trees2/" itemprop="url">
+                  Unique Binary Search Trees2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T20:10:39+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/03/14/Unique-Binary-Search-Trees2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/Unique-Binary-Search-Trees2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/14/Unique-Binary-Search-Trees2/" class="leancloud_visitors" data-flag-title="Unique Binary Search Trees2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode {</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) { val = x; }</div><div class="line"> * }</div><div class="line"> */</div><div class="line">public class Solution {</div><div class="line">    public List&lt;TreeNode&gt; generateTrees(int n) {</div><div class="line">        if(n==0) return new ArrayList&lt;TreeNode&gt;();</div><div class="line">        Map&lt;Integer,List&lt;TreeNode&gt;&gt; map = new HashMap&lt;&gt;();</div><div class="line">        List&lt;TreeNode&gt; tmp = new ArrayList&lt;&gt;();</div><div class="line">        tmp.add(null);</div><div class="line">        map.put(0, new ArrayList&lt;TreeNode&gt;(tmp));</div><div class="line">        tmp.clear();</div><div class="line">        tmp.add(new TreeNode(1));</div><div class="line">        map.put(1, new ArrayList&lt;TreeNode&gt;(tmp));</div><div class="line">        for(int i=2;i&lt;=n;i++){</div><div class="line">        	tmp.clear();</div><div class="line">        	for(int j=1;j&lt;=i;j++){</div><div class="line">        		int left = map.get(j-1).size();</div><div class="line">        		int right = map.get(i-j).size();</div><div class="line">        		for(int k=0;k&lt;left;k++){</div><div class="line">        			for(int l=0;l&lt;right;l++){</div><div class="line">        				TreeNode root = new TreeNode(j);</div><div class="line">        				TreeNode node = nodeCloneOffset(j,map.get(i-j).get(l));</div><div class="line">        				root.left=map.get(j-1).get(k);</div><div class="line">        				root.right = node;</div><div class="line">        				tmp.add(root);</div><div class="line">        			}</div><div class="line">        		}</div><div class="line">        	}</div><div class="line">        	</div><div class="line">        	map.put(i, new ArrayList&lt;TreeNode&gt;(tmp));</div><div class="line">        }</div><div class="line">        return map.get(n);</div><div class="line">    }</div><div class="line">    </div><div class="line"></div><div class="line">    </div><div class="line">    public TreeNode nodeCloneOffset(int n,TreeNode root){</div><div class="line">    	if(root==null)</div><div class="line">    		return null;</div><div class="line">        TreeNode node = new TreeNode(root.val + n);</div><div class="line">        node.left = nodeCloneOffset(n, root.left);</div><div class="line">        node.right = nodeCloneOffset(n, root.right);</div><div class="line">        return node;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x501F;&#x52A9;Unique Binary Search Trees&#x7684;&#x601D;&#x8DEF;&#xFF0C;&#x6309;&#x6839;&#x8282;&#x70B9;&#x7684;&#x503C;&#x5206;&#x7C7B;&#x3002;&#x7531;&#x4E8E;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x83B7;&#x53D6;&#x8282;&#x70B9;&#x4E2A;&#x6570;&#x4E3A;n&#x65F6;&#x7684;&#x6240;&#x6709;&#x6811;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x501F;&#x52A9;1~n-1&#x7684;&#x7ED3;&#x679C;&#x624D;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x7EC8;&#x7B54;&#x6848;&#x3002;&#x6240;&#x4EE5;&#x7B2C;&#x4E00;&#x4E2A;&#x5FAA;&#x73AF;&#x8868;&#x793A;&#x7684;&#x662F;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x4E2A;&#x6570;&#x4ECE;2&#x5230;n&#xFF1B;&#x7B2C;&#x4E8C;&#x4E2A;&#x5FAA;&#x73AF;&#x8868;&#x793A;&#x6839;&#x8282;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x662F;1~n&#xFF1B;&#x7B2C;&#x4E09;&#x3001;&#x7B2C;&#x56DB;&#x4E2A;&#x5FAA;&#x73AF;&#x5219;&#x8868;&#x793A;&#x5DE6;&#x8FB9;&#x6811;&#x7684;&#x60C5;&#x51B5;&#x548C;&#x53F3;&#x8FB9;&#x5B50;&#x6811;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x8981;&#x6CE8;&#x610F;&#x53F3;&#x8FB9;&#x5B50;&#x6811;&#x7684;&#x503C;&#x9700;&#x8981;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x589E;&#x503C;&#xFF08;&#x8FD9;&#x4E2A;&#x503C;&#x7B49;&#x4E8E;&#x5F53;&#x524D;&#x6839;&#x8282;&#x70B9;&#x7684;&#x503C;&#xFF09;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/Java学习笔记-对象与类/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1322,274 +1590,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/09/Remove-Duplicates-from-Sorted-List/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/09/Remove-Duplicates-from-Sorted-List/" itemprop="url">
-                  Remove Duplicates from Sorted List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-09T19:15:27+08:00">
-                2017-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/03/09/Remove-Duplicates-from-Sorted-List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/09/Remove-Duplicates-from-Sorted-List/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/03/09/Remove-Duplicates-from-Sorted-List/" class="leancloud_visitors" data-flag-title="Remove Duplicates from Sorted List">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * public class ListNode {</div><div class="line"> *     int val;</div><div class="line"> *     ListNode next;</div><div class="line"> *     ListNode(int x) { val = x; }</div><div class="line"> * }</div><div class="line"> */</div><div class="line">public class Solution {</div><div class="line">    public ListNode deleteDuplicates(ListNode head) {</div><div class="line">        if(head==null||head.next==null) return head;</div><div class="line">        ListNode ans = new ListNode(head.val-1);//&#x4FDD;&#x8BC1;&#x94FE;&#x8868;&#x7684;&#x5934;&#x6307;&#x9488;&#x4E0E;head&#x503C;&#x4E0D;&#x7B49;</div><div class="line">        ans.next = head;</div><div class="line">        ListNode p = ans;</div><div class="line">        ListNode pre = ans;</div><div class="line">        ListNode now = ans.next;</div><div class="line">        while(now!=null){</div><div class="line">        	if(now.val!=pre.val){</div><div class="line">        		p.next = now;</div><div class="line">        		p = p.next;</div><div class="line">        	}</div><div class="line">        	pre = now;</div><div class="line">        	now = now.next;</div><div class="line">        }</div><div class="line">        if(p!=null) p.next=null;</div><div class="line">        return ans.next;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x94FE;&#x8868;&#x64CD;&#x4F5C;&#xFF0C;&#x7B97;&#x6CD5;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x5728;&#x8FD9;&#x5757;&#x5F88;&#x5BB9;&#x6613;&#x628A;&#x81EA;&#x5DF1;&#x7ED5;&#x6655;&#xFF0C;&#x770B;&#x6765;&#x8FD8;&#x662F;&#x8981;&#x591A;&#x591A;&#x7EC3;&#x4E60;&#x8FD9;&#x65B9;&#x9762;&#x7684;&#x9898;&#x578B;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/Subsets2/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/08/Subsets2/" itemprop="url">
-                  Subsets2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T13:24:45+08:00">
-                2017-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/03/08/Subsets2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/Subsets2/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/03/08/Subsets2/" class="leancloud_visitors" data-flag-title="Subsets2">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(int[] nums) {</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();</div><div class="line">        ans.add(new ArrayList&lt;Integer&gt;());</div><div class="line">        if(nums==null||nums.length==0) return ans;</div><div class="line">        Arrays.sort(nums);</div><div class="line">        List&lt;Integer&gt; tmp = new ArrayList&lt;Integer&gt;();</div><div class="line">        for(int k=1;k&lt;=nums.length;k++){</div><div class="line">        	for(int i=0;i&lt;k;i++)</div><div class="line">        		tmp.add(nums[i]);</div><div class="line">        	ans.add(new ArrayList&lt;Integer&gt;(tmp));</div><div class="line">        	while(getNextCombination(ans,nums,tmp,k)==1);</div><div class="line">          	if(k==nums.length) break;</div><div class="line">        	tmp.clear();</div><div class="line">        }</div><div class="line">        return ans;</div><div class="line">    }</div><div class="line">    </div><div class="line">    public int getNextCombination(List&lt;List&lt;Integer&gt;&gt; ans,int[] nums,List&lt;Integer&gt; tmp,int n){</div><div class="line">    	int i = nums.length-1,j=tmp.size()-1,index=0;</div><div class="line">    	while(tmp.get(j-index)==nums[i-index]){</div><div class="line">    		index++;</div><div class="line">    		if(index==n) return -1;</div><div class="line">    	}</div><div class="line">    	int k=i-index;</div><div class="line">    	for(;k&gt;=0;k--){</div><div class="line">    		if(nums[k]==tmp.get(j-index)) break;</div><div class="line">    	}</div><div class="line">    	for(int l=j-index;l&lt;tmp.size();l++)</div><div class="line">    		tmp.set(l,nums[++k]);</div><div class="line">    	ans.add(new ArrayList&lt;Integer&gt;(tmp));</div><div class="line">    	return 1;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x548C;subsets&#x57FA;&#x672C;&#x4E00;&#x6837;&#xFF0C;&#x552F;&#x4E00;&#x4E0D;&#x540C;&#x7684;&#x662F;subsets&#x4E2D;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x800C;subsets2&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x8FD9;&#x5C31;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x51FA;&#x73B0;&#x5B50;&#x96C6;&#x76F8;&#x540C;&#x7684;&#x60C5;&#x51B5;&#x3002;&#x4E3A;&#x4E86;&#x53BB;&#x91CD;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x4E2D;&#x7565;&#x52A0;&#x6CE8;&#x610F;&#xFF0C;&#x5982;&#x679C;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x8DF3;&#x8FC7;&#x3002;&#x53EF;&#x80FD;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#x4E0D;&#x662F;&#x8BF4;&#x7684;&#x8DF3;&#x8FC7;&#x53BB;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x662F;&#x601D;&#x60F3;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF0C;&#x4EE3;&#x7801;&#x662F;&#x5DE5;&#x5177;&#x3001;&#x601D;&#x60F3;&#x662F;&#x7075;&#x9B42;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1635,7 +1635,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">133</span>
+              <span class="site-state-item-count">135</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1645,7 +1645,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

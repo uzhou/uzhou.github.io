@@ -236,6 +236,274 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Count-And-Say/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/Count-And-Say/" itemprop="url">
+                  Count And Say
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T09:40:57+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/01/12/Count-And-Say/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/Count-And-Say/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/12/Count-And-Say/" class="leancloud_visitors" data-flag-title="Count And Say">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public String countAndSay(int n) {</div><div class="line">        StringBuilder ans = new StringBuilder(&quot;&quot;);</div><div class="line">        if(n==1) return 1+&quot;&quot;;</div><div class="line">        StringBuilder temp = new StringBuilder(&quot;1&quot;);</div><div class="line">        int len = 1,num=0,j=0;</div><div class="line">        char pre = temp.charAt(0);</div><div class="line">        for(int i=2;i&lt;=n;i++){</div><div class="line">        	len = temp.length();num=0;j=0;pre = temp.charAt(0);</div><div class="line">        	ans = new StringBuilder(&quot;&quot;);</div><div class="line">        	while(j&lt;len){</div><div class="line">        		if(pre==temp.charAt(j)) num++;</div><div class="line">        		else{</div><div class="line">        			ans.append(num).append(pre);</div><div class="line">        			num=1;</div><div class="line">        			pre = temp.charAt(j);</div><div class="line">        		}</div><div class="line">        		j++;</div><div class="line">        	}</div><div class="line">        	ans.append(num).append(pre);</div><div class="line">        	temp = ans;       	</div><div class="line">        }</div><div class="line">        return ans.toString();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x9898;&#x7684;&#x63CF;&#x8FF0;&#x6709;&#x70B9;&#x5751;&#xFF0C;&#x5BB9;&#x6613;&#x7ED9;&#x4EBA;&#x9020;&#x6210;&#x8BEF;&#x89E3;&#xFF0C;&#x5176;&#x5B9E;&#x5B83;&#x6240;&#x8868;&#x8FBE;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#xFF1A;1st&#x5E8F;&#x5217;&#x4E3A;1&#xFF0C;&#x73B0;&#x7ED9;&#x51FA;&#x6574;&#x6570;n&#xFF0C;&#x6C42;&#x51FA;nth&#x5E8F;&#x5217;&#x6570;&#x3002;&#x7136;&#x540E;&#x4F1A;&#x53D1;&#x73B0;nth&#x5E8F;&#x5217;&#x6570;&#x662F;&#x5728;(n-1)th&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x8BA1;&#x7B97;&#x5F97;&#x6765;&#x7684;&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4ECE;1&#x8BA1;&#x7B97;&#x5230;n&#xFF0C;&#x5BF9;&#x4E8E;1&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x7279;&#x5224;&#xFF0C;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x7684;&#x6570;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4F9D;&#x6B21;&#x5411;&#x4E0A;&#x8BA1;&#x7B97;&#xFF0C;&#x6BCF;&#x6B21;&#x6539;&#x53D8;&#x4E2D;&#x95F4;&#x503C;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;<br>&#x53E6;&#x5916;&#xFF1A;&#x8FD9;&#x4E00;&#x9898;&#x8FD8;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;String&#x7C7B;&#x578B;&#x5C3D;&#x91CF;&#x522B;&#x7528;&#xFF0C;&#x5C3D;&#x91CF;&#x4F7F;&#x7528;StringBuilder&#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x4E3A;&#x5FAA;&#x73AF;&#x4E2D;&#x6709;&#x5927;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x62FC;&#x63A5;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/11/Valid-Sudoku/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="uzhou">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="uzhou">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/11/Valid-Sudoku/" itemprop="url">
+                  Valid Sudoku
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-11T17:29:52+08:00">
+                2017-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/01/11/Valid-Sudoku/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/11/Valid-Sudoku/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/11/Valid-Sudoku/" class="leancloud_visitors" data-flag-title="Valid Sudoku">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public boolean isValidSudoku(char[][] board) {</div><div class="line">    	for(int i = 0;i&lt;9;i++){</div><div class="line">    		if(!isValid(board[i])) return false;</div><div class="line">    		char[] temp = new char[9];</div><div class="line">    		for(int j=0;j&lt;9;j++){</div><div class="line">    			temp[j]=board[j][i];</div><div class="line">    		}</div><div class="line">    		if(!isValid(temp)) return false;</div><div class="line">    		int p=0;</div><div class="line">    		for(int j=0;j&lt;3;j++){</div><div class="line">    			for(int k=0;k&lt;3;k++){</div><div class="line">    				temp[p++]=board[j+i/3*3][k+i%3*3];</div><div class="line">    			}</div><div class="line">    		}</div><div class="line">    		if(!isValid(temp)) return false;</div><div class="line">     	}</div><div class="line">        return true;</div><div class="line">    }</div><div class="line">    public boolean isValid(char[] board){</div><div class="line">    	HashMap&lt;String,Boolean&gt; map = new HashMap&lt;&gt;();</div><div class="line">    	for(int i=0;i&lt;9;i++){</div><div class="line">    		map.put(i+1+&quot;&quot;, false);</div><div class="line">    	}</div><div class="line">    	for(int i=0;i&lt;9;i++){</div><div class="line">    		if(map.containsKey(board[i]+&quot;&quot;)&amp;&amp;map.get(board[i]+&quot;&quot;)) return false;</div><div class="line">    		if(map.containsKey(board[i]+&quot;&quot;)&amp;&amp;!map.get(board[i]+&quot;&quot;)) map.put(board[i]+&quot;&quot;,true);</div><div class="line">    	}</div><div class="line">    	return true;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x601D;&#x60F3;&#x8FD8;&#x662F;&#x904D;&#x5386;&#xFF0C;&#x6839;&#x636E;&#x6570;&#x72EC;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x8981;&#x8FDB;&#x884C;&#x4E09;&#x5927;&#x7C7B;&#x7684;&#x5224;&#x65AD;&#xFF1A;1&#xFF09;&#x5224;&#x65AD;&#x884C;&#x662F;&#x5426;&#x91CD;&#x590D; 2&#xFF09;&#x5224;&#x65AD;&#x5217;&#x662F;&#x5426;&#x91CD;&#x590D; 3&#xFF09;&#x5224;&#x65AD;&#x6BCF;&#x4E00;&#x4E2A;&#x5C0F;&#x7684;&#x4E5D;&#x5BAB;&#x683C;&#x662F;&#x5426;&#x91CD;&#x590D;&#xFF1B;&#x5206;&#x7C7B;&#x4E4B;&#x540E;&#x53D1;&#x73B0;&#x6700;&#x96BE;&#x5904;&#x7406;&#x7684;&#x662F;&#x7B2C;3&#x7C7B;&#x60C5;&#x51B5;&#x3002;&#x96BE;&#x70B9;&#x5728;&#x4E8E;&#x5982;&#x4F55;&#x5C06;&#x4ECE;9<em>9&#x7684;&#x65B9;&#x683C;&#x5185;&#x53D6;&#x51FA;&#x5BF9;&#x5E94;&#x7684;&#x5C0F;&#x4E5D;&#x5BAB;&#x683C;&#xFF0C;&#x7ECF;&#x8FC7;&#x89C2;&#x5BDF;&#x548C;&#x8BA1;&#x7B97;&#x5F97;&#x7B2C;i&#x4E2A;&#x4E5D;&#x5BAB;&#x683C;&#x5143;&#x7D20;&#x5BF9;&#x5E94;&#x4E8E;board[j+i/3</em>3][k+i%3*3],&#x5176;&#x4E2D;j&#x8868;&#x793A;&#x5C0F;&#x4E5D;&#x5BAB;&#x683C;&#x7684;&#x7B2C;j&#x884C;&#xFF0C;k&#x8868;&#x793A;&#x5C0F;&#x4E5D;&#x5BAB;&#x683C;&#x7684;&#x7B2C;k&#x5217;&#x3002;&#x53D6;&#x51FA;&#x5BF9;&#x5E94;&#x7684;&#x4E5D;&#x5BAB;&#x683C;&#x53C8;&#x53EF;&#x4EE5;&#x8F6C;&#x6210;&#x7B2C;1&#x3001;2&#x7C7B;&#x95EE;&#x9898;&#x4E50;&#x3002;&#x6548;&#x7387;&#x4E3A;2.17%,&#x786E;&#x5B9E;&#x4E0D;&#x5FCD;&#x76F4;&#x89C6;&#x3002;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/11/Search-Insert-Position/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1346,274 +1614,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/Remove-Element/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/04/Remove-Element/" itemprop="url">
-                  Remove Element
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-04T15:27:06+08:00">
-                2017-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/01/04/Remove-Element/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/04/Remove-Element/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/04/Remove-Element/" class="leancloud_visitors" data-flag-title="Remove Element">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public int removeElement(int[] nums, int val) {</div><div class="line">        int len = nums.length,i=0,j=0;</div><div class="line">        while(i&lt;len){</div><div class="line">        	if(nums[i]!=val)</div><div class="line">        		nums[j++]=nums[i];</div><div class="line">        	i++;</div><div class="line">        }</div><div class="line">        return j;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x8FD9;&#x4E00;&#x9898;&#x601D;&#x8DEF;&#x548C;&#x4E0A;&#x4E00;&#x9898;&#x601D;&#x8DEF;&#x5B8C;&#x5168;&#x4E00;&#x6837;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x53EA;&#x662F;&#x5224;&#x65AD;&#x7684;&#x6761;&#x4EF6;&#xFF0C;&#x4E0A;&#x4E00;&#x9898;&#x662F;&#x5224;&#x65AD;&#x662F;&#x5426;&#x91CD;&#x590D;&#xFF0C;&#x800C;&#x672C;&#x9898;&#x662F;&#x5224;&#x65AD;&#x503C;&#x662F;&#x5426;&#x4E3A;val&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/Remove-Duplicates-from-Sorted-Array/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="uzhou">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="uzhou">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="uzhou" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/04/Remove-Duplicates-from-Sorted-Array/" itemprop="url">
-                  Remove Duplicates from Sorted Array
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-04T15:15:11+08:00">
-                2017-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/01/04/Remove-Duplicates-from-Sorted-Array/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/04/Remove-Duplicates-from-Sorted-Array/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/04/Remove-Duplicates-from-Sorted-Array/" class="leancloud_visitors" data-flag-title="Remove Duplicates from Sorted Array">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Solution {</div><div class="line">    public int removeDuplicates(int[] nums) {</div><div class="line">        int i=1,j=1,len = nums.length;</div><div class="line">        if(len&lt;2)</div><div class="line">        	return len;</div><div class="line">        while(i&lt;len){</div><div class="line">        	if(nums[i]!=nums[i-1])</div><div class="line">        		nums[j++]=nums[i];</div><div class="line">        	i++;</div><div class="line">        }</div><div class="line">        return j;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-<p>&#x7531;&#x4E8E;&#x8981;&#x6C42;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;O(1)&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x53EF;&#x80FD;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x6765;&#x5904;&#x7406;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;&#x56E0;&#x4E3A;&#x7ED9;&#x5B9A;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x5E8F;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x6240;&#x4EE5;&#x5224;&#x5B9A;&#x662F;&#x5426;&#x91CD;&#x590D;&#x662F;&#x5341;&#x5206;&#x65B9;&#x4FBF;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;O(1)&#x3002;&#x56E0;&#x6B64;&#x771F;&#x6B63;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x662F;&#x5728;&#x5220;&#x9664;&#x91CD;&#x590D;&#x6570;&#x636E;&#x4E0A;&#xFF0C;&#x6700;&#x76F4;&#x63A5;&#x4E5F;&#x662F;&#x6700;&#x7B28;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x6570;&#x7EC4;&#x7684;&#x524D;&#x79FB;&#xFF0C;&#x4F46;&#x662F;&#x590D;&#x6742;&#x5EA6;&#x5C31;&#x5F88;&#x9AD8;&#x4E86;&#x3002;&#x540E;&#x6765;&#x8003;&#x8651;&#x4E86;&#x4E00;&#x4E0B;&#x53CC;&#x6307;&#x9488;&#xFF0C;&#x4E00;&#x4E2A;i&#x4E00;&#x4E2A;j&#xFF0C;i&#x662F;&#x5F53;&#x524D;&#x904D;&#x5386;&#x7684;&#x5143;&#x7D20;&#x4F4D;&#x7F6E;&#xFF0C;j&#x662F;&#x65B0;nums&#x6570;&#x7EC4;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;&#x3002;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1659,7 +1659,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">133</span>
+              <span class="site-state-item-count">135</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1669,7 +1669,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
